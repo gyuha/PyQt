@@ -31,20 +31,20 @@ class BubbleLabel(QWidget):
     def __init__(self, *args, **kwargs):
         text = kwargs.pop("text", "")
         super(BubbleLabel, self).__init__(*args, **kwargs)
-        # 设置无边框置顶
+        # 무한한 프레임을 설정합니다
         self.setWindowFlags(
             Qt.Window | Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)
-        # 设置最小宽度和高度
+        # 최소 너비와 높이를 설정하십시오
         self.setMinimumWidth(200)
         self.setMinimumHeight(48)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         layout = QVBoxLayout(self)
-        # 左上右下的边距（下方16是因为包括了三角形）
+        # 왼쪽 상단의 여백 (하위 16 아래의 삼각형 때문에)
         layout.setContentsMargins(8, 8, 8, 16)
         self.label = QLabel(self)
         layout.addWidget(self.label)
         self.setText(text)
-        # 获取屏幕高宽
+        # 스크린을 높이고 넓게하십시오
         self._desktop = QApplication.instance().desktop()
 
     def setText(self, text):
@@ -60,7 +60,7 @@ class BubbleLabel(QWidget):
 
     def show(self):
         super(BubbleLabel, self).show()
-        # 窗口开始位置
+        # 창 시작 위치
         startPos = QPoint(
             self._desktop.screenGeometry().width() - self.width() - 100,
             self._desktop.availableGeometry().height() - self.height())
@@ -69,56 +69,56 @@ class BubbleLabel(QWidget):
             self._desktop.availableGeometry().height() - self.height() * 3 - 5)
         print(startPos, endPos)
         self.move(startPos)
-        # 初始化动画
+        # 초기화 애니메이션
         self.initAnimation(startPos, endPos)
 
     def initAnimation(self, startPos, endPos):
-        # 透明度动画
+        # 투명성 애니메이션
         opacityAnimation = QPropertyAnimation(self, b"opacity")
         opacityAnimation.setStartValue(1.0)
         opacityAnimation.setEndValue(0.0)
-        # 设置动画曲线
+        # 애니메이션 곡선을 설정하십시오
         opacityAnimation.setEasingCurve(QEasingCurve.InQuad)
-        opacityAnimation.setDuration(4000)  # 在4秒的时间内完成
-        # 往上移动动画
+        opacityAnimation.setDuration(4000)  # 4 초 이내에 완료되었습니다
+        # 움직이는 애니메이션
         moveAnimation = QPropertyAnimation(self, b"pos")
         moveAnimation.setStartValue(startPos)
         moveAnimation.setEndValue(endPos)
         moveAnimation.setEasingCurve(QEasingCurve.InQuad)
-        moveAnimation.setDuration(5000)  # 在5秒的时间内完成
-        # 并行动画组（目的是让上面的两个动画同时进行）
+        moveAnimation.setDuration(5000)  # 5 초 이내에 완료되었습니다
+        # 병렬 애니메이션 그룹 (목적은 위의 두 애니메이션을 설정하는 것입니다)
         self.animationGroup = QParallelAnimationGroup(self)
         self.animationGroup.addAnimation(opacityAnimation)
         self.animationGroup.addAnimation(moveAnimation)
-        self.animationGroup.finished.connect(self.close)  # 动画结束时关闭窗口
+        self.animationGroup.finished.connect(self.close)  # 애니메이션의 끝에 창을 닫습니다
         self.animationGroup.start()
 
     def paintEvent(self, event):
         super(BubbleLabel, self).paintEvent(event)
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)  # 抗锯齿
+        painter.setRenderHint(QPainter.Antialiasing)  # 안티 앨리어싱
 
-        rectPath = QPainterPath()  # 圆角矩形
-        triPath = QPainterPath()  # 底部三角形
+        rectPath = QPainterPath()  # 둥근 사각형
+        triPath = QPainterPath()  # 하단 삼각형
 
-        height = self.height() - 8  # 往上偏移8
+        height = self.height() - 8
         rectPath.addRoundedRect(QRectF(0, 0, self.width(), height), 5, 5)
         x = self.width() / 5 * 4
-        triPath.moveTo(x, height)  # 移动到底部横线4/5处
-        # 画三角形
+        triPath.moveTo(x, height)  # 아래쪽 수평선 4/5로 이동하십시오
+        # 화면 삼각형
         triPath.lineTo(x + 6, height + 8)
         triPath.lineTo(x + 12, height)
 
-        rectPath.addPath(triPath)  # 添加三角形到之前的矩形上
+        rectPath.addPath(triPath)  # 이전 사각형에 삼각형을 추가하십시오
 
-        # 边框画笔
+        # 테두리 브러쉬
         painter.setPen(QPen(self.BorderColor, 1, Qt.SolidLine,
                             Qt.RoundCap, Qt.RoundJoin))
-        # 背景画刷
+        # 배경 그림 브러시
         painter.setBrush(self.BackgroundColor)
-        # 绘制形状
+        # 모양의 모양
         painter.drawPath(rectPath)
-        # 三角形底边绘制一条线保证颜色与背景一样
+        # 三 边 边 保 保 保 保
         painter.setPen(QPen(self.BackgroundColor, 1,
                             Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
         painter.drawLine(x, height, x + 12, height)
@@ -129,7 +129,7 @@ class BubbleLabel(QWidget):
     def setWindowOpacity(self, opacity):
         super(BubbleLabel, self).setWindowOpacity(opacity)
 
-    # 由于opacity属性不在QWidget中需要重新定义一个
+    # 불투명도 속성으로 인해 qwidget에서 하나를 재정의 할 필요가 없습니다.
     opacity = pyqtProperty(float, windowOpacity, setWindowOpacity)
 
 

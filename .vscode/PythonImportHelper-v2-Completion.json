@@ -14565,7 +14565,7 @@
         "kind": 6,
         "importPath": "Demo.BubbleTips",
         "description": "Demo.BubbleTips",
-        "peekOfCode": "class BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 设置无边框置顶\n        self.setWindowFlags(\n            Qt.Window | Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)\n        # 设置最小宽度和高度",
+        "peekOfCode": "class BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 무한한 프레임을 설정합니다\n        self.setWindowFlags(\n            Qt.Window | Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)\n        # 최소 너비와 높이를 설정하십시오",
         "detail": "Demo.BubbleTips",
         "documentation": {}
     },
@@ -14583,7 +14583,7 @@
         "kind": 5,
         "importPath": "Demo.BubbleTips",
         "description": "Demo.BubbleTips",
-        "peekOfCode": "__Author__ = \"By: Irony.\\\"[讽刺]\\nQQ: 892768447\\nEmail: 892768447@qq.com\"\n__Copyright__ = \"Copyright (c) 2018 Irony.\\\"[讽刺]\"\n__Version__ = \"Version 1.0\"\nclass BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 设置无边框置顶",
+        "peekOfCode": "__Author__ = \"By: Irony.\\\"[讽刺]\\nQQ: 892768447\\nEmail: 892768447@qq.com\"\n__Copyright__ = \"Copyright (c) 2018 Irony.\\\"[讽刺]\"\n__Version__ = \"Version 1.0\"\nclass BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 무한한 프레임을 설정합니다",
         "detail": "Demo.BubbleTips",
         "documentation": {}
     },
@@ -14592,7 +14592,7 @@
         "kind": 5,
         "importPath": "Demo.BubbleTips",
         "description": "Demo.BubbleTips",
-        "peekOfCode": "__Copyright__ = \"Copyright (c) 2018 Irony.\\\"[讽刺]\"\n__Version__ = \"Version 1.0\"\nclass BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 设置无边框置顶\n        self.setWindowFlags(",
+        "peekOfCode": "__Copyright__ = \"Copyright (c) 2018 Irony.\\\"[讽刺]\"\n__Version__ = \"Version 1.0\"\nclass BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 무한한 프레임을 설정합니다\n        self.setWindowFlags(",
         "detail": "Demo.BubbleTips",
         "documentation": {}
     },
@@ -14601,7 +14601,7 @@
         "kind": 5,
         "importPath": "Demo.BubbleTips",
         "description": "Demo.BubbleTips",
-        "peekOfCode": "__Version__ = \"Version 1.0\"\nclass BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 设置无边框置顶\n        self.setWindowFlags(\n            Qt.Window | Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)",
+        "peekOfCode": "__Version__ = \"Version 1.0\"\nclass BubbleLabel(QWidget):\n    BackgroundColor = QColor(195, 195, 195)\n    BorderColor = QColor(150, 150, 150)\n    def __init__(self, *args, **kwargs):\n        text = kwargs.pop(\"text\", \"\")\n        super(BubbleLabel, self).__init__(*args, **kwargs)\n        # 무한한 프레임을 설정합니다\n        self.setWindowFlags(\n            Qt.Window | Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)",
         "detail": "Demo.BubbleTips",
         "documentation": {}
     },
