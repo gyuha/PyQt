@@ -259,6 +259,11 @@ https://pyqt.site 포럼은 PYQT5 학습 및 향상을 전문으로하는 웹 �
   - [화면 변동 모니터링](Demo/ScreenNotify.py)
   - [축복 프레임 창](Demo/NewFramelessWindow.py)
 
+# 추가 설치
+```
+pip install pypiwin32
+```
+
 # QQ Group.
 
 [PyQt 배우다](https://jq.qq.com/?_wv=1027&k=5QVVEdF)

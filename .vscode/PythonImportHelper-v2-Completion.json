@@ -15716,7 +15716,7 @@
         "kind": 6,
         "importPath": "Demo.WeltHideWindow",
         "description": "Demo.WeltHideWindow",
-        "peekOfCode": "class WeltHideWindow(QWidget):\n    def __init__(self, *args, **kwargs):\n        super(WeltHideWindow, self).__init__(*args, **kwargs)\n        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)\n        self.resize(800, 600)\n        self._width = QApplication.desktop().availableGeometry(self).width()\n        layout = QVBoxLayout(self)\n        layout.addWidget(QPushButton(\"关闭窗口\", self, clicked=self.close))\n    def mousePressEvent(self, event):\n        '''鼠标按下事件，需要记录下坐标self._pos 和 是否可移动self._canMove'''",
+        "peekOfCode": "class WeltHideWindow(QWidget):\n    def __init__(self, *args, **kwargs):\n        super(WeltHideWindow, self).__init__(*args, **kwargs)\n        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)\n        self.resize(800, 600)\n        self._width = QApplication.desktop().availableGeometry(self).width()\n        layout = QVBoxLayout(self)\n        layout.addWidget(QPushButton(\"닫기\", self, clicked=self.close))\n    def mousePressEvent(self, event):\n        '''鼠标按下事件，需要记录下坐标self._pos 和 是否可移动self._canMove'''",
         "detail": "Demo.WeltHideWindow",
         "documentation": {}
     },
@@ -15734,7 +15734,7 @@
         "kind": 5,
         "importPath": "Demo.WeltHideWindow",
         "description": "Demo.WeltHideWindow",
-        "peekOfCode": "__Copyright__ = 'Copyright (c) 2018 Irony'\n__Version__ = 1.0\nclass WeltHideWindow(QWidget):\n    def __init__(self, *args, **kwargs):\n        super(WeltHideWindow, self).__init__(*args, **kwargs)\n        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)\n        self.resize(800, 600)\n        self._width = QApplication.desktop().availableGeometry(self).width()\n        layout = QVBoxLayout(self)\n        layout.addWidget(QPushButton(\"关闭窗口\", self, clicked=self.close))",
+        "peekOfCode": "__Copyright__ = 'Copyright (c) 2018 Irony'\n__Version__ = 1.0\nclass WeltHideWindow(QWidget):\n    def __init__(self, *args, **kwargs):\n        super(WeltHideWindow, self).__init__(*args, **kwargs)\n        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)\n        self.resize(800, 600)\n        self._width = QApplication.desktop().availableGeometry(self).width()\n        layout = QVBoxLayout(self)\n        layout.addWidget(QPushButton(\"닫기\", self, clicked=self.close))",
         "detail": "Demo.WeltHideWindow",
         "documentation": {}
     },
@@ -15743,7 +15743,7 @@
         "kind": 5,
         "importPath": "Demo.WeltHideWindow",
         "description": "Demo.WeltHideWindow",
-        "peekOfCode": "__Version__ = 1.0\nclass WeltHideWindow(QWidget):\n    def __init__(self, *args, **kwargs):\n        super(WeltHideWindow, self).__init__(*args, **kwargs)\n        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)\n        self.resize(800, 600)\n        self._width = QApplication.desktop().availableGeometry(self).width()\n        layout = QVBoxLayout(self)\n        layout.addWidget(QPushButton(\"关闭窗口\", self, clicked=self.close))\n    def mousePressEvent(self, event):",
+        "peekOfCode": "__Version__ = 1.0\nclass WeltHideWindow(QWidget):\n    def __init__(self, *args, **kwargs):\n        super(WeltHideWindow, self).__init__(*args, **kwargs)\n        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)\n        self.resize(800, 600)\n        self._width = QApplication.desktop().availableGeometry(self).width()\n        layout = QVBoxLayout(self)\n        layout.addWidget(QPushButton(\"닫기\", self, clicked=self.close))\n    def mousePressEvent(self, event):",
         "detail": "Demo.WeltHideWindow",
         "documentation": {}
     },
