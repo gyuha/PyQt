@@ -68,8 +68,8 @@ class ToolTipWidget(QWidget):
             else:
                 self.Cache[serie].setText(
                     (serie.name() or "-") + ":" + str(point.y()))
-            self.Cache[serie].setVisible(serie.isVisible())  # 隐藏那些不可用的项
-        self.adjustSize()  # 调整大小
+            self.Cache[serie].setVisible(serie.isVisible())  # 사용할 수없는 항목을 숨 깁니다 
+        self.adjustSize()  # 크기 조정 
 
 
 class GraphicsProxyWidget(QGraphicsProxyWidget):
@@ -98,12 +98,12 @@ class ChartView(QChartView):
     def __init__(self, *args, **kwargs):
         super(ChartView, self).__init__(*args, **kwargs)
         self.resize(800, 600)
-        self.setRenderHint(QPainter.Antialiasing)  # 抗锯齿
-        # 自定义x轴label
+        self.setRenderHint(QPainter.Antialiasing)  # 抗锯 齿齿 
+        # 사용자 정의 x 축 레이블 
         self.category = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
         self.initChart()
 
-        # 提示widget
+        # 提 위젯 
         self.toolTipWidget = GraphicsProxyWidget(self._chart)
 
         # line
@@ -114,19 +114,19 @@ class ChartView(QChartView):
         self.lineItem.setZValue(998)
         self.lineItem.hide()
 
-        # 一些固定计算，减少mouseMoveEvent中的计算量
-        # 获取x和y轴的最小最大值
+        # 일부 고정 계산, mouseMoveEvent의 계산량을 줄입니다. 
+        # x 및 y 축의 최대 최대 값을 얻습니다. 
         axisX, axisY = self._chart.axisX(), self._chart.axisY()
         self.min_x, self.max_x = axisX.min(), axisX.max()
         self.min_y, self.max_y = axisY.min(), axisY.max()
 
     def resizeEvent(self, event):
         super(ChartView, self).resizeEvent(event)
-        # 当窗口大小改变时需要重新计算
-        # 坐标系中左上角顶点
+        # 창 크기가 변경되면 다시 계산됩니다 
+        # 上 上 上 上 上 上 上 
         self.point_top = self._chart.mapToPosition(
             QPointF(self.min_x, self.max_y))
-        # 坐标原点坐标
+        # 坐 原 原 点 
         self.point_bottom = self._chart.mapToPosition(
             QPointF(self.min_x, self.min_y))
         self.step_x = (self.max_x - self.min_x) / \
@@ -135,11 +135,11 @@ class ChartView(QChartView):
     def mouseMoveEvent(self, event):
         super(ChartView, self).mouseMoveEvent(event)
         pos = event.pos()
-        # 把鼠标位置所在点转换为对应的xy值
+        # 마우스 위치를 해당 XY 값으로 변환하십시오. 
         x = self._chart.mapToValue(pos).x()
         y = self._chart.mapToValue(pos).y()
         index = round((x - self.min_x) / self.step_x)
-        # 得到在坐标系中的所有正常显示的series的类型和点
+        # 좌표계에서 모든 일반 시리즈의 유형과 지점을 얻으십시오. 
         points = [(serie, serie.at(index))
                   for serie in self._chart.series()
                   if self.min_x <= x <= self.max_x and
@@ -156,10 +156,10 @@ class ChartView(QChartView):
                 title = ""
             t_width = self.toolTipWidget.width()
             t_height = self.toolTipWidget.height()
-            # 如果鼠标位置离右侧的距离小于tip宽度
+            # 오른쪽에서의 거리가 팁 너비보다 작 으면 
             x = pos.x() - t_width if self.width() - \
                 pos.x() - 20 < t_width else pos.x()
-            # 如果鼠标位置离底部的高度小于tip高度
+            # 하단의 높은 높이가 팁 높이보다 작은 경우 # 
             y = pos.y() - t_height if self.height() - \
                 pos.y() - 20 < t_height else pos.y()
             self.toolTipWidget.show(
@@ -169,28 +169,28 @@ class ChartView(QChartView):
             self.lineItem.hide()
 
     def handleMarkerClicked(self):
-        marker = self.sender()  # 信号发送者
+        marker = self.sender()  # 신호 보낸 사람 
         if not marker:
             return
         visible = not marker.series().isVisible()
-#         # 隐藏或显示series
+# # 숨기기 또는 시리즈 
         marker.series().setVisible(visible)
-        marker.setVisible(True)  # 要保证marker一直显示
-        # 透明度
+        marker.setVisible(True)  # 마커가 항상 표시되었는지 확인하십시오 
+        # 透 透 
         alpha = 1.0 if visible else 0.4
-        # 设置label的透明度
+        # 레이블의 투명도를 설정하십시오 
         brush = marker.labelBrush()
         color = brush.color()
         color.setAlphaF(alpha)
         brush.setColor(color)
         marker.setLabelBrush(brush)
-        # 设置marker的透明度
+        # 마커의 투명도를 설정하십시오 
         brush = marker.brush()
         color = brush.color()
         color.setAlphaF(alpha)
         brush.setColor(color)
         marker.setBrush(brush)
-        # 设置画笔透明度
+        # 브러시 투명도를 설정하십시오 
         pen = marker.pen()
         color = pen.color()
         color.setAlphaF(alpha)
@@ -198,8 +198,8 @@ class ChartView(QChartView):
         marker.setPen(pen)
 
     def handleMarkerHovered(self, status):
-        # 设置series的画笔宽度
-        marker = self.sender()  # 信号发送者
+        # 시리즈의 브러시 너비를 설정하십시오 
+        marker = self.sender()  # 신호 보낸 사람 
         if not marker:
             return
         series = marker.series()
@@ -212,8 +212,8 @@ class ChartView(QChartView):
         series.setPen(pen)
 
     def handleSeriesHoverd(self, point, state):
-        # 设置series的画笔宽度
-        series = self.sender()  # 信号发送者
+        # 시리즈의 브러시 너비를 설정하십시오 
+        series = self.sender()  # 신호 보낸 사람 
         pen = series.pen()
         if not pen:
             return
@@ -223,7 +223,7 @@ class ChartView(QChartView):
     def initChart(self):
         self._chart = QChart(title="折线图堆叠")
         self._chart.setAcceptHoverEvents(True)
-        # Series动画
+        # 시리즈 애니메이션 
         self._chart.setAnimationOptions(QChart.SeriesAnimations)
         dataTable = [
             ["邮件营销", [120, 132, 101, 134, 90, 230, 210]],
@@ -237,36 +237,36 @@ class ChartView(QChartView):
             for j, v in enumerate(data_list):
                 series.append(j, v)
             series.setName(series_name)
-            series.setPointsVisible(True)  # 显示圆点
-            series.hovered.connect(self.handleSeriesHoverd)  # 鼠标悬停
+            series.setPointsVisible(True)  # 점을 표시합니다 
+            series.hovered.connect(self.handleSeriesHoverd)  # 
             self._chart.addSeries(series)
-        self._chart.createDefaultAxes()  # 创建默认的轴
-        axisX = self._chart.axisX()  # x轴
-        axisX.setTickCount(7)  # x轴设置7个刻度
-        axisX.setGridLineVisible(False)  # 隐藏从x轴往上的线条
+        self._chart.createDefaultAxes()  # 기본 축을 만듭니다 
+        axisX = self._chart.axisX()  # x 축 
+        axisX.setTickCount(7)  # x 축 설정 7 스케일 
+        axisX.setGridLineVisible(False)  # x 축에서 선을 숨 깁니다 
         axisY = self._chart.axisY()
-        axisY.setTickCount(7)  # y轴设置7个刻度
-        axisY.setRange(0, 1500)  # 设置y轴范围
-        # 自定义x轴
+        axisY.setTickCount(7)  # 샤프트 설정 7 스케일 
+        axisY.setRange(0, 1500)  # y 축 범위를 설정합니다 
+        # 사용자 정의 x 축 
         axis_x = QCategoryAxis(
             self._chart, labelsPosition=QCategoryAxis.AxisLabelsPositionOnValue)
         axis_x.setTickCount(7)
         axis_x.setGridLineVisible(False)
         min_x = axisX.min()
         max_x = axisX.max()
-        step = (max_x - min_x) / (7 - 1)  # 7个tick
+        step = (max_x - min_x) / (7 - 1)  # 7 틱 
         for i in range(0, 7):
             axis_x.append(self.category[i], min_x + i * step)
         self._chart.setAxisX(axis_x, self._chart.series()[-1])
-        # chart的图例
+        # 차트의 전설 
         legend = self._chart.legend()
-        # 设置图例由Series来决定样式
+        # 스타일을 결정하기 위해 시리즈로 전설을 설정하십시오. 
         legend.setMarkerShape(QLegend.MarkerShapeFromSeries)
-        # 遍历图例上的标记并绑定信号
+        # 전설에서 표시를 거래하고 신호를 바인딩합니다. 
         for marker in legend.markers():
-            # 点击事件
+            # 点击 事 事 
             marker.clicked.connect(self.handleMarkerClicked)
-            # 鼠标悬停事件
+            # 事 事 事 
             marker.hovered.connect(self.handleMarkerHovered)
         self.setChart(self._chart)
 

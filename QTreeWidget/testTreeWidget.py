@@ -20,7 +20,7 @@ class graphAnalysis(QDialog, Ui_Form):
     def __init__(self):
         super(graphAnalysis, self).__init__()
         self.setupUi(self)
-        # 点击父节点
+        # 상위 노드를 클릭하십시오 
         self.treeWidget.itemChanged.connect(self.handleChanged)
 
     def handleChanged(self, item, column):

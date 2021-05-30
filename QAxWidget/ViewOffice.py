@@ -47,7 +47,7 @@ class AxWidget(QWidget):
         if not self.axWidget.setControl(app):
             return QMessageBox.critical(self, '错误', '没有安装  %s' % app)
         self.axWidget.dynamicCall(
-            'SetVisible (bool Visible)', 'false')  # 不显示窗体
+            'SetVisible (bool Visible)', 'false')  # 양식을 표시하지 마십시오 
         self.axWidget.setProperty('DisplayAlerts', False)
         self.axWidget.setControl(path)
 

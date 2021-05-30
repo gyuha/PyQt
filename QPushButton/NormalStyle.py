@@ -30,14 +30,14 @@ QPushButton#xxx
 都表示通过设置的objectName来指定
 */
 QPushButton#RedButton {
-    background-color: #f44336; /*背景颜色*/
+    background-color: # F44336; / * 배경색 * / 
 }
 #RedButton:hover {
-    background-color: #e57373; /*鼠标悬停时背景颜色*/
+    background-color: # E57373; / * 마우스 호버 배경색 색상 * / 
 }
 /*注意pressed一定要放在hover的后面，否则没有效果*/
 #RedButton:pressed {
-    background-color: #ffcdd2; /*鼠标按下不放时背景颜色*/
+    background-color: # ffcdd2; / * 마우스 배경색을 눌러 * / 
 }
 
 #GreenButton {

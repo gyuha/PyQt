@@ -28,11 +28,11 @@ class MessageBox(QMessageBox):
         super(MessageBox, self).__init__(*args, **kwargs)
         self._count = count
         self._time = time
-        self._auto = auto  # 是否自动关闭
-        assert count > 0  # 必须大于0
-        assert time >= 500  # 必须>=500毫秒
-        self.setStandardButtons(self.Close)  # 关闭按钮
-        self.closeBtn = self.button(self.Close)  # 获取关闭按钮
+        self._auto = auto  # 是 자동 닫기 
+        assert count > 0  # 0보다 커야합니다 
+        assert time >= 500  # = 500ms = ms. 
+        self.setStandardButtons(self.Close)  # 关 闭 按 
+        self.closeBtn = self.button(self.Close)  # 获 关 关 关 按. 
         self.closeBtn.setText('关闭(%s)' % count)
         self.closeBtn.setEnabled(False)
         self._timer = QTimer(self, timeout=self.doCountDown)
@@ -46,7 +46,7 @@ class MessageBox(QMessageBox):
             self.closeBtn.setText('关闭')
             self.closeBtn.setEnabled(True)
             self._timer.stop()
-            if self._auto:  # 自动关闭
+            if self._auto:  # 자동 종료 
                 self.accept()
                 self.close()
 

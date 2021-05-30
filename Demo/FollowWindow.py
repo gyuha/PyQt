@@ -30,22 +30,22 @@ class Window(QWidget):
         layout = QVBoxLayout(self)
         layout.addWidget(QPushButton('test', self))
         self.tmpHwnd = None
-        # 启动定时器检测记事本的位置大小和是否关闭
+        #TOOT 타이머는 메모장의 위치 크기와 폐쇄 여부를 감지합니다. 
         self.checkTimer = QTimer(self, timeout=self.checkWindow)
-        self.checkTimer.start(10)  # 10毫秒比较流畅
+        self.checkTimer.start(10)  # 10 밀리 초 부드럽습니다 
 
     def checkWindow(self):
-        # 查找
+        # 查 找 
         hwnd = win32gui.FindWindow('Notepad', None)
         if self.tmpHwnd and not hwnd:
-            # 表示记事本关闭了
+            # 表示 记 记 记 
             self.checkTimer.stop()
-            self.close()  # 关闭自己
+            self.close()  # 너 자신을 닫으십시오 
             return
         if not hwnd:
             return
         self.tmpHwnd = hwnd
-        # 获取位置
+        # 获取 位置 
         rect = win32gui.GetWindowRect(hwnd)
         print(rect)
         self.move(rect[2], rect[1])
@@ -54,11 +54,11 @@ class Window(QWidget):
 if __name__ == '__main__':
     import sys
     from PyQt5.QtWidgets import QApplication
-    # 先检测是否已有记事本打开
+    # 첫 번째 탐지가 열리기위한 메모장이있는 경우 
     hwnd = win32gui.FindWindow('Notepad', None)
     print('hwnd', hwnd)
     if not hwnd:
-        # 启动记事本
+        # 启 记 记事. 
         os.startfile('notepad')
     app = QApplication(sys.argv)
     w = Window()

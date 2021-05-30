@@ -42,8 +42,8 @@ class Window(QWidget):
             except Exception as e:
                 self.resultEdit.append('start osk error: %s' % e)
             try:
-                # 32位程序调用64位操作系统下的程序会被重定向到SysWOW64目录
-                # 可通过`Wow64DisableWow64FsRedirection`和`Wow64RevertWow64FsRedirection`控制
+                # 32 비트 프로그램 튜닝 64 비트 운영 체제 운영 체제 아래의 프로그램은 SYSWOW64 디렉토리로 리디렉션됩니다. 
+                #`WOW64DisableWow64FSRedirection '및'WOW64REVERTWOW64FSRedirection` Control.를 전달할 수 있습니다 
                 ret = QProcess.startDetached(r'C:\Windows\system32\osk.exe')
                 self.resultEdit.append('start 32 osk: %s' % ret)
             except Exception as e:

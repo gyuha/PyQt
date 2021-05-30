@@ -70,11 +70,11 @@ StyleSheet = '''
     color: white;
     background: transparent;/*让输入框背景透明*/
 }
-#qt_calendar_yearedit::up-button { /*往上的按钮*/
+#QT_CALENDAR_YAAREDIT :: UP 버튼 {/ * 버튼 * / 
     width: 20px;
     subcontrol-position: right;/*移动到右边*/
 }
-#qt_calendar_yearedit::down-button { /*往下的按钮*/
+#qt_calendar_yearedit :: 다운 버튼 {/ * 원격 버튼 * / 
     width: 20px;
     subcontrol-position: left; /*移动到左边去*/
 }
@@ -108,10 +108,10 @@ class CalendarWidget(QCalendarWidget):
 
     def __init__(self, *args, **kwargs):
         super(CalendarWidget, self).__init__(*args, **kwargs)
-        # 隐藏左边的序号
+        # 왼쪽 수를 숨 깁니다 
         self.setVerticalHeaderFormat(self.NoVerticalHeader)
 
-        # 修改周六周日颜色
+        # 토요일 일요일 색상을 수정하십시오 
 
         fmtGreen = QTextCharFormat()
         fmtGreen.setForeground(QBrush(Qt.green))

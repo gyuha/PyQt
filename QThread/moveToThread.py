@@ -20,7 +20,7 @@ __Version__ = 1.0
 
 class Worker(QObject):
 
-    valueChanged = pyqtSignal(int)  # 值变化信号
+    valueChanged = pyqtSignal(int)  # 값 변경 신호 
 
     def run(self):
         print('thread id', int(QThread.currentThreadId()))
@@ -40,25 +40,25 @@ class Window(QWidget):
         layout.addWidget(self.progressBar)
         layout.addWidget(QPushButton('开启线程', self, clicked=self.onStart))
 
-        # 当前线程id
+        # 현재 스레드 ID. 
         print('main id', int(QThread.currentThreadId()))
 
-        # 启动线程更新进度条值
+        # 스레드 업데이트 일정을 시작합니다 
         self._thread = QThread(self)
         self._worker = Worker()
-        self._worker.moveToThread(self._thread)  # 移动到线程中执行
+        self._worker.moveToThread(self._thread)  # 스레드로 이동합니다 
         self._thread.finished.connect(self._worker.deleteLater)
         self._worker.valueChanged.connect(self.progressBar.setValue)
 
     def onStart(self):
         print('main id', int(QThread.currentThreadId()))
         self._thread.started.connect(self._worker.run)
-        self._thread.start()  # 启动线程
+        self._thread.start()  # 启 线 线程 
 
     def closeEvent(self, event):
         if self._thread.isRunning():
             self._thread.quit()
-            # 强制
+            # 强 强 
             # self._thread.terminate()
         del self._thread
         del self._worker

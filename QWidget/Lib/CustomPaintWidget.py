@@ -26,7 +26,7 @@ class CustomPaintWidget(QWidget):
         layout.addWidget(QLabel("我是自定义CustomPaintWidget", self))
 
     def paintEvent(self, event):
-        # 解决QSS问题
+        # QSS 문제를 해결하십시오 
         option = QStyleOption()
         option.initFrom(self)
         painter = QPainter(self)

@@ -19,48 +19,48 @@ class Window(QChartView):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.resize(400, 300)
-        # 抗锯齿
+        # 抗锯 齿齿 
         self.setRenderHint(QPainter.Antialiasing)
 
-        # 图表
+        # 图片 
         chart = QChart()
         self.setChart(chart)
-        # 设置标题
+        # 제목을 설정하십시오 
         chart.setTitle('Simple percentbarchart example')
-        # 开启动画效果
+        # 애니메이션 효과를 엽니 다 
         chart.setAnimationOptions(QChart.SeriesAnimations)
-        # 添加Series
+        # 加 ses. 
         series = self.getSeries()
         chart.addSeries(series)
-        # 分类
+        # 분류 
         categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-        # 分类x轴
+        # 분류 된 X 축 
         axis = QBarCategoryAxis()
         axis.append(categories)
-        # 创建默认轴线
+        # 기본 축을 만듭니다 
         chart.createDefaultAxes()
-        # 替换默认x轴
+        # 기본 X 축장 
         chart.setAxisX(axis, series)
-        # 显示图例
+        # 전설 전설 
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
 
     def getSeries(self):
-        # 创建5个柱子
+        # 5 기둥을 만듭니다 
         set0 = QBarSet('Jane')
         set1 = QBarSet('John')
         set2 = QBarSet('Axel')
         set3 = QBarSet('Mary')
         set4 = QBarSet('Samantha')
 
-        # 添加数据
+        # 데이터 추가 
         set0 << 1 << 2 << 3 << 4 << 5 << 6
         set1 << 5 << 0 << 0 << 4 << 0 << 7
         set2 << 3 << 5 << 8 << 13 << 8 << 5
         set3 << 5 << 6 << 7 << 3 << 4 << 5
         set4 << 9 << 7 << 5 << 3 << 1 << 2
 
-        # 创建柱状条
+        # 역사적인 스트립을 만드십시오 
         series = QPercentBarSeries()
         series.append(set0)
         series.append(set1)

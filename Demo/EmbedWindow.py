@@ -29,7 +29,7 @@ class Window(QWidget):
         self.resize(800, 600)
         layout = QVBoxLayout(self)
 
-        self.myhwnd = int(self.winId())  # 自己的句柄
+        self.myhwnd = int(self.winId())  # 自己 的 手柄. 
 
         layout.addWidget(QPushButton('获取所有可用、可视窗口', self,
                                      clicked=self._getWindowList, maximumHeight=30))
@@ -58,24 +58,24 @@ class Window(QWidget):
 
     def onItemDoubleClicked(self, item):
         """列表双击选择事件"""
-        # 先移除掉item
+        # 첫 번째 항목을 제거하십시오 
         self.windowList.takeItem(self.windowList.indexFromItem(item).row())
         hwnd, phwnd, _, _ = item.text().split('|')
-        # 开始嵌入
+        # 시작을 시작합니다 
         self.releaseWidget()
         hwnd, phwnd = int(hwnd), int(phwnd)
-        # 嵌入之前的属性
+        # 이전 속성을 포함시킵니다 
         style = win32gui.GetWindowLong(hwnd, win32con.GWL_STYLE)
         exstyle = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
         wrect = win32gui.GetWindowRect(hwnd)[:2] + win32gui.GetClientRect(hwnd)[2:]
         print('save', hwnd, style, exstyle, wrect)
 
         widget = QWidget.createWindowContainer(QWindow.fromWinId(hwnd))
-        widget.hwnd = hwnd  # 窗口句柄
-        widget.phwnd = phwnd  # 父窗口句柄
-        widget.style = style  # 窗口样式
-        widget.exstyle = exstyle  # 窗口额外样式
-        widget.wrect = wrect  # 窗口位置
+        widget.hwnd = hwnd  # 手 句 
+        widget.phwnd = phwnd  #flial 창 핸들 
+        widget.style = style  # 창 스타일 
+        widget.exstyle = exstyle  # 样 
+        widget.wrect = wrect  # 位置 位置 
         self.layout().addWidget(widget)
 
         widget.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
@@ -83,24 +83,24 @@ class Window(QWidget):
 
     def restore(self):
         """归还窗口"""
-        # 有bug，归还后窗口没有了WS_VISIBLE样式，不可见
+        # 버그가 있고 WS_VISIBLE 스타일이없는 창을 반환합니다. 
         widget = self.layout().itemAt(4).widget()
         hwnd, phwnd, style, exstyle, wrect = widget.hwnd, widget.phwnd, widget.style, widget.exstyle, widget.wrect
         print('restore', hwnd, phwnd, style, exstyle, wrect)
         widget.close()
-        self.layout().removeWidget(widget)  # 从布局中移出
+        self.layout().removeWidget(widget)  # 레이아웃에서 # 
         widget.deleteLater()
 
-        win32gui.SetParent(hwnd, phwnd)  # 让它返回它的父窗口
-        win32gui.SetWindowLong(hwnd, win32con.GWL_STYLE, style | win32con.WS_VISIBLE)  # 恢复样式
-        win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE, exstyle)  # 恢复样式
-        win32gui.ShowWindow(hwnd, win32con.SW_SHOW)  # 显示窗口
+        win32gui.SetParent(hwnd, phwnd)  # 부모 창으로 돌아가십시오 
+        win32gui.SetWindowLong(hwnd, win32con.GWL_STYLE, style | win32con.WS_VISIBLE)  # 스타일 복원 
+        win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE, exstyle)  # 스타일 복원 
+        win32gui.ShowWindow(hwnd, win32con.SW_SHOW)  # 显示 显示 口 
         win32gui.SetWindowPos(hwnd, 0, wrect[0], wrect[1], wrect[2], wrect[3], win32con.SWP_NOACTIVATE)
 
     def _enumWindows(self, hwnd, _):
         """遍历回调函数"""
         if hwnd == self.myhwnd:
-            return  # 防止自己嵌入自己
+            return  # 자신을 삽입하지 못하게하십시오 
         if win32gui.IsWindow(hwnd) and win32gui.IsWindowVisible(hwnd) and win32gui.IsWindowEnabled(hwnd):
             phwnd = win32gui.GetParent(hwnd)
             title = win32gui.GetWindowText(hwnd)

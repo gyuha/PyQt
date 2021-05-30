@@ -29,10 +29,10 @@ class Window(QWebView):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.resize(800, 600)
-        # 浏览器设置
+        # 览 设置 
         setting = QWebSettings.globalSettings()
         setting.setAttribute(QWebSettings.PluginsEnabled, True)
-        # 解决xp下ssl问题
+        # 解 x 下 s 문제 
         self.page().networkAccessManager().sslErrors.connect(self.handleSslErrors)
         sslconf = QSslConfiguration.defaultConfiguration()
         clist = sslconf.caCertificates()
@@ -43,12 +43,12 @@ class Window(QWebView):
         QSslConfiguration.setDefaultConfiguration(sslconf)
 
     def handleSslErrors(self, reply, errors):
-        # 解决ssl错误
+        # SSL 오류를 해결하십시오 
         reply.ignoreSslErrors()
 
 
 if __name__ == '__main__':
-    # 非常重要，设置为NPSWF32.dll文件所在目录
+    # 매우 중요합니다. 디렉토리가있는 npswf32.dll 파일로 설정 
     os.environ['QTWEBKIT_PLUGIN_PATH'] = os.path.abspath('Data')
     app = QApplication(sys.argv)
     w = Window()

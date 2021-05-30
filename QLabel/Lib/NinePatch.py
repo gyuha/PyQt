@@ -62,11 +62,11 @@ class ExceptionNot9Patch(Exception):
 class NinePatch:
 
     def __init__(self, fileName):
-        self.CachedImage = None    # 缓存图片
+        self.CachedImage = None    # 캠페인 
         self.OldWidth = -1
         self.OldHeight = -1
         self.ResizeDistancesX = []
-        self.ResizeDistancesY = []    # [(int,int)]数组
+        self.ResizeDistancesY = []    # [(int, int)] 배열 
         self.setImage(fileName)
 
     def width(self):

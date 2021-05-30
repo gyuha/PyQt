@@ -30,39 +30,39 @@ class Window(QWidget):
         layout.addWidget(self.labelInfo)
         layout.addWidget(self.button)
 
-        # 添加菜单
+        # 추가 메뉴 
         self._initMenu()
 
     def _initMenu(self):
-        # 创建菜单
+        # 메뉴를 만듭니다 
         self._menu = QMenu(self.button)
-        # 替换menu的鼠标释放事件达到选择性不关闭菜单
+        # 대체 메뉴 마우스 릴리스 이벤트를 사용하여 선택도가 닫히지 않음 메뉴 
         self._menu.mouseReleaseEvent = self._menu_mouseReleaseEvent
         self._menu.addAction('菜单1', self._checkAction)
         self._menu.addAction('菜单2', self._checkAction)
         self._menu.addAction(
             QAction('菜单3', self._menu, triggered=self._checkAction))
         action = QAction('菜单4', self._menu, triggered=self._checkAction)
-        # 添加自定义的属性,判断该属性可以关闭菜单
+        # 사용자 지정 속성을 추가하고 속성이 메뉴를 닫을 수 있음을 판별합니다. 
         action.setProperty('canHide', True)
         self._menu.addAction(action)
         for action in self._menu.actions():
-            # 循环设置可勾选
+            # 循 设置 可 
             action.setCheckable(True)
         self.button.setMenu(self._menu)
 
     def _menu_mouseReleaseEvent(self, event):
         action = self._menu.actionAt(event.pos())
         if not action:
-            # 没有找到action就交给QMenu自己处理
+            # q 找 a q q q 自己 自己 
             return QMenu.mouseReleaseEvent(self._menu, event)
-        if action.property('canHide'):  # 如果有该属性则给菜单自己处理
+        if action.property('canHide'):  #이 속성이 있으면 메뉴를 직접 제공하십시오. 
             return QMenu.mouseReleaseEvent(self._menu, event)
-        # 找到了QAction则只触发Action
+        # qaction을 찾으십시오, 그냥 행동을 유발합니다 
         action.activate(action.Trigger)
 
     def _checkAction(self):
-        # 三个action都响应该函数
+        # 3 개의 부작용이 함수에 응답합니다 
         self.labelInfo.setText('\n'.join(['{}\t选中：{}'.format(
             action.text(), action.isChecked()) for action in self._menu.actions()]))
 

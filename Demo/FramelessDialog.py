@@ -48,7 +48,7 @@ class Dialog(QDialog):
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setStyleSheet(Stylesheet)
         self.initUi()
-        # 添加阴影
+        # 그림자를 추가하십시오 
         effect = QGraphicsDropShadowEffect(self)
         effect.setBlurRadius(12)
         effect.setOffset(0, 0)
@@ -57,12 +57,12 @@ class Dialog(QDialog):
 
     def initUi(self):
         layout = QVBoxLayout(self)
-        # 重点： 这个widget作为背景和圆角
+        # 重点 :이 위젯은 배경과 둥근 모서리입니다. 
         self.widget = QWidget(self)
         self.widget.setObjectName('Custom_Widget')
         layout.addWidget(self.widget)
 
-        # 在widget中添加ui
+        # 위젯에 UI를 추가하십시오 
         layout = QGridLayout(self.widget)
         layout.addItem(QSpacerItem(
             40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum), 0, 0)

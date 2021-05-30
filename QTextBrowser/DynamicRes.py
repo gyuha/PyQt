@@ -26,7 +26,7 @@ class TextBrowser(QTextBrowser):
 
     def __init__(self, *args, **kwargs):
         super(TextBrowser, self).__init__(*args, **kwargs)
-        self.setOpenLinks(False)  # 禁止打开URL
+        self.setOpenLinks(False)  # URL을 열지 마십시오 
 
     def downloadImage(self, url):
         try:
@@ -38,17 +38,17 @@ class TextBrowser(QTextBrowser):
 
     def loadResource(self, rtype, url):
         ret = super(TextBrowser, self).loadResource(rtype, url)
-        # 加载图片资源
+        # 이미지 리소스를로드합니다 
         if rtype == QTextDocument.ImageResource:
             if ret:
                 return ret
-            if url.toString().startswith('irony'):  # 自定义的协议头
+            if url.toString().startswith('irony'):  # 사용자 정의 프로토콜 헤더 
                 print('加载本地', '../Donate/zhifubao.png', url)
-                return QImage('../Donate/zhifubao.png')  # 或者 QByteArray(open('../Donate/zhifubao.png', 'rb').read())
-            elif url.toString().startswith('http'):  # 加载网络图片
+                return QImage('../Donate/zhifubao.png')  # 或者 qbytearray (오픈 ( '../ 기부 / zhifubao.png', 'rb') 읽기 ()) 
+            elif url.toString().startswith('http'):  # 加 网 网 
                 img, status = self.NetImages.get(url, [None, None])
                 if url not in self.NetImages or status is None:
-                    # 子线程下载
+                    # 子 线 下载 下载 下载. 
                     self.NetImages[url] = [None, 1]
                     print('download ', url)
                     Thread(target=self.downloadImage, args=(url,), daemon=True).start()
@@ -57,7 +57,7 @@ class TextBrowser(QTextBrowser):
         return ret
 
     def mouseDoubleClickEvent(self, event):
-        # 双击图片得到图片的URL，也可以用来放大显示
+        # 이미지의 그림을 얻으려면 이미지를 두 번 클릭하거나이를 사용하여 확대 / 축소 할 수 있습니다. 
         super(TextBrowser, self).mouseDoubleClickEvent(event)
         url = self.anchorAt(event.pos())
         if url:
@@ -76,18 +76,18 @@ class Window(QWidget):
         layout.addWidget(self.textBrowser)
         layout.addWidget(self.downButton)
 
-        # 加载本地图片
+        # 로딩 사진로드 
         img = QImage('../Donate/weixin.png')
-        # 第二个参数为任意唯一的url类似于qrc方式
+        # 두 번째 매개 변수는 QRC 모드와 유사한 임의의 고유 URL입니다. 
         self.textBrowser.document().addResource(QTextDocument.ImageResource, QUrl('dynamic:/images/weixin.png'), img)
 
-        # 设置html
-        # 需要注意里面的图片地址
+        # html을 설정합니다 
+        # 내부 이미지 주소에주의가 필요합니다 
         self.textBrowser.setHtml(
-            '<p><a href="../Donate/weixin.png"><img src="../Donate/weixin.png"></a></p>'  # 方式一直接加载本地图片
-            '<p><a href="dynamic:/images/weixin.png"><img src="dynamic:/images/weixin.png"></a></p>'  # 方式二通过addResource添加资源
-            '<p><a href="irony://zhifubao.png"><img src="irony://zhifubao.png"></a></p>'  # 方式三定义自定义的协议头通过loadResource动态加载
-            '<p><a href="https://blog.pyqt5.com/img/avatar.png"><img '  # 方式四类似方式三，只不过需要从网络中下载
+            '<p><a href="../Donate/weixin.png"><img src="../Donate/weixin.png"></a></p>'  # 方式 一 직접 로컬 그림을로드합니다 
+            '<p><a href="dynamic:/images/weixin.png"><img src="dynamic:/images/weixin.png"></a></p>'  # 方式 二 AddResource를 통해 리소스 추가 
+            '<p><a href="irony://zhifubao.png"><img src="irony://zhifubao.png"></a></p>'  # 方式 三 맞춤형 프로토콜 헤드 정의 loadResource를 통해 동적으로로드됩니다. 
+            '<p><a href="https://blog.pyqt5.com/img/avatar.png"><img '  # ¶ 네 가지 유사한 방식 3이지만 네트워크에서 다운로드 할 필요가 없습니다. 
             'src="https://blog.pyqt5.com/img/avatar.png"></a></p>')
 
 

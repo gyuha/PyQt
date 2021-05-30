@@ -26,7 +26,7 @@ __Author__ = "Irony"
 __Copyright__ = "Copyright (c) 2019"
 __Version__ = "Version 1.0"
 
-# 对部分内容进行截图
+# 일부 콘텐츠의 스크린 샷 
 CODE = """
 var el = $("%s");
 html2canvas(el[0], {
@@ -45,10 +45,10 @@ class Window(QWidget):
         self.resize(600, 400)
         layout = QHBoxLayout(self)
 
-        # 左侧
+        # 左 
         widgetLeft = QWidget(self)
         layoutLeft = QVBoxLayout(widgetLeft)
-        # 右侧
+        # 권리 
         self.widgetRight = QListWidget(
             self, minimumWidth=200, iconSize=QSize(150, 150))
         self.widgetRight.setViewMode(QListWidget.IconMode)
@@ -58,13 +58,13 @@ class Window(QWidget):
         self.webView = QWebView()
         layoutLeft.addWidget(self.webView)
 
-        # 截图方式一
+        # 스크린 샷 방법 
         groupBox1 = QGroupBox('截图方式一', self)
         layout1 = QVBoxLayout(groupBox1)
         layout1.addWidget(QPushButton('截图1', self, clicked=self.onScreenShot1))
         layoutLeft.addWidget(groupBox1)
 
-        # 截图方式二（采用js）
+        # 스크린 샷 모드 2 (JS 사용) 
         groupBox2 = QGroupBox('截图方式二', self)
         layout2 = QVBoxLayout(groupBox2)
         self.codeEdit = QLineEdit(
@@ -75,14 +75,14 @@ class Window(QWidget):
         layout2.addWidget(self.btnMethod2)
         layoutLeft.addWidget(groupBox2)
 
-        # 开启开发人员工具
+        # 개발자 도구를 엽니 다 
         QWebSettings.globalSettings().setAttribute(
             QWebSettings.DeveloperExtrasEnabled, True)
         self.webView.loadStarted.connect(self.onLoadStarted)
         self.webView.loadFinished.connect(self.onLoadFinished)
         self.webView.load(QUrl("https://pyqt5.com"))
 
-        # 暴露接口和加载完成后执行jquery等一些库文件
+        # 인터페이스 및로드 후 jQuery와 같은 일부 라이브러리 파일을 실행하는 데 노출됩니다. 
         self.webView.page().mainFrame().javaScriptWindowObjectCleared.connect(
             self.populateJavaScriptWindowObject)
 
@@ -96,9 +96,9 @@ class Window(QWidget):
         self.btnMethod2.setText('暂时无法使用（等待页面加载完成）')
 
     def onLoadFinished(self):
-        # 注入脚本
+        # 注 
         mainFrame = self.webView.page().mainFrame()
-        # 执行jquery,promise,html2canvas
+        # jQuery, 약속, html2canvas를 실행하십시오 
         mainFrame.evaluateJavaScript(
             open('Data/jquery.js', 'rb').read().decode())
         mainFrame.evaluateJavaScript(
@@ -110,7 +110,7 @@ class Window(QWidget):
         self.btnMethod2.setEnabled(True)
 
     def onScreenShot1(self):
-        # 截图方式1
+        # 스크린 샷 방법 1 
         page = self.webView.page()
         frame = page.mainFrame()
         size = frame.contentsSize()
@@ -123,24 +123,24 @@ class Window(QWidget):
         painter.setRenderHint(QPainter.TextAntialiasing, True)
         painter.setRenderHint(QPainter.SmoothPixmapTransform, True)
 
-        # 记录旧大小
+        # 오래된 크기를 녹음하십시오 
         oldSize = page.viewportSize()
-        # *****重点就是这里******
+        # **** 초점은 여기 ****** 
         page.setViewportSize(size)
         frame.render(painter)
         painter.end()
 
-        # 截图完成后需要还原,否则界面不响应鼠标等
+        # 스크린 샷이 완료된 후 # 복원, 그렇지 않으면 인터페이스가 마우스에 응답하지 않습니다. 
         page.setViewportSize(oldSize)
 
-        # 添加到左侧list中
+        # 왼쪽 목록에 추가하십시오 
         item = QListWidgetItem(self.widgetRight)
         image = QPixmap.fromImage(image)
         item.setIcon(QIcon(image))
         item.setData(Qt.UserRole + 1, image)
 
     def onScreenShot2(self):
-        # 截图方式2
+        # 스크린 샷 모드 2 
         code = self.codeEdit.text().strip()
         if not code:
             return
@@ -158,7 +158,7 @@ class Window(QWidget):
         data = base64.b64decode(image.split(';base64,')[1])
         image = QPixmap()
         image.loadFromData(data)
-        # 添加到左侧list中
+        # 왼쪽 목록에 추가하십시오 
         item = QListWidgetItem(self.widgetRight)
         item.setIcon(QIcon(image))
         item.setData(Qt.UserRole + 1, image)

@@ -38,7 +38,7 @@ class TestWindow(QWidget):
         super(TestWindow, self).__init__(*args, **kwargs)
         layout = QHBoxLayout(self)
 
-        # 左侧原始
+        # 原 原 
         left_group = QGroupBox('原始QSlider', self)
         left_layout = QVBoxLayout(left_group)
         self.leftLabel = QPlainTextEdit(self)
@@ -50,7 +50,7 @@ class TestWindow(QWidget):
 
         layout.addWidget(left_group)
 
-        # 右侧低频率变化
+        # 低 低 低. 
         right_group = QGroupBox('LfSlider', self)
         right_layout = QVBoxLayout(right_group)
         self.rightLabel = QPlainTextEdit(self)

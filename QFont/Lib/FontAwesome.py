@@ -9,9 +9,9 @@ Created on 2017年3月30日
 @file: FontAwesome
 @description: 
 '''
-# FontAwesome 版本: 4.7.0
-# 字体图标地址: http://fontawesome.io/icons/
-# 字体字符地址: http://fontawesome.io/cheatsheet/
+# Fontawesome 버전 : 4.7.0. 
+# 글꼴 아이콘 주소 : http://fontawesome.io/icons/ 
+# 글꼴 문자 주소 : http://fontawesome.io/cheatsheet/ 
 
 
 class FontAwesomes:

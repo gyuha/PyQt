@@ -33,17 +33,17 @@ class BigImageView(QGraphicsView):
                             QPainter.SmoothPixmapTransform)
         self.setCacheMode(self.CacheBackground)
         self.setViewportUpdateMode(self.SmartViewportUpdate)
-        self._item = QGraphicsPixmapItem()  # 放置图像
+        self._item = QGraphicsPixmapItem()  # 이미지를 배치합니다 
         self._item.setFlags(QGraphicsPixmapItem.ItemIsFocusable |
                             QGraphicsPixmapItem.ItemIsMovable)
-        self._scene = QGraphicsScene(self)  # 场景
+        self._scene = QGraphicsScene(self)  # 장면 
         self.setScene(self._scene)
         self._scene.addItem(self._item)
         rect = QApplication.instance().desktop().availableGeometry()
         self.resize(int(rect.width() * 2 / 3), int(rect.height() * 2 / 3))
 
         self.pixmap = None
-        self._delta = 0.1  # 缩放
+        self._delta = 0.1  # 줌 
         self.setPixmap(image)
 
     def setBackground(self, color):
@@ -128,7 +128,7 @@ class BigImageView(QGraphicsView):
         _factor = self.transform().scale(
             factor, factor).mapRect(QRectF(0, 0, 1, 1)).width()
         if _factor < 0.07 or _factor > 100:
-            # 防止过大过小
+            # 너무 많이 예방하십시오 
             return
         self.scale(factor, factor)
 
@@ -154,26 +154,26 @@ class ImageView(QListView):
         self.setWordWrap(True)
         self.setSelectionRectVisible(True)
         self.setContextMenuPolicy(Qt.CustomContextMenu)
-        # 解决拖动到顶部或者底部自动滚动
+        # 끌기를 맨 위로 또는 자동 스크롤 해결 
         self.setAutoScrollMargin(150)
         self.verticalScrollBar().setSingleStep(ScrollPixel)
-        # 设置model
+        # setupel. 
         self.dmodel = QStandardItemModel(self)
         self.setModel(self.dmodel)
 
-        # 大图控件
+        # 大 图 조절기 
         self.bigView = BigImageView(background='#323232')
 
     def addItem(self, image):
         if isinstance(image, str):
             image = QPixmap(image)
-        # 添加一个item
+        # 항목을 추가하십시오 
         item = QStandardItem()
-        # 记录原始图片
-        item.setData(image, Qt.UserRole + 1)  # 用于双击的时候取出来
-        # 缩放成小图并显示
+        # 원래 그림을 녹화하십시오 
+        item.setData(image, Qt.UserRole + 1)  # 取 用 用 双 
+        # 작은 그림과 디스플레이로 확대하십시오 
         item.setData(image.scaled(60, 60, Qt.IgnoreAspectRatio, Qt.SmoothTransformation), Qt.DecorationRole)
-        # 添加item到界面中
+        # 인터페이스에 항목을 추가하십시오 
         self.dmodel.appendRow(item)
 
     def count(self):
@@ -186,17 +186,17 @@ class ImageView(QListView):
         return self.currentIndex().row()
 
     def updateGeometries(self):
-        # 一次滑动20px
+        # 一 滑 20 20px. 
         super(ImageView, self).updateGeometries()
         self.verticalScrollBar().setSingleStep(ScrollPixel)
 
     def closeEvent(self, event):
-        # 关闭预览窗口
+        # 미리보기 창을 닫습니다 
         self.bigView.close()
         super(ImageView, self).closeEvent(event)
 
     def wheelEvent(self, event):
-        # 修复滑动bug
+        # 修 修 滑 B. 
         if self.flow() == QListView.LeftToRight:
             bar = self.horizontalScrollBar()
             value = ScrollPixel if event.angleDelta().y() < 0 else (0 - ScrollPixel)
@@ -205,12 +205,12 @@ class ImageView(QListView):
             super(ImageView, self).wheelEvent(event)
 
     def mouseDoubleClickEvent(self, event):
-        # 列表双击,如果有item则进入item处理流程,否则调用打开图片功能
+        # 萱 ✍ 항목 처리 프로세스를 입력 할 항목이있는 경우 두 번 클릭합니다. 그렇지 않으면 그림 기능을 호출합니다. 
         index = self.indexAt(event.pos())
         if index and index.isValid():
             item = self.dmodel.itemFromIndex(index)
             if item:
-                # 取出原图用来新窗口显示
+                # 새 창을 표시하려면 원본 이미지를 제거하십시오 
                 image = item.data(Qt.UserRole + 1)
                 self.bigView.setPixmap(image)
                 self.bigView.show()
@@ -229,7 +229,7 @@ if __name__ == '__main__':
     w = ImageView()
     w.show()
 
-    # 添加模拟图片
+    # 아날로그 이미지를 추가하십시오 
     for i in range(3):
         for name in os.listdir('ScreenShot'):
             w.addItem(os.path.join('ScreenShot', name))

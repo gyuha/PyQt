@@ -37,7 +37,7 @@ if __name__ == '__main__':
     t = Thread()
     t.finished.connect(app.quit)
     t.start()
-    # 3秒后退出
+    # 3 초 후에 종료 후 
     print('will quit 3s latter')
     QTimer.singleShot(3000, t.requestInterruption)
     sys.exit(app.exec_())

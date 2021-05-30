@@ -23,11 +23,11 @@ class MyTable(QTableWidget):
         self.resize(920, 240)
         self.setColumnCount(6)
         self.setRowCount(2)
-        #设置表格有两行五列。
+        # 두 행의 행으로 테이블을 설정합니다. 
         self.setColumnWidth(0, 200)
         self.setColumnWidth(4, 200)
         self.setRowHeight(0, 100)
-        #设置第一行高度为100px，第一列宽度为200px。
+        # 첫 번째 줄 높이를 100px로 설정하면 첫 번째 열 너비는 200px입니다. 
 
         self.table()
 
@@ -38,40 +38,40 @@ class MyTable(QTableWidget):
         self.setItem(0,3, QTableWidgetItem("职业"))
         self.setItem(0,4, QTableWidgetItem("收入"))
         self.setItem(0, 5, QTableWidgetItem("进度条"))
-        #添加表格的文字内容.
+        # 테이블의 텍스트 내용을 추가하십시오. 
         self.setHorizontalHeaderLabels(["第一行", "第二行", "第三行", "第四行", "第五行","第六行"])
         self.setVerticalHeaderLabels(["第一列", "第二列"])
-        #设置表头
+        # 헤더를 설정하십시오 
         lbp = QLabel()
         lbp.setPixmap(QPixmap("Male.png"))
         self.setCellWidget(1,1,lbp)
-        #在表中添加一张图片
+        # 표에 그림을 추가하십시오 
         twi = QTableWidgetItem("      新海诚")
         twi.setFont(QFont("Times", 10, ))
         self.setItem(1,0,twi)
 
-        #添加一个自己设置了大小和类型的文字。
+        # 크기를 설정하고 직접 입력하는 텍스트를 추가하십시오. 
         dte = QDateTimeEdit()
         dte.setDateTime(QDateTime.currentDateTime())
         dte.setDisplayFormat("yyyy/MM/dd")
         dte.setCalendarPopup(True)
         self.setCellWidget(1,2,dte)
-        #添加一个弹出的日期选择，设置默认值为当前日期,显示格式为年月日。
+        # 팝업 날짜 선택을 추가하고 기본값을 현재 날짜로 설정하면 디스플레이 형식이 연도의 날짜입니다. 
         cbw = QComboBox()
         cbw.addItem("医生")
         cbw.addItem("老师")
         cbw.addItem("律师")
         self.setCellWidget(1,3,cbw)
-        #添加了一个下拉选择框
+        # 드롭 다운 선택 상자를 추가합니다 
         sb = QSpinBox()
         sb.setRange(1000,10000)
-        sb.setValue(5000)#设置最开始显示的数字
-        sb.setDisplayIntegerBase(10)#这个是显示数字的进制，默认是十进制。
-        sb.setSuffix("元")#设置后辍
-        sb.setPrefix("RMB: ")#设置前辍
+        sb.setValue(5000)# 디스플레이하기 시작하는 번호를 설정하십시오 
+        sb.setDisplayIntegerBase(10)# 이것은 디스플레이의 응용 프로그램이며 기본값은 디메이션입니다. 
+        sb.setSuffix("元")# 设置 设置 
+        sb.setPrefix("RMB: ")# 设置 设置 
         sb.setSingleStep(100)
         self.setCellWidget(1,4,sb)
-        # 添加一个进度条
+        # 진행률 표시 줄을 추가하십시오 
 
         self.progressBar = QtWidgets.QProgressBar(self)
         self.progressBar.setProperty("value", 0)
@@ -81,12 +81,12 @@ class MyTable(QTableWidget):
         self.timer = QTimer()
         self.timer.setInterval(1000)
         self.timer.start()
-        # 信号连接到槽
+        # 그루브에 대한 신호 연결 
         self.timer.timeout.connect(self.onTimerOut)
         self.count=0
-    def onTimerOut(self):  # 重写timerEvent
+    def onTimerOut(self):  # 重 写 timeEvent. 
         self.count +=1
-        if self.count >= 100:  # value >= 100时，停止计时器
+        if self.count >= 100:  # 값> = 100, 타이머를 중지하십시오 
             self.timer.stop()
             print("结束")
             # self.progressBar.setValue(self.step)

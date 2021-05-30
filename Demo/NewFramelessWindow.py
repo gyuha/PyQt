@@ -17,9 +17,9 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox
 
 
 class FramelessObject(QObject):
-    Margins = 3  # 边缘边距
-    TitleHeight = 36  # 标题栏高度
-    Widgets = set()  # 无边框窗口集合
+    Margins = 3  # 가장자리 여백 
+    TitleHeight = 36  # 标 标 高度 
+    Widgets = set()  # 无球 集 集 
 
     @classmethod
     def set_margins(cls, margins):
@@ -93,14 +93,14 @@ class FramelessObject(QObject):
 
     def eventFilter(self, obj, event):
         if obj.isWindowType():
-            # top window 处理光标样式
+            # 탑 윈도우 처리 커서 스타일 
             if event.type() == QEvent.MouseMove and obj.windowState() == Qt.WindowNoState:
                 obj.setCursor(self._get_cursor(self._get_edges(event.pos(), obj.width(), obj.height())))
             elif event.type() == QEvent.TouchUpdate:
                 self.moveOrResize(obj, event.pos(), obj.width(), obj.height())
         elif obj in self.Widgets and isinstance(event, QMouseEvent) and event.button() == Qt.LeftButton:
             if event.type() == QEvent.MouseButtonDblClick:
-                # 双击最大化还原
+                # 복원을 최대화하려면 더블 클릭하십시오 
                 if self.is_titlebar(event.pos()):
                     if obj.windowState() == Qt.WindowFullScreen:
                         pass
@@ -119,13 +119,13 @@ class FramelessWindow(QWidget, Ui_FormFrameless):
     def __init__(self, *args, **kwargs):
         super(FramelessWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        # 无边框
+        # 무시건 
         self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setMouseTracking(True)
-        # 隐藏还原按钮
+        # 복원 버튼을 숨 깁니다 
         self.buttonNormal.setVisible(False)
-        # 标题栏按钮信号
+        # 标题 단추 신호 
         self.buttonMinimum.clicked.connect(self.showMinimized)
         self.buttonMaximum.clicked.connect(self.showMaximized)
         self.buttonNormal.clicked.connect(self.showNormal)
@@ -137,19 +137,19 @@ class FramelessWindow(QWidget, Ui_FormFrameless):
         :param event:
         """
         super(FramelessWindow, self).changeEvent(event)
-        # 窗口状态改变时修改标题栏控制按钮
+        # # 时 控制 时 修 时 
         visible = self.isMaximized()
         self.buttonMaximum.setVisible(not visible)
         self.buttonNormal.setVisible(visible)
         if visible:
             self.layout().setContentsMargins(0, 0, 0, 0)
         else:
-            # TODO 与UI文件中的布局边距一致
+            # todo는 UI 파일의 여백 여백과 일치합니다. 
             m = FramelessObject.Margins
             self.layout().setContentsMargins(m, m, m, m)
 
     def paintEvent(self, event):
-        # 透明背景但是需要留下一个透明度用于鼠标捕获
+        # 透 透 背景 背景 그러나 마우스 캡처를위한 투명성을 남겨 둘 필요가 있습니다. 
         painter = QPainter(self)
         painter.fillRect(self.rect(), QColor(255, 255, 255, 1))
 
@@ -163,11 +163,11 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     if not hasattr(QWindow, 'startSystemMove'):
         QWindow.startSystemResize()
-        # 不支持
+        # 지원하지 않습니다 
         QMessageBox.critical(None, '错误', '当前Qt版本不支持该例子')
         QTimer.singleShot(100, app.quit)
     else:
-        # 安装全局事件过滤器
+        # 글로벌 이벤트 필터 설치 
         fo = FramelessObject()
         app.installEventFilter(fo)
 

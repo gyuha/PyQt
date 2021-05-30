@@ -40,13 +40,13 @@ class SortFilterProxyModel(QSortFilterProxyModel):
         if self.sortRole() == ClassifyRole and \
                 source_left.column() == self.sortColumn() and \
                 source_right.column() == self.sortColumn():
-            # 获取左右两个的分类
+            # 获 获 分 分 分. 
             leftIndex = source_left.data(ClassifyRole)
             rightIndex = source_right.data(ClassifyRole)
 
-            # 升序
+            # 升序 
             if self.sortOrder() == Qt.AscendingOrder:
-                # 保持在最前面
+                # 최전선에 유지하십시오 
                 if leftIndex == self._topIndex:
                     leftIndex = -1
                 if rightIndex == self._topIndex:
@@ -72,8 +72,8 @@ IndexDict = {
     4: '清',
 }
 
-IdRole = Qt.UserRole + 1            # 用于恢复排序
-ClassifyRole = Qt.UserRole + 2      # 用于按照分类序号排序
+IdRole = Qt.UserRole + 1            # 정렬을 다시 시작하는 데 사용됩니다 
+ClassifyRole = Qt.UserRole + 2      # 분류 시퀀스 번호로 정렬합니다 
 
 
 class Window(QWidget):
@@ -95,44 +95,44 @@ class Window(QWidget):
         self._initItems()
 
     def restoreSort(self):
-        # 恢复默认排序
-        self.fmodel.setSortRole(IdRole)     # 必须设置排序角色为ID
-        self.fmodel.sort(0)                 # 排序第一列按照ID升序
+        # 기본 정렬 복원 
+        self.fmodel.setSortRole(IdRole)     # 정렬 역할을 설정해야합니다 
+        self.fmodel.sort(0)                 ID 오름차순에 따라 # 排 첫 번째 열 
 
     def sortByClassify(self):
         self.fmodel.setSortIndex(NameDict.get(
             self.sender().text(), ['', 100])[1])
         # self.restoreSort()
         self.fmodel.setSortRole(IdRole)
-        # 按照给定的分类排序（这里注意还要按照把给定分类的放在最前面）
+        # 주어진 분류로 정렬 (여기서는 최전선에서 주어진 분류를 보낼 수있는주의를 기울이십시오) 
         self.fmodel.setSortRole(ClassifyRole)
         self.fmodel.sort(0)
 
     def _initItems(self):
-        # 初始化Items
+        # 항목 초기화 
         self.dmodel = QStandardItemModel(self.listView)
         self.fmodel = SortFilterProxyModel(self.listView)
         self.fmodel.setSourceModel(self.dmodel)
         self.listView.setModel(self.fmodel)
 
         keys = list(NameDict.keys())
-        print(keys)  # ['清', '元', '唐', '明', '宋']
+        print(keys)  # [ 'Q QING', 'YUAN', 'TANG', 'MIND', 'SONG'] 
         classifies = [v[1] for v in NameDict.values()]
         for i in range(5):
-            # 添加5个100, 用于模拟没有分类, 排序的时候就显示在最后面
+            # 5 100을 추가하고, 분류를 시뮬레이션하는 데 사용되며, 마지막에 주문이 표시됩니다. 
             classifies.append(100)
         print(classifies)  # [4, 2, 0, 3, 1, 100, 100, 100, 100, 100]
 
-        # 生成50个Item
+        # 生 生 50 품목 
         for i in range(50):
-            #             name = keys[i % 4]  # 随机取一个朝代
+            # Name = Keys [I % 4] # 무작위로 왕조를 찍었습니다. 
             item = QStandardItem()
-            # 设置ID角色
+            # ID 문자 설정 
             item.setData(i, IdRole)
-            # 设置分类角色
+            # 분류 역할을 설정합니다 
             c = choice(classifies)
             item.setData(c, ClassifyRole)
-            # 设置显示内容
+            # 디스플레이 콘텐츠를 설정합니다 
             item.setText('Name: {}\t\tId: {}\t\tClassify: {}'.format(
                 IndexDict.get(c, '其它'), i, c))
             self.dmodel.appendRow(item)

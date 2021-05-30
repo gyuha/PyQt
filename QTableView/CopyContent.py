@@ -24,14 +24,14 @@ class TableView(QTableView):
     def __init__(self, parent=None):
         super(TableView, self).__init__(parent)
         self.resize(800, 600)
-        self.setContextMenuPolicy(Qt.ActionsContextMenu)  # 右键菜单
-        self.setEditTriggers(self.NoEditTriggers)  # 禁止编辑
+        self.setContextMenuPolicy(Qt.ActionsContextMenu)  # 键 메뉴 
+        self.setEditTriggers(self.NoEditTriggers)  # 禁 编 编 
         self.doubleClicked.connect(self.onDoubleClick)
         self.addAction(QAction("复制", self, triggered=self.copyData))
         self.myModel = QStandardItemModel()  # model
-        self.initHeader()  # 初始化表头
+        self.initHeader()  # 초기화 머리 
         self.setModel(self.myModel)
-        self.initData()  # 初始化模拟数据
+        self.initData()  # 아날로그 데이터를 초기화합니다 
 
     def onDoubleClick(self, index):
         print(index.row(), index.column(), index.data())
@@ -46,45 +46,45 @@ class TableView(QTableView):
         count = len(self.selectedIndexes())
         if count == 0:
             return
-        if count == 1:  # 只复制了一个
+        if count == 1:  # 하나만 복사하십시오 
             QApplication.clipboard().setText(
-                self.selectedIndexes()[0].data())  # 复制到剪贴板中
+                self.selectedIndexes()[0].data())  # 클립 보드에 복사 
             QMessageBox.information(self, "提示", "已复制一个数据")
             return
         rows = set()
         cols = set()
-        for index in self.selectedIndexes():  # 得到所有选择的
+        for index in self.selectedIndexes():  # 모두 선택하십시오 
             rows.add(index.row())
             cols.add(index.column())
             # print(index.row(),index.column(),index.data())
-        if len(rows) == 1:  # 一行
+        if len(rows) == 1:  # 一 
             QApplication.clipboard().setText("\t".join(
-                [index.data() for index in self.selectedIndexes()]))  # 复制
+                [index.data() for index in self.selectedIndexes()]))  # 复 
             QMessageBox.information(self, "提示", "已复制一行数据")
             return
-        if len(cols) == 1:  # 一列
+        if len(cols) == 1:  # 행 
             QApplication.clipboard().setText("\r\n".join(
-                [index.data() for index in self.selectedIndexes()]))  # 复制
+                [index.data() for index in self.selectedIndexes()]))  # 复 
             QMessageBox.information(self, "提示", "已复制一列数据")
             return
-        mirow, marow = min(rows), max(rows)  # 最(少/多)行
-        micol, macol = min(cols), max(cols)  # 最(少/多)列
+        mirow, marow = min(rows), max(rows)  # 대부분 (덜 / 더) 라인 
+        micol, macol = min(cols), max(cols)  # 대부분 (덜 / 더) 열 
         print(mirow, marow, micol, macol)
         arrays = [
             [
                 "" for _ in range(macol - micol + 1)
             ] for _ in range(marow - mirow + 1)
-        ]  # 创建二维数组(并排除前面的空行和空列)
+        ]  # 2 차원 배열 생성 (및 공기 라인 및 빈 열의 전면 제외) 
         print(arrays)
-        # 填充数据
-        for index in self.selectedIndexes():  # 遍历所有选择的
+        # 데이터 투입 
+        for index in self.selectedIndexes():  # 선택된 모든 것을 가로 지르십시오 
             arrays[index.row() - mirow][index.column() - micol] = index.data()
         print(arrays)
-        data = ""  # 最后的结果
+        data = ""  # 마지막 결과 
         for row in arrays:
             data += "\t".join(row) + "\r\n"
         print(data)
-        QApplication.clipboard().setText(data)  # 复制到剪贴板中
+        QApplication.clipboard().setText(data)  # 클립 보드에 복사 
         QMessageBox.information(self, "提示", "已复制")
 
     def initHeader(self):

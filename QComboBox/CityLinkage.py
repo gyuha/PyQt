@@ -28,7 +28,7 @@ class SortFilterProxyModel(QSortFilterProxyModel):
 
     def __init__(self, *args, **kwargs):
         super(SortFilterProxyModel, self).__init__(*args, **kwargs)
-        self.setFilterRole(Qt.ToolTipRole)  # 根据Qt.ToolTipRole角色过滤
+        self.setFilterRole(Qt.ToolTipRole)  # Qt.Tooltiprole 역할에 따라 # 필터링합니다 
         self._model = QStandardItemModel(self)
         self.setSourceModel(self._model)
 
@@ -36,15 +36,15 @@ class SortFilterProxyModel(QSortFilterProxyModel):
         self._model.appendRow(item)
 
     def setFilter(self, _):
-        # 过滤
-        # self.sender()#发送者
-        # 获取上一个下拉框中的item_code
+        # 필터 
+        # self.sender () # 보낸 사람 
+        # drop-down 상자에서 item_code 가져 오기 
         item_code = self.sender().currentData(Qt.ToolTipRole)
         if not item_code:
             return
-        if item_code.endswith("0000"):  # 过滤市
+        if item_code.endswith("0000"):  # 필터 
             self.setFilterRegExp(QRegExp(item_code[:-4] + "\d\d00"))
-        elif item_code.endswith("00"):  # 过滤市以下
+        elif item_code.endswith("00"):  # 다음을 필터링합니다 
             self.setFilterRegExp(QRegExp(item_code[:-2] + "\d\d"))
 
 
@@ -53,9 +53,9 @@ class CityLinkageWindow(QWidget):
     def __init__(self, *args, **kwargs):
         super(CityLinkageWindow, self).__init__(*args, **kwargs)
         layout = QHBoxLayout(self)
-        self.province_box = QComboBox(self, minimumWidth=200)  # 市级以上
-        self.city_box = QComboBox(self, minimumWidth=200)  # 市
-        self.county_box = QComboBox(self, minimumWidth=200)  # 市级以下
+        self.province_box = QComboBox(self, minimumWidth=200)  # 도시 수준 이상 
+        self.city_box = QComboBox(self, minimumWidth=200)  # 市 
+        self.county_box = QComboBox(self, minimumWidth=200)  # 市 아래 수준 
         layout.addWidget(QLabel("省/直辖市/特别行政区", self))
         layout.addWidget(self.province_box)
         layout.addItem(QSpacerItem(
@@ -71,38 +71,38 @@ class CityLinkageWindow(QWidget):
         self.initData()
 
     def initSignal(self):
-        # 初始化信号槽
+        # 초기화 신호 슬롯 
         self.province_box.currentIndexChanged.connect(
             self.city_model.setFilter)
         self.city_box.currentIndexChanged.connect(self.county_model.setFilter)
 
     def initModel(self):
-        # 初始化模型
+        # 초기화 모델 
         self.province_model = SortFilterProxyModel(self)
         self.city_model = SortFilterProxyModel(self)
         self.county_model = SortFilterProxyModel(self)
-        # 设置模型
+        # 모델을 설정합니다 
         self.province_box.setModel(self.province_model)
         self.city_box.setModel(self.city_model)
         self.county_box.setModel(self.county_model)
 
     def initData(self):
-        # 初始化数据
+        # 초기화 데이터 
         datas = open("Data/data.json", "rb").read()
         encoding = chardet.detect(datas) or {}
         datas = datas.decode(encoding.get("encoding", "utf-8"))
         datas = json.loads(datas)
-        # 开始解析数据
+        # 파싱 데이터를 시작합니다 
         for data in datas:
-            item_code = data.get("item_code")  # 编码
-            item_name = data.get("item_name")  # 名字
+            item_code = data.get("item_code")  # 编 编 
+            item_name = data.get("item_name")  # 이름 
             item = QStandardItem(item_name)
             item.setData(item_code, Qt.ToolTipRole)
-            if item_code.endswith("0000"):  # 4个0结尾的是市级以上的
+            if item_code.endswith("0000"):  # 4 0 결말은 도시 수준입니다 
                 self.province_model.appendRow(item)
-            elif item_code.endswith("00"):  # 2个0结尾的是市
+            elif item_code.endswith("00"):  # 2 0 끝이 도시입니다 
                 self.city_model.appendRow(item)
-            else:  # 市以下
+            else:  # 市 아래에서 
                 self.county_model.appendRow(item)
 
 

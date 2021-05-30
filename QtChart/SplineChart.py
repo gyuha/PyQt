@@ -19,28 +19,28 @@ class Window(QChartView):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.resize(400, 300)
-        # 抗锯齿
+        # 抗锯 齿齿 
         self.setRenderHint(QPainter.Antialiasing)
 
-        # 图表
+        # 图片 
         chart = QChart()
         self.setChart(chart)
-        # 设置标题
+        # 제목을 설정하십시오 
         chart.setTitle('Simple splinechart example')
-        # 添加Series
+        # 加 ses. 
         self.getSeries(chart)
-        # 创建默认xy轴
+        # 기본 XY 축을 만듭니다 
         chart.createDefaultAxes()
         chart.legend().setVisible(False)
 
     def getSeries(self, chart):
-        # 第一组
+        # 첫 번째 그룹 
         series = QSplineSeries(chart)
         series << QPointF(1, 5) << QPointF(3, 7) << QPointF(7, 6) << QPointF(9, 7) \
         << QPointF(12, 6) << QPointF(16, 7) << QPointF(18, 5)
         chart.addSeries(series)
 
-        # 第二组
+        # 두 번째 그룹 
         series = QSplineSeries(chart)
         series << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) \
         << QPointF(12, 3) << QPointF(16, 4) << QPointF(18, 3)

@@ -57,7 +57,7 @@ QMenu::separator {
 
 
 def get_icon():
-    # 测试模拟图标
+    # 아날로그 아이콘을 테스트합니다 
     pixmap = QPixmap(16, 16)
     pixmap.fill(Qt.transparent)
     painter = QPainter()
@@ -71,7 +71,7 @@ def get_icon():
 
 
 def about_qt():
-    # 关于Qt
+    # Qt에 대하여 
     QApplication.instance().aboutQt()
 
 
@@ -89,13 +89,13 @@ class Window(QLabel):
         self.context_menu.exec_(event.globalPos())
 
     def init_menu(self):
-        # 背景透明
+        # 배경 투명 
         self.context_menu.setAttribute(Qt.WA_TranslucentBackground)
-        # 无边框、去掉自带阴影
+        # 无 边, 그림자를 제거하십시오 
         self.context_menu.setWindowFlags(
             self.context_menu.windowFlags() | Qt.FramelessWindowHint | Qt.NoDropShadowWindowHint)
 
-        # 模拟菜单项
+        # 模 菜 菜 菜 
         for i in range(10):
             if i % 2 == 0:
                 action = self.context_menu.addAction('菜单 %d' % i, about_qt)
@@ -105,12 +105,12 @@ class Window(QLabel):
             if i % 4 == 0:
                 self.context_menu.addSeparator()
             if i % 5 == 0:
-                # 二级菜单
-                # 二级菜单
+                # 보조 메뉴 
+                # 보조 메뉴 
                 menu = QMenu('二级菜单 %d' % i, self.context_menu)
-                # 背景透明
+                # 배경 투명 
                 menu.setAttribute(Qt.WA_TranslucentBackground)
-                # 无边框、去掉自带阴影
+                # 无 边, 그림자를 제거하십시오 
                 menu.setWindowFlags(menu.windowFlags() | Qt.FramelessWindowHint | Qt.NoDropShadowWindowHint)
                 for j in range(3):
                     menu.addAction(get_icon(), '子菜单 %d' % j)

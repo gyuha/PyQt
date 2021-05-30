@@ -23,7 +23,7 @@ class Window(QWidget, QCursorGif):
 
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
-        # 设置忙碌光标图片数组
+        # 바쁜 커서 사진 배열 설정 
         self.initCursor(['Data/Images/Cursors/%d.png' %
                          i for i in range(8)], self)
         self.setCursorTimeout(100)

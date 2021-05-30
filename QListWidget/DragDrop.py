@@ -22,27 +22,27 @@ __Version__ = "Version 1.0"
 
 
 class DropListWidget(QListWidget):
-    # 可以拖进来的QListWidget
+    # QListWidget에서 끌 수 있습니다 
 
     def __init__(self, *args, **kwargs):
         super(DropListWidget, self).__init__(*args, **kwargs)
         self.resize(400, 400)
         self.setAcceptDrops(True)
-        # 设置从左到右、自动换行、依次排列
+        # 왼쪽에서 오른쪽으로 설정, 자동으로 랩, 배열 
         self.setFlow(self.LeftToRight)
         self.setWrapping(True)
         self.setResizeMode(self.Adjust)
-        # item的间隔
+        # 特 e 间 间 
         self.setSpacing(5)
 
     def makeItem(self, size, cname):
         item = QListWidgetItem(self)
-        item.setData(Qt.UserRole + 1, cname)  # 把颜色放进自定义的data里面
+        item.setData(Qt.UserRole + 1, cname)  # 사용자 정의 데이터에 색상을 넣으십시오 
         item.setSizeHint(size)
-        label = QLabel(self)  # 自定义控件
-        label.setMargin(2)  # 往内缩进2
+        label = QLabel(self)  # 사용자 정의 컨트롤 
+        label.setMargin(2)  # 往 内 进 2. 
         label.resize(size)
-        pixmap = QPixmap(size.scaled(96, 96, Qt.IgnoreAspectRatio))  # 调整尺寸
+        pixmap = QPixmap(size.scaled(96, 96, Qt.IgnoreAspectRatio))  # 크기 조정 
         pixmap.fill(QColor(cname))
         label.setPixmap(pixmap)
         self.setItemWidget(item, label)
@@ -55,53 +55,53 @@ class DropListWidget(QListWidget):
             event.acceptProposedAction()
 
     def dropEvent(self, event):
-        # 获取拖放的items
+        # 드래그와 드롭 항목을 얻으십시오 
         items = event.mimeData().property('myItems')
         event.accept()
         for item in items:
-            # 取出item里的data并生成item
+            # 항목의 데이터를 제거하고 항목 생성 
             self.makeItem(QSize(100, 100), item.data(Qt.UserRole + 1))
 
 
 class DragListWidget(QListWidget):
-    # 可以往外拖的QListWidget
+    # qlistwidget. 
 
     def __init__(self, *args, **kwargs):
         super(DragListWidget, self).__init__(*args, **kwargs)
         self.resize(400, 400)
-        # 隐藏横向滚动条
+        # 가로 스크롤 막대를 숨 깁니다 
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        # 不能编辑
+        # 편집 할 수 없습니다 
         self.setEditTriggers(self.NoEditTriggers)
-        # 开启拖功能
+        # 开 功 
         self.setDragEnabled(True)
-        # 只能往外拖
+        # # 外 外 外. 
         self.setDragDropMode(self.DragOnly)
-        # 忽略放
+        # 略 放 
         self.setDefaultDropAction(Qt.IgnoreAction)
-        # ****重要的一句（作用是可以单选，多选。Ctrl、Shift多选，可从空白位置框选）****
-        # ****不能用ExtendedSelection,因为它可以在选中item后继续框选会和拖拽冲突****
+        # **** 중요한 문장 (함수는 사용할 수 있으며 다중 선택, 시프트 다중 선택, 빈 위치에서 선택할 수 있음) **** 
+        # **** 항목을 선택한 후 상자 선택 및 드래그 앤 드롭 충돌이므로 ExtendedSelection을 사용할 수 없습니다. 
         self.setSelectionMode(self.ContiguousSelection)
-        # 设置从左到右、自动换行、依次排列
+        # 왼쪽에서 오른쪽으로 설정, 자동으로 랩, 배열 
         self.setFlow(self.LeftToRight)
         self.setWrapping(True)
         self.setResizeMode(self.Adjust)
-        # item的间隔
+        # 特 e 间 间 
         self.setSpacing(5)
-        # 橡皮筋(用于框选效果)
+        # 筋 (상자 선택 효과 용) 
         self._rubberPos = None
         self._rubberBand = QRubberBand(QRubberBand.Rectangle, self)
 
         self.initItems()
 
-    # 实现拖拽的时候预览效果图
-    # 这里演示拼接所有的item截图(也可以自己写算法实现堆叠效果)
+    # 드래그 할 때 렌더링 미리보기 
+    # 这里 演 演 i (또는 스태킹 효과를 달성하기 위해 자체 쓰기 알고리즘을 작성하십시오) 
     def startDrag(self, supportedActions):
         items = self.selectedItems()
         drag = QDrag(self)
         mimeData = self.mimeData(items)
-        # 由于QMimeData只能设置image、urls、str、bytes等等不方便
-        # 这里添加一个额外的属性直接把item放进去,后面可以根据item取出数据
+        # qmimedata는 이미지, URL, STR, 바이트 등을 설정할 수 있습니다. 
+        # 여기에서 추가 속성을 직접 추가 한 다음 항목에 따라 데이터를 제거합니다. 
         mimeData.setProperty('myItems', items)
         drag.setMimeData(mimeData)
         pixmap = QPixmap(self.viewport().visibleRegion().boundingRect().size())
@@ -117,7 +117,7 @@ class DragListWidget(QListWidget):
         drag.exec_(supportedActions)
 
     def mousePressEvent(self, event):
-        # 列表框点击事件,用于设置框选工具的开始位置
+        # 列表 点 一个 事, 상자 선택 도구의 시작 위치를 설정하는 데 사용 
         super(DragListWidget, self).mousePressEvent(event)
         if event.buttons() != Qt.LeftButton or self.itemAt(event.pos()):
             return
@@ -126,13 +126,13 @@ class DragListWidget(QListWidget):
         self._rubberBand.show()
 
     def mouseReleaseEvent(self, event):
-        # 列表框点击释放事件,用于隐藏框选工具
+        # 列表 框 点 事, 隐 工 工 
         super(DragListWidget, self).mouseReleaseEvent(event)
         self._rubberPos = None
         self._rubberBand.hide()
 
     def mouseMoveEvent(self, event):
-        # 列表框鼠标移动事件,用于设置框选工具的矩形范围
+        #list 마우스 안개 모바일 이벤트, 설정 상자 선택 도구 용 사각형 범위 
         super(DragListWidget, self).mouseMoveEvent(event)
         if self._rubberPos:
             pos = event.pos()
@@ -144,12 +144,12 @@ class DragListWidget(QListWidget):
 
     def makeItem(self, size, cname):
         item = QListWidgetItem(self)
-        item.setData(Qt.UserRole + 1, cname)  # 把颜色放进自定义的data里面
+        item.setData(Qt.UserRole + 1, cname)  # 사용자 정의 데이터에 색상을 넣으십시오 
         item.setSizeHint(size)
-        label = QLabel(self)  # 自定义控件
-        label.setMargin(2)  # 往内缩进2
+        label = QLabel(self)  # 사용자 정의 컨트롤 
+        label.setMargin(2)  # 往 内 进 2. 
         label.resize(size)
-        pixmap = QPixmap(size.scaled(96, 96, Qt.IgnoreAspectRatio))  # 调整尺寸
+        pixmap = QPixmap(size.scaled(96, 96, Qt.IgnoreAspectRatio))  # 크기 조정 
         pixmap.fill(QColor(cname))
         label.setPixmap(pixmap)
         self.setItemWidget(item, label)

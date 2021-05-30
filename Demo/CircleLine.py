@@ -22,16 +22,16 @@ from PyQt5.QtWidgets import QWidget
 __Author__ = 'Irony'
 __Copyright__ = 'Copyright (c) 2019'
 
-# 最小和最大半径、半径阈值和填充圆的百分比
+# 最 최소 및 최대 반경, 반경 임계 값 및 필링 라운드의 백분율 
 radMin = 10
 radMax = 80
-filledCircle = 30  # 填充圆的百分比
-concentricCircle = 60  # 同心圆百分比
+filledCircle = 30  # 百 
+concentricCircle = 60  # 同心 百 
 radThreshold = 25  # IFF special, over this radius concentric, otherwise filled
-# 最小和最大移动速度
+# 최소 및 최대 이동 속도 
 speedMin = 0.3
 speedMax = 0.6
-# 每个圆和模糊效果的最大透明度
+# 각 원과 퍼지 효과 
 maxOpacity = 0.6
 
 colors = [
@@ -49,30 +49,30 @@ backgroundMlt = 0.85
 
 lineBorder = 2.5
 
-# 最重要的是：包含它们的整个圆和数组的数目
+# 가장 중요한 것은 전체 동그라미와 verrandars의 수 
 maxCircles = 8
 points = []
 
-# 实验变量
+# 实实 변수 
 circleExp = 1
 circleExpMax = 1.003
 circleExpMin = 0.997
 circleExpSp = 0.00004
 circlePulse = False
 
-# 生成随机整数 a<=x<=b
+# <= x <= b를 임의의 정수를 생성합니다. 
 
 
 def randint(a, b):
     return floor(random() * (b - a + 1) + a)
 
-# 生成随机小数
+# 成 成 小 
 
 
 def randRange(a, b):
     return random() * (b - a) + a
 
-# 生成接近a的随机小数
+# 成成 등급 
 
 
 def hyperRange(a, b):
@@ -107,12 +107,12 @@ class CircleLineWindow(QWidget):
 
     def __init__(self, *args, **kwargs):
         super(CircleLineWindow, self).__init__(*args, **kwargs)
-        # 设置背景颜色
+        # 배경색을 설정합니다 
         palette = self.palette()
         palette.setColor(palette.Background, backgroundColor)
         self.setAutoFillBackground(True)
         self.setPalette(palette)
-        # 获取屏幕大小
+        # 화면 크기를 얻으십시오 
         geometry = QApplication.instance().desktop().availableGeometry()
         self.screenWidth = geometry.width()
         self.screenHeight = geometry.height()
@@ -123,9 +123,9 @@ class CircleLineWindow(QWidget):
 
     def init(self):
         points.clear()
-        # 链接的最小距离
+        # 최소 거리 
         self.linkDist = min(self.screenWidth, self.screenHeight) / 2.4
-        # 初始化点
+        # 初 初 
         for _ in range(maxCircles * 3):
             points.append(Circle('', self.screenWidth, self.screenHeight))
         self.update()
@@ -136,7 +136,7 @@ class CircleLineWindow(QWidget):
 
     def hideEvent(self, event):
         super(CircleLineWindow, self).hideEvent(event)
-        # 窗口最小化要停止绘制, 减少cpu占用
+        # 最 그리기를 중지하고 CPU 직업을 줄이는 최소화 
         self._canDraw = False
 
     def paintEvent(self, event):
@@ -161,13 +161,13 @@ class CircleLineWindow(QWidget):
         self.renderPoints(painter, points)
         if self._firstDraw:
             self._firstDraw = False
-            # 此处有个比例关系用于设置timer的时间，如果初始窗口很小，没有比例会导致动画很快
+            #이 비례 관계는 타이머의 시간을 설정하는 데 사용됩니다. 초기 창이 작 으면 비율이 없으면 애니메이션이 매우 빠릅니다. 
             t = (time() - t) * 1000 * 2
-            # 比例最大不能超过1920/800
+            # 比例 大 不 님의보기 1920/800. 
             t = int(min(2.4, self.screenHeight / self.height()) * t) - 1
-            t = t if t > 15 else 15  # 不能小于15s
+            t = t if t > 15 else 15  # 不 能 15 초보 다 
             print('start timer(%d msec)' % t)
-            # 开启定时器
+            # 开 时器 
             self._timer.start(t)
 
     def drawCircle(self, painter, circle):
@@ -179,27 +179,27 @@ class CircleLineWindow(QWidget):
         radius = circle.radius
 
         r = radius * circleExp
-        # 边框颜色设置透明度
+        # 경계 색상 투명도 설정 
         c = QColor(circle.borderColor)
         c.setAlphaF(circle.opacity)
 
         painter.save()
         if circle.filled == 'full':
-            # 设置背景刷
+            # 배경 브러시를 설정합니다 
             painter.setBrush(c)
             painter.setPen(Qt.NoPen)
         else:
-            # 设置画笔
+            # 설치 브러시 
             painter.setPen(
                 QPen(c, max(1, circleBorder * (radMin - circle.radius) / (radMin - radMax))))
 
-        # 画实心圆或者圆圈
+        # 画实 心 心 또는 서클 
         painter.drawEllipse(circle.x - r, circle.y - r, 2 * r, 2 * r)
         painter.restore()
 
         if circle.filled == 'concentric':
             r = radius / 2
-            # 画圆圈
+            # 画 
             painter.save()
             painter.setBrush(Qt.NoBrush)
             painter.setPen(
@@ -216,7 +216,7 @@ class CircleLineWindow(QWidget):
     def renderPoints(self, painter, circles):
         for i, circle in enumerate(circles):
             if circle.ttl < -20:
-                # 重新初始化一个
+                # 하나를 다시 초기화하십시오 
                 circle = Circle('', self.screenWidth, self.screenHeight)
                 circles[i] = circle
             self.drawCircle(painter, circle)

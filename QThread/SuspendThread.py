@@ -8,11 +8,11 @@ import win32con
 from win32process import SuspendThread, ResumeThread
 
 
-# Created on 2018年3月13日
+# 2018 년 3 월 13 일에 작성되었습니다 
 # author: Irony
 # site: https://pyqt5.com , https://github.com/892768447
 # email: 892768447@qq.com
-# file: 多线程使用.a
+# 파일 : 멀티 스레드 사용 .A. 
 # description:
 __Author__ = 'By: Irony\nQQ: 892768447\nEmail: 892768447@qq.com'
 __Copyright__ = 'Copyright (c) 2018 Irony'
@@ -21,7 +21,7 @@ __Version__ = 1.0
 
 class Worker(QThread):
 
-    valueChanged = pyqtSignal(int)  # 值变化信号
+    valueChanged = pyqtSignal(int)  # 값 변경 신호 
     handle = -1
 
     def run(self):
@@ -57,17 +57,17 @@ class Window(QWidget):
             '终止线程', self, clicked=self.onStopThread, enabled=False)
         layout.addWidget(self.stopButton)
 
-        # 当前线程id
+        # 현재 스레드 ID. 
         print('main id', int(QThread.currentThreadId()))
 
-        # 子线程
+        # 子 线 
         self._thread = Worker(self)
         self._thread.finished.connect(self._thread.deleteLater)
         self._thread.valueChanged.connect(self.progressBar.setValue)
 
     def onStart(self):
         print('main id', int(QThread.currentThreadId()))
-        self._thread.start()  # 启动线程
+        self._thread.start()  # 启 线 线程 
         self.startButton.setEnabled(False)
         self.suspendButton.setEnabled(True)
         self.stopButton.setEnabled(True)
@@ -100,7 +100,7 @@ class Window(QWidget):
     def closeEvent(self, event):
         if self._thread.isRunning():
             self._thread.quit()
-            # 强制
+            # 强 强 
             # self._thread.terminate()
         del self._thread
         super(Window, self).closeEvent(event)

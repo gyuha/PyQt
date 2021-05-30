@@ -30,9 +30,9 @@ class Window(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(CustomPaintWidget(self))
         layout.addWidget(CustomWidget(self))
-        # 注意
+        # 노트 
         w = CustomWidget(self)
-        w.setAttribute(Qt.WA_StyledBackground)  # 很重要
+        w.setAttribute(Qt.WA_StyledBackground)  # 매우 중요 
         layout.addWidget(w)
 
 

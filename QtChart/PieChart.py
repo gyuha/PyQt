@@ -18,15 +18,15 @@ class Window(QChartView):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.resize(400, 300)
-        # 抗锯齿
+        # 抗锯 齿齿 
         self.setRenderHint(QPainter.Antialiasing)
 
-        # 图表
+        # 图片 
         chart = QChart()
         self.setChart(chart)
-        # 设置标题
+        # 제목을 설정하십시오 
         chart.setTitle('Simple piechart example')
-        # 添加Series
+        # 加 ses. 
         chart.addSeries(self.getSeries())
 
     def getSeries(self):
@@ -34,13 +34,13 @@ class Window(QChartView):
         slice0 = series.append('10%', 1)
         series.append('20%', 2)
         series.append('70%', 7)
-        # 显示label文字
+        # 레이블 텍스트 표시 
         series.setLabelsVisible()
         series.setPieSize(0.5)
-        # 使第一块突出显示
+        # 첫 번째 블록을 제거하십시오 
         slice0.setLabelVisible()
         slice0.setExploded()
-        # 设置第一块颜色
+        # 첫 번째 색상을 설정하십시오 
         slice0.setColor(QColor(255, 0, 0, 100))
         return series
 

@@ -32,7 +32,7 @@ __Version__ = "Version 1.0"
 # offset=0,30,60,90
 Url = "http://v.qq.com/x/list/movie?pay=-1&offset={0}"
 
-# 播放量图标
+# 放 量 아이콘 
 Svg_icon_play_sm = '''<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
     <path d="M10.83 8.31v.022l-4.08 2.539-.005.003-.048.03-.012-.005c-.073.051-.15.101-.246.101-.217 0-.376-.165-.413-.369l-.027-.011V5.461l.009-.005c0-.009-.009-.014-.009-.022 0-.24.197-.435.44-.435.096 0 .174.049.247.101l.031-.017 4.129 2.569v.016a.42.42 0 0 1 .153.317.418.418 0 0 1-.169.325zm3.493 2.604a.986.986 0 0 1-.948.742 1 1 0 0 1-1-1 .98.98 0 0 1 .094-.412l-.019-.01C12.79 9.559 13 8.807 13 8a5 5 0 1 0-5 5c.766 0 1.484-.186 2.133-.494l.013.03a.975.975 0 0 1 .417-.097 1 1 0 0 1 1 1 .987.987 0 0 1-.77.954A6.936 6.936 0 0 1 8 14.999a7 7 0 1 1 7-7c0 1.048-.261 2.024-.677 2.915z" fill="#999999"></path>
 </svg>
@@ -70,7 +70,7 @@ Svg_icon_loading = '''<svg width="100%" height="100%" viewBox="0 0 38 38" xmlns=
     </g>
 </svg>'''.encode()
 
-# 主演
+# 주연 
 Actor = '''<a href="{href}" target="_blank" title="{title}" style="text-decoration: none;font-size: 12px;color: #999999;">{title}</a>&nbsp;'''
 
 
@@ -99,31 +99,31 @@ class CoverLabel(QLabel):
     def paintEvent(self, event):
         super(CoverLabel, self).paintEvent(event)
         if hasattr(self, "cover_title") and self.cover_title != "":
-            # 底部绘制文字
+            # 하단 텍스트 그리기 
             painter = QPainter(self)
             rect = self.rect()
-            # 粗略字体高度
+            # 略 字 字 字 
             painter.save()
             fheight = self.fontMetrics().height()
-            # 底部矩形框背景渐变颜色
+            # 하단 사각형 상자 배경 그라디언트 색상 
             bottomRectColor = QLinearGradient(
                 rect.width() / 2, rect.height() - 24 - fheight,
                 rect.width() / 2, rect.height())
             bottomRectColor.setSpread(QGradient.PadSpread)
             bottomRectColor.setColorAt(0, QColor(255, 255, 255, 70))
             bottomRectColor.setColorAt(1, QColor(0, 0, 0, 50))
-            # 画半透明渐变矩形框
+            # 画 半 透 
             painter.setPen(Qt.NoPen)
             painter.setBrush(QBrush(bottomRectColor))
             painter.drawRect(rect.x(), rect.height() - 24 -
                              fheight, rect.width(), 24 + fheight)
             painter.restore()
-            # 距离底部一定高度画文字
+            # 一 高 高 高 文. 
             font = self.font() or QFont()
             font.setPointSize(8)
             painter.setFont(font)
             painter.setPen(Qt.white)
-            rect.setHeight(rect.height() - 12)  # 底部减去一定高度
+            rect.setHeight(rect.height() - 12)  # 减 ​​减 减 一 
             painter.drawText(rect, Qt.AlignHCenter |
                              Qt.AlignBottom, self.cover_title)
 
@@ -139,11 +139,11 @@ class ItemWidget(QWidget):
         self.cover_url = cover_url
         layout = QVBoxLayout(self)
         layout.setContentsMargins(10, 20, 10, 0)
-        # 图片label
+        # 图片 레이블 
         self.clabel = CoverLabel(cover_path, figure_info, video_url, self)
         layout.addWidget(self.clabel)
 
-        # 片名和分数
+        # 片 名 和 and score. 
         flayout = QHBoxLayout()
         flayout.addWidget(QLabel(figure_title, self))
         flayout.addItem(QSpacerItem(
@@ -151,11 +151,11 @@ class ItemWidget(QWidget):
         flayout.addWidget(QLabel(figure_score, self, styleSheet="color: red;"))
         layout.addLayout(flayout)
 
-        # 主演
+        # 주연 
         layout.addWidget(
             QLabel(figure_desc, self, styleSheet="color: #999999;", openExternalLinks=True))
 
-        # 播放量
+        # 量 
         blayout = QHBoxLayout()
         count_icon = QSvgWidget(self)
         count_icon.setMaximumSize(16, 16)
@@ -171,19 +171,19 @@ class ItemWidget(QWidget):
 #         self.clabel.setText('<img src="{0}"/>'.format(os.path.abspath(path)))
 
     def sizeHint(self):
-        # 每个item控件的大小
+        # 각 항목 제어 크기 
         return QSize(220, 420)
 
     def event(self, event):
         if isinstance(event, QPaintEvent):
             if event.rect().height() > 20 and hasattr(self, "clabel"):
-                if self.clabel.cover_path.find("pic_v.png") > -1:  # 封面未加载
+                if self.clabel.cover_path.find("pic_v.png") > -1:  # 덮개가로드되지 않았습니다 
                     #                     print("start download img:", self.cover_url)
                     req = QNetworkRequest(QUrl(self.cover_url))
-                    # 设置两个自定义属性方便后期reply中处理
+                    # 2 개의 사용자 정의 특성을 설정하여 재생 후 처리를 용이하게합니다. 
                     req.setAttribute(QNetworkRequest.User + 1, self)
                     req.setAttribute(QNetworkRequest.User + 2, self.img_path)
-                    self.parentWidget()._manager.get(req)  # 调用父窗口中的下载器下载
+                    self.parentWidget()._manager.get(req)  # 부모 창에서 다운로더 다운로드를 호출합니다 
         return super(ItemWidget, self).event(event)
 
 
@@ -194,8 +194,8 @@ class GridWidget(QWidget):
 
     def __init__(self, *args, **kwargs):
         super(GridWidget, self).__init__(*args, **kwargs)
-        self._layout = FlowLayout(self)  # 使用自定义流式布局
-        # 异步网络下载管理器
+        self._layout = FlowLayout(self)  # 사용자 정의 간소화 레이아웃을 사용하십시오 
+        # 비동기식 네트워크 다운로드 관리자 
         self._manager = QNetworkAccessManager(self)
         self._manager.finished.connect(self.onFinished)
 
@@ -203,7 +203,7 @@ class GridWidget(QWidget):
         if self.Page == -1:
             return
         self.loadStarted.emit(True)
-        # 延迟一秒后调用目的在于显示进度条
+        # 목적이 진행률 표시 줄을 표시 한 후 두 번째 지연 
         QTimer.singleShot(1000, self._load)
 
     def _load(self):
@@ -212,19 +212,19 @@ class GridWidget(QWidget):
         self._manager.get(QNetworkRequest(url))
 
     def onFinished(self, reply):
-        # 请求完成后会调用该函数
-        req = reply.request()  # 获取请求
+        # 요청이 완료된 후 함수가 함수를 호출합니다. 
+        req = reply.request()  # 요청 받기 
         iwidget = req.attribute(QNetworkRequest.User + 1, None)
         path = req.attribute(QNetworkRequest.User + 2, None)
         html = reply.readAll().data()
         reply.deleteLater()
         del reply
         if iwidget and path and html:
-            # 这里是图片下载完毕
+            # 这里 这里 这里 是 下载 图片 
             open(path, "wb").write(html)
             iwidget.setCover(path)
             return
-        # 解析网页
+        # 解析 网 
         self._parseHtml(html)
         self.loadStarted.emit(False)
 
@@ -232,10 +232,10 @@ class GridWidget(QWidget):
         #         encoding = chardet.detect(html) or {}
         #         html = html.decode(encoding.get("encoding","utf-8"))
         html = HTML(html)
-        # 查找所有的li list_item
+        # 모든 List_Item을 모두 찾으십시오 
         lis = html.xpath("//li[@class='list_item']")
         if not lis:
-            self.Page = -1  # 后面没有页面了
+            self.Page = -1  # 그 뒤에 페이지가 없습니다. 
             return
         self.Page += 1
         self._makeItem(lis)
@@ -243,18 +243,18 @@ class GridWidget(QWidget):
     def _makeItem(self, lis):
         for li in lis:
             a = li.find("a")
-            video_url = a.get("href")  # 视频播放地址
+            video_url = a.get("href")  # 视频 视频 放 放 地址. 
             img = a.find("img")
-            cover_url = "http:" + img.get("r-lazyload")  # 封面图片
-            figure_title = img.get("alt")  # 电影名
+            cover_url = "http:" + img.get("r-lazyload")  # 표지 이미지 
+            figure_title = img.get("alt")  # 电影 이름 
             figure_info = a.find("div/span")
-            figure_info = "" if figure_info is None else figure_info.text  # 影片信息
-            figure_score = "".join(li.xpath(".//em/text()"))  # 评分
-            # 主演
+            figure_info = "" if figure_info is None else figure_info.text  # 影 影 影 信息 
+            figure_score = "".join(li.xpath(".//em/text()"))  # 评 评 
+            # 주연 
             figure_desc = "<span style=\"font-size: 12px;\">主演：</span>" + \
                 "".join([Actor.format(**dict(fd.items()))
                          for fd in li.xpath(".//div[@class='figure_desc']/a")])
-            # 播放数
+            # 견해 
             figure_count = (
                 li.xpath(".//div[@class='figure_count']/span/text()") or [""])[0]
             path = "cache/{0}.jpg".format(
@@ -276,13 +276,13 @@ class Window(QScrollArea):
         self.setWidgetResizable(True)
         self.setAlignment(Qt.AlignCenter)
         self._loadStart = False
-        # 网格窗口
+        # 网 网 
         self._widget = GridWidget(self)
         self._widget.loadStarted.connect(self.setLoadStarted)
         self.setWidget(self._widget)
-        # 连接竖着的滚动条滚动事件
+        # 수직 스크롤 막대 롤링 이벤트를 연결합니다 
         self.verticalScrollBar().actionTriggered.connect(self.onActionTriggered)
-        # 进度条
+        # 진행 표시 줄 
         self.loadWidget = QSvgWidget(
             self, minimumHeight=120, minimumWidth=120, visible=False)
         self.loadWidget.load(Svg_icon_loading)
@@ -292,13 +292,13 @@ class Window(QScrollArea):
         self.loadWidget.setVisible(started)
 
     def onActionTriggered(self, action):
-        # 这里要判断action=QAbstractSlider.SliderMove，可以避免窗口大小改变的问题
-        # 同时防止多次加载同一个url
+        # 这里 这里 = = qabstractslider.slidermove, 창 크기의 변경 문제를 피하십시오 
+        # 防 防 防 加 加 加 u. 
         if action != QAbstractSlider.SliderMove or self._loadStart:
             return
-        # 使用sliderPosition获取值可以同时满足鼠标滑动和拖动判断
+        # sliderposition을 사용하여 마우스 미끄러짐 및 드래그 판단을 충족하도록 값을 가져옵니다. 
         if self.verticalScrollBar().sliderPosition() == self.verticalScrollBar().maximum():
-            # 可以下一页了
+            # 다음 페이지가 될 수 있습니다 
             self._widget.load()
 
     def resizeEvent(self, event):

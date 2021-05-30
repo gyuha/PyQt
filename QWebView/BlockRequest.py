@@ -29,15 +29,15 @@ class RequestInterceptor(QNetworkAccessManager):
         """
         url = originalReq.url().toString()
         if url.find('pos.baidu.com') > -1 and url.find('ltu=') > -1:
-            # 拦截百度联盟的广告
+            # 가로 촬영 Baidu Alliance 광고 
             print('block:', url)
             originalReq.setUrl(QUrl())
         if op == self.PostOperation and outgoingData:
-            # 拦截或者修改post数据
-            # 读取后要重新设置,不然网站接收不到请求
+            # 포스트 데이터를 가로 채거나 수정하십시오 
+            # 읽는 후 다시 설정해야합니다. 그렇지 않으면 웹 사이트가 요청을받지 못합니다. 
             data = outgoingData.readAll().data()
             print('post data:', data)
-            # 修改data后重新设置
+            # 데이터를 수정 한 후 # 재설정하십시오 
             outgoingData = QBuffer(self)
             outgoingData.setData(data)
 

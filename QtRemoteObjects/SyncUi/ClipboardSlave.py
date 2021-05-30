@@ -30,17 +30,17 @@ class WindowSlave(QTextBrowser):
 
     def __init__(self, *args, **kwargs):
         super(WindowSlave, self).__init__(*args, **kwargs)
-        # 监听剪切板
+        # 监 板 
         clipboard = QApplication.clipboard()
         clipboard.dataChanged.connect(self.on_data_changed)
-        # 加入Master节点
+        # 마스터 노드 가입 
         node = QRemoteObjectNode(parent=self)
         node.connectToNode(QUrl('tcp://{}:{}'.format(sys.argv[1], sys.argv[2])))
-        # 获取WindowMaster对象
+        # windowmaster object를 얻으십시오 
         self.windowMaster = node.acquireDynamic('WindowMaster')
-        # 初始化成功后才能去绑定信号等
+        # 초기화, 바인딩 신호 등으로 이동할 수 있습니다. 
         self.windowMaster.initialized.connect(self.onInitialized)
-        # 状态改变 https://doc.qt.io/qt-5/qremoteobjectreplica.html#State-enum
+        # 상태 변경 https://doc.qt.io/qt-5/qremoteobjectreplica.html#State-Enum. 
         self.windowMaster.stateChanged.connect(self.onStateChanged)
 
     def onStateChanged(self, newState, oldState):
@@ -53,7 +53,7 @@ class WindowSlave(QTextBrowser):
         self.append('绑定信号槽完成')
 
     def on_data_changed(self):
-        # 客户端剪贴板变化后发送到远程
+        # 客户 客户 贴 贴 变 变 变 变 远 
         print('on_data_changed')
         clipboard = QApplication.clipboard()
         clipboard.blockSignals(True)
@@ -76,7 +76,7 @@ class WindowSlave(QTextBrowser):
                        hasText, text,
                        hasUrls, urls
                        ):
-        # 远程的剪贴板同步到客户端
+        # 원격 클립 보드는 클라이언트에 동기화되었습니다 
         clipboard = QApplication.clipboard()
         clipboard.blockSignals(True)
         data = QMimeData()

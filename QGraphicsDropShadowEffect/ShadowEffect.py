@@ -29,14 +29,14 @@ class Window(QWidget):
         super(Window, self).__init__(*args, **kwargs)
         layout = QHBoxLayout(self)
 
-        # 绿色边框
+        # 绿色 边 框 
         labelGreen = QLabel(self, pixmap=QPixmap('Data/1.jpg').scaled(100, 100))
         layout.addWidget(labelGreen)
         aniGreen = AnimationShadowEffect(Qt.darkGreen, labelGreen)
         labelGreen.setGraphicsEffect(aniGreen)
         aniGreen.start()
 
-        # 红色边框,圆形图片
+        # 红 边,, 원형 그림 
         labelRed = QLabel(self)
         labelRed.setMinimumSize(100, 100)
         labelRed.setMaximumSize(100, 100)
@@ -46,15 +46,15 @@ class Window(QWidget):
         labelRed.setGraphicsEffect(aniRed)
         aniRed.start()
 
-        # 蓝色边框按钮
+        # 蓝色 按 버튼 
         button = QPushButton('按钮', self)
         aniButton = AnimationShadowEffect(Qt.blue, button)
         layout.addWidget(button)
         button.setGraphicsEffect(aniButton)
-        button.clicked.connect(aniButton.stop)  # 按下按钮停止动画
+        button.clicked.connect(aniButton.stop)  # 애니메이션을 중지하려면 버튼을 누릅니다 
         aniButton.start()
 
-        # 青色边框输入框
+        # 青色 边 边 框 
         lineedit = QLineEdit(self)
         aniEdit = AnimationShadowEffect(Qt.cyan, lineedit)
         layout.addWidget(lineedit)

@@ -19,7 +19,7 @@ from PyQt5.QtWidgets import QLabel
 
 __version__ = "0.0.1"
 
-DEF_NOISYPOINTCOUNT = 60  # 噪点数量
+DEF_NOISYPOINTCOUNT = 60  # 点 数 
 COLORLIST = ("black", "gray", "red", "green", "blue", "magenta")
 TCOLORLIST = (Qt.black, Qt.gray, Qt.red, Qt.green, Qt.blue, Qt.magenta)
 QTCOLORLIST = (Qt.darkGray, Qt.darkRed, Qt.darkGreen, Qt.darkBlue, Qt.darkMagenta)
@@ -32,24 +32,24 @@ class WidgetCode(QLabel):
     
     def __init__(self, *args, **kwargs):
         super(WidgetCode, self).__init__(*args, **kwargs)
-        self._sensitive = False  # 是否大小写敏感
+        self._sensitive = False  # 是 大 大 小 
         self.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         self.setBackgroundRole(QPalette.Midlight)
         self.setAutoFillBackground(True)
-        # 字体
+        # 폰트 
         newFont = self.font()
         newFont.setPointSize(16)
         newFont.setFamily("Kristen ITC")
         newFont.setBold(True)
         self.setFont(newFont)
         self.reset()
-        # 定时器
+        # 타이머 
         self.step = 0
         self.timer = QBasicTimer()
         self.timer.start(60, self)
         
     def reset(self):
-        self._code = "".join(sample(WORDS, 4))  # 随机4个字符
+        self._code = "".join(sample(WORDS, 4))  # 무작위 4 자 
         self.setText(self._code)
     
     def check(self, code):
@@ -59,7 +59,7 @@ class WidgetCode(QLabel):
         self._sensitive = sensitive
     
 #     def setText(self, text):
-#         text = text if (text and len(text) == 4) else "".join(sample(WORDS, 4))  # 随机4个字符
+# text = 텍스트 (텍스트 및 len (텍스트) == 4) else "" "" "" "" "" "" "" "" ""랜덤 4 자) 
 #         self._code = str(text)
 #         html = "".join([FONT.format(color=COLORLIST[qrand() % 6], word=t) for t in text])
 #         super(WidgetCode, self).setText(HTML.format(html=html))
@@ -77,13 +77,13 @@ class WidgetCode(QLabel):
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
-        # 背景白色
+        # 배경 흰색 
         painter.fillRect(event.rect(), QBrush(Qt.white))
-        # 绘制边缘虚线框
+        # 여백의 가장자리를 그립니다 
         painter.setPen(Qt.DashLine)
         painter.setBrush(Qt.NoBrush)
         painter.drawRect(self.rect())
-        # 随机画条线
+        # 임의의 도면 
         for _ in range(3):
             painter.setPen(QPen(QTCOLORLIST[qrand() % 5], 1, Qt.SolidLine))
             painter.setBrush(Qt.NoBrush)
@@ -91,13 +91,13 @@ class WidgetCode(QLabel):
                              QPoint(self.width(), qrand() % self.height()))
             painter.drawLine(QPoint(qrand() % self.width(), 0),
                              QPoint(qrand() % self.width(), self.height()))
-        # 绘制噪点
+        #draw 소음 
         painter.setPen(Qt.DotLine)
         painter.setBrush(Qt.NoBrush)
-        for _ in range(self.width()):  # 绘制噪点
+        for _ in range(self.width()):  #draw 소음 
             painter.drawPoint(QPointF(qrand() % self.width(), qrand() % self.height()))
-        # super(WidgetCode, self).paintEvent(event)  # 绘制文字
-        # 绘制跳动文字
+        # 슈퍼 (위젯 코드, 자체) .painTevent (이벤트) #draw 텍스트 
+        # beating text를 그립니다 
         metrics = QFontMetrics(self.font())
         x = (self.width() - metrics.width(self.text())) / 2
         y = (self.height() + metrics.ascent() - metrics.descent()) / 2

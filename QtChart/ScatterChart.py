@@ -21,19 +21,19 @@ class Window(QChartView):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.resize(400, 300)
-        # 抗锯齿
+        # 抗锯 齿齿 
         self.setRenderHint(QPainter.Antialiasing)
-        # 生成模拟数据
+        # 아날로그 데이터 생성 
         self.m_dataTable = self.generateRandomData(3, 10, 7)
 
-        # 图表
+        # 图片 
         chart = QChart()
         self.setChart(chart)
-        # 设置标题
+        # 제목을 설정하십시오 
         chart.setTitle('Scatter chart')
-        # 添加Series
+        # 加 ses. 
         self.getSeries(chart)
-        # 创建默认xy轴
+        # 기본 XY 축을 만듭니다 
         chart.createDefaultAxes()
         chart.legend().setVisible(False)
 
@@ -47,7 +47,7 @@ class Window(QChartView):
             chart.addSeries(series)
 
     def generateRandomData(self, listCount, valueMax, valueCount):
-        # 生成模拟随机数据
+        # 아날로그 임의 데이터를 생성합니다 
         random.seed()
 
         dataTable = []

@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QTextEdit
 from Lib.FramelessWindow import FramelessWindow  # @UnresolvedImport
 
 
-# Created on 2018年4月30日
+# 2018 년 4 월 30 일에 만들어졌습니다 
 # author: Irony
 # site: https://pyqt5.com , https://github.com/892768447
 # email: 892768447@qq.com
@@ -29,7 +29,7 @@ class MainWindow(QWidget):
         layout.addWidget(QTextEdit(self))
 
 
-# 样式
+# 스타일 
 StyleSheet = """
 /*标题栏*/
 TitleBar {
@@ -69,6 +69,6 @@ if __name__ == '__main__':
     w = FramelessWindow()
     w.setWindowTitle('测试标题栏')
     w.setWindowIcon(QIcon('Data/Qt.ico'))
-    w.setWidget(MainWindow(w))  # 把自己的窗口添加进来
+    w.setWidget(MainWindow(w))  # 자신의 창을 추가하십시오 
     w.show()
     sys.exit(app.exec_())

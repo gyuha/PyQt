@@ -36,7 +36,7 @@ class ItemWidget(QWidget):
         layout.addWidget(QLabel(text, self, styleSheet='color: white;'))
         layout.addSpacerItem(QSpacerItem(
             60, 1, QSizePolicy.Maximum, QSizePolicy.Minimum))
-        if badge and len(badge) == 2:  # 后面带颜色的标签
+        if badge and len(badge) == 2:  # # 面 标 
             layout.addWidget(QLabel(
                 badge[0], self, alignment=Qt.AlignCenter,
                 styleSheet="""min-width: 80px; 
@@ -56,12 +56,12 @@ class JsonTreeWidget(QTreeWidget):
         super(JsonTreeWidget, self).__init__(*args, **kwargs)
         self.setEditTriggers(self.NoEditTriggers)
         self.header().setVisible(False)
-        # 帮点单击事件
+        # 帮 点 点 单 事 事 
         self.itemClicked.connect(self.onItemClicked)
 
     def onItemClicked(self, item):
         """item单击事件"""
-        if item.url:  # 调用浏览器打开网址
+        if item.url:  # URL을 여는 브라우저를 호출하십시오 
             webbrowser.open_new_tab(item.url)
 
     def parseData(self, datas, parent=None):
@@ -69,7 +69,7 @@ class JsonTreeWidget(QTreeWidget):
         for data in datas:
             url = data.get('url', '')
             items = data.get('items', [])
-            # 生成item
+            # 生 生 I. 
             _item = QTreeWidgetItem(parent)
             _item.setIcon(0, QIcon(data.get('icon', '')))
             _widget = ItemWidget(
@@ -77,11 +77,11 @@ class JsonTreeWidget(QTreeWidget):
                 data.get('badge', []),
                 self
             )
-            _item.url = url  # 可以直接设置变量值
+            _item.url = url  # 변수 값을 직접 설정할 수 있습니다 
             self.setItemWidget(_item, 0, _widget)
             if url:
-                continue  # 跳过
-            # 解析儿子
+                continue  # 뛰어 넘다 
+            # 解析 儿子 
             if items:
                 self.parseData(items, _item)
 

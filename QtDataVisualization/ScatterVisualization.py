@@ -72,20 +72,20 @@ class ScatterDataModifier(QObject):
     def __init__(self, scatter):
         super(ScatterDataModifier, self).__init__()
 
-        self.m_graph = scatter  # Q3DScatter实例
+        self.m_graph = scatter  # Q3DSCATTER 인스턴스 
         self.m_fontSize = 40.0
         self.m_style = QAbstract3DSeries.MeshSphere
         self.m_smooth = True
         self.m_itemCount = self.lowerNumberOfItems
         self.m_curveDivider = self.lowerCurveDivider
 
-        # 设置当前主题类型
+        # 현재 주제 유형을 설정합니다 
         self.m_graph.activeTheme().setType(Q3DTheme.ThemeEbony)
-        # 设置当前主题的字体
+        # 현재 주제의 글꼴을 설정합니다 
         font = self.m_graph.activeTheme().font()
         font.setPointSize(self.m_fontSize)
         self.m_graph.activeTheme().setFont(font)
-        # 设置阴影质量
+        # 그림자 품질을 설정합니다 
         self.m_graph.setShadowQuality(QAbstract3DGraph.ShadowQualitySoftLow)
         self.m_graph.scene().activeCamera().setCameraPreset(
             Q3DCamera.CameraPresetFront)
@@ -100,7 +100,7 @@ class ScatterDataModifier(QObject):
         self.addData()
 
     def addData(self):
-        # 添加数据
+        # 데이터 추가 
         self.m_graph.axisX().setTitle("X")
         self.m_graph.axisY().setTitle("Y")
         self.m_graph.axisZ().setTitle("Z")

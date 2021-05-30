@@ -11,7 +11,7 @@ Created on 2019年5月21日
 from pyqtgraph.exporters.ImageExporter import ImageExporter, Exporter
 from pyqtgraph.parametertree import Parameter
 import pyqtgraph as pg
-#不用修改源码，重加载，解决右键保存图片异常
+# 소스 코드,로드 및로드 및 해결을 수정하지 마십시오. 그림 예외를 저장하려면 클릭하십시오. 
 def widthChanged(self):
     sr = self.getSourceRect()
     ar = float(sr.height()) / sr.width()
@@ -46,7 +46,7 @@ ImageExporter.heightChanged = heightChanged
 ImageExporter.widthChanged = widthChanged
 ImageExporter.__init__ = New__init__
 
-#解决自定义坐标轴密集显示
+# 사용자 정의 좌표 축 집약적 인 디스플레이를 해결합니다 
 class MyStringAxis(pg.AxisItem):
     def __init__(self, xdict, *args, **kwargs):
         pg.AxisItem.__init__(self, *args, **kwargs)
@@ -62,7 +62,7 @@ class MyStringAxis(pg.AxisItem):
                 vstr = ""
             strings.append(vstr)
         return strings
-# 禁止鼠标事件
+# 禁 事 事 
 class CustomViewBox(pg.ViewBox):
     def __init__(self, *args, **kwds):
         pg.ViewBox.__init__(self, *args, **kwds)

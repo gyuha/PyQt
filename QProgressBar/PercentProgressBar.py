@@ -27,13 +27,13 @@ class PercentProgressBar(QWidget):
     MaxValue = 100
     Value = 0
     BorderWidth = 8
-    Clockwise = True  # 顺时针还是逆时针
-    ShowPercent = True  # 是否显示百分比
-    ShowFreeArea = False  # 显示背后剩余
-    ShowSmallCircle = False  # 显示带头的小圆圈
-    TextColor = QColor(255, 255, 255)  # 文字颜色
-    BorderColor = QColor(24, 189, 155)  # 边框圆圈颜色
-    BackgroundColor = QColor(70, 70, 70)  # 背景颜色
+    Clockwise = True  # 顺 时 针 또는 반 시계 방향으로 
+    ShowPercent = True  # 백분율을 표시할지 여부 
+    ShowFreeArea = False  # 남은 뒤에 표시하십시오 
+    ShowSmallCircle = False  # 머리와 작은 원을 보여줍니다 
+    TextColor = QColor(255, 255, 255)  # 文 
+    BorderColor = QColor(24, 189, 155)  # 테두리 원형 색상 
+    BackgroundColor = QColor(70, 70, 70)  # 배경색 
 
     def __init__(self, *args, value=0, minValue=0, maxValue=100,
                  borderWidth=8, clockwise=True, showPercent=True,
@@ -55,7 +55,7 @@ class PercentProgressBar(QWidget):
         self.BackgroundColor = backgroundColor
 
     def setRange(self, minValue: int, maxValue: int):
-        if minValue >= maxValue:  # 最小值>=最大值
+        if minValue >= maxValue:  # minimum> = 최대 값 
             return
         self.MinValue = minValue
         self.MaxValue = maxValue
@@ -68,23 +68,23 @@ class PercentProgressBar(QWidget):
         side = min(width, height)
 
         painter = QPainter(self)
-        # 反锯齿
+        # 反 反 齿 
         painter.setRenderHints(QPainter.Antialiasing |
                                QPainter.TextAntialiasing)
-        # 坐标中心为中间点
+        # 坐 中 村은 중간 지점입니다 
         painter.translate(width / 2, height / 2)
-        # 按照100x100缩放
+        # 100 100 100 100 1. 
         painter.scale(side / 100.0, side / 100.0)
 
-        # 绘制中心园
+        # 绘 中心 
         self._drawCircle(painter, 50)
-        # 绘制圆弧
+        #draw 아크 
         self._drawArc(painter, 50 - self.BorderWidth / 2)
-        # 绘制文字
+        # 文 
         self._drawText(painter, 50)
 
     def _drawCircle(self, painter: QPainter, radius: int):
-        # 绘制中心园
+        # 绘 中心 
         radius = radius - self.BorderWidth
         painter.save()
         painter.setPen(Qt.NoPen)
@@ -93,10 +93,10 @@ class PercentProgressBar(QWidget):
         painter.restore()
 
     def _drawArc(self, painter: QPainter, radius: int):
-        # 绘制圆弧
+        #draw 아크 
         painter.save()
         painter.setBrush(Qt.NoBrush)
-        # 修改画笔
+        # 修 修 修 画 
         pen = painter.pen()
         pen.setWidthF(self.BorderWidth)
         pen.setCapStyle(Qt.RoundCap)
@@ -105,10 +105,10 @@ class PercentProgressBar(QWidget):
         rect = QRectF(-radius, -radius, radius * 2, radius * 2)
 
         if not self.Clockwise:
-            # 逆时针
+            # 반 시계 방향으로 
             arcLength = -arcLength
 
-        # 绘制剩余进度圆弧
+        # 나머지 진행 상황을 끌어 올리십시오 
         if self.ShowFreeArea:
             acolor = self.BorderColor.toRgb()
             acolor.setAlphaF(0.2)
@@ -117,12 +117,12 @@ class PercentProgressBar(QWidget):
             painter.drawArc(rect, (0 - arcLength) *
                             16, -(360 - arcLength) * 16)
 
-        # 绘制当前进度圆弧
+        # 현재 진행 상황을 그립니다 
         pen.setColor(self.BorderColor)
         painter.setPen(pen)
         painter.drawArc(rect, 0, -arcLength * 16)
 
-        # 绘制进度圆弧前面的小圆
+        # 진행 상황에서 진행 상황을 끌어 올리십시오 
         if self.ShowSmallCircle:
             offset = radius - self.BorderWidth + 1
             radius = self.BorderWidth / 2 - 1
@@ -135,7 +135,7 @@ class PercentProgressBar(QWidget):
         painter.restore()
 
     def _drawText(self, painter: QPainter, radius: int):
-        # 绘制文字
+        # 文 
         painter.save()
         painter.setPen(self.TextColor)
         painter.setFont(QFont('Arial', 25))

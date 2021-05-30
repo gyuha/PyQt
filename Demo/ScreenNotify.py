@@ -20,28 +20,28 @@ class Window(QPlainTextEdit):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.appendPlainText('修改分辨率后查看')
-        # 记录最后一次的值（减少槽调用）
+        # 마지막 값을 기록하십시오 (슬롯 줄이기). 
         self.m_rect = QRect()
-        # 使用定时器来延迟触发最后一次变化
+        # 타이머를 사용하여 트리거 마지막 변경 지연 
         self.m_timer = QTimer(self, timeout=self.onSolutionChanged)
-        self.m_timer.setSingleShot(True)  # **重要** 保证多次信号尽量少的调用函数
+        self.m_timer.setSingleShot(True)  # ** 중요 ** 보증 다중 신호가 작은 통화 기능으로 
 
-        # 主要是多屏幕->无屏幕->有屏幕
+        # 주로 다중 화면 -> 화면 없음 -> 화면이있는 
         qApp.primaryScreenChanged.connect(lambda _: self.m_timer.start(1000))
-        # 其它信号最终基本上都会调用该信号
+        # 다른 신호는 결국이 신호를 호출합니다 
         qApp.primaryScreen().virtualGeometryChanged.connect(lambda _: self.m_timer.start(1000))
-        # DPI变化
+        #dpi 변경 
         qApp.primaryScreen().logicalDotsPerInchChanged.connect(lambda _: self.m_timer.start(1000))
 
     def onSolutionChanged(self):
-        # 获取主屏幕
+        # 홈 화면을 얻으십시오 
         screen = qApp.primaryScreen()
         if self.m_rect == screen.availableVirtualGeometry():
             return
         self.m_rect = screen.availableVirtualGeometry()
-        # 所有屏幕可用大小
+        # 모든 화면을 사용할 수 있습니다 
         self.appendPlainText('\navailableVirtualGeometry: {0}'.format(str(screen.availableVirtualGeometry())))
-        # 获取所有屏幕
+        # 모든 화면을 얻으십시오 
         screens = qApp.screens()
         for screen in screens:
             self.appendPlainText(

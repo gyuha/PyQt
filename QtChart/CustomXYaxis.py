@@ -50,12 +50,12 @@ def getChart(title):
             series.append(*value)
         series.setName("Series " + str(i))
         chart.addSeries(series)
-    chart.createDefaultAxes()  # 创建默认的轴
+    chart.createDefaultAxes()  # 기본 축을 만듭니다 
     return chart
 
 
 def customAxisX(chart):
-    # 自定义x轴(均分)
+    # 사용자 정의 X 축 (000) 
     series = chart.series()
     if not series:
         return
@@ -74,28 +74,28 @@ def customAxisX(chart):
 
 
 def customTopAxisX(chart):
-    # 自定义top x轴
+    # 사용자 정의 탑 x 축 
     series = chart.series()
     if not series:
         return
-    category = ["%d月" % i for i in range(1, 9)]  # 1-8月
+    category = ["%d月" % i for i in range(1, 9)]  # 1 1 8 1. 
     axisx = QCategoryAxis(
         chart, labelsPosition=QCategoryAxis.AxisLabelsPositionOnValue)
-    axisx.setGridLineVisible(False)  # 隐藏网格线条
-    axisx.setTickCount(len(category))  # 设置刻度个数
-    chart.axisX().setTickCount(len(category))  # 强制修改x轴的刻度个数一致
+    axisx.setGridLineVisible(False)  # 숨겨진 격자 선 
+    axisx.setTickCount(len(category))  # 포인트 수를 설정하십시오 
+    chart.axisX().setTickCount(len(category))  # x 축에 대한 스케일 번호 수를 적용합니다. 
     minx = chart.axisX().min()
     maxx = chart.axisX().max()
     tickc = chart.axisX().tickCount()
     step = (maxx - minx) / (tickc - 1)  # tickc>=2
     for i in range(0, tickc):
         axisx.append(category[i], minx + i * step)
-    chart.addAxis(axisx, Qt.AlignTop)  # 添加到右侧
-    series[-1].attachAxis(axisx)  # 附加到series上
+    chart.addAxis(axisx, Qt.AlignTop)  # 오른쪽에 추가하십시오 
+    series[-1].attachAxis(axisx)  # 附 到 s 上. 
 
 
 def customAxisY(chart):
-    # 自定义y轴(不等分)
+    # 사용자 정의 Y 축 (불평등) 
     series = chart.series()
     if not series:
         return
@@ -103,8 +103,8 @@ def customAxisY(chart):
                 "周五", "周六", "周日"]
     axisy = QCategoryAxis(
         chart, labelsPosition=QCategoryAxis.AxisLabelsPositionOnValue)
-    axisy.setGridLineVisible(False)  # 隐藏网格线条
-    axisy.setTickCount(len(category))  # 设置刻度个数
+    axisy.setGridLineVisible(False)  # 숨겨진 격자 선 
+    axisy.setTickCount(len(category))  # 포인트 수를 설정하십시오 
     miny = chart.axisY().min()
     maxy = chart.axisY().max()
     tickc = axisy.tickCount()
@@ -114,8 +114,8 @@ def customAxisY(chart):
         step = (maxy - miny) / (tickc - 1)  # tickc>=2
         for i in range(0, tickc):
             axisy.append(category[i], miny + i * step)
-    chart.addAxis(axisy, Qt.AlignRight)  # 添加到右侧
-    series[-1].attachAxis(axisy)  # 附加到series上
+    chart.addAxis(axisy, Qt.AlignRight)  # 오른쪽에 추가하십시오 
+    series[-1].attachAxis(axisy)  # 附 到 s 上. 
 
 
 class Window(QWidget):
@@ -124,15 +124,15 @@ class Window(QWidget):
         super(Window, self).__init__(*args, **kwargs)
         layout = QHBoxLayout(self)
 
-        # 自定义x轴(和原来的x轴值对应等分)
+        # x 축을 사용자 정의하십시오 (원래 x 축 값에 해당). 
         chart = getChart("自定义x轴(和原来的x轴值对应等分)")
         customAxisX(chart)
         layout.addWidget(QChartView(chart, self))
-        # 自定义添加右侧y轴(等分,与左侧不对应)
+        # 사용자 정의 오른쪽 축을 추가 (왼쪽에 해당하는 분취 량) 
         chart = getChart("自定义添加右侧y轴(等分,与左侧不对应)")
         customAxisY(chart)
         layout.addWidget(QChartView(chart, self))
-        # 自定义top x轴(按现有新的x轴划分)
+        # 맞춤형 탑 x 축 (새로운 x 축으로 나눈) 
         chart = getChart("自定义top x轴(按现有新的x轴划分)")
         customTopAxisX(chart)
         layout.addWidget(QChartView(chart, self))

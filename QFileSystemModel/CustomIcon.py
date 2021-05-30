@@ -21,7 +21,7 @@ __Author__ = "By: Irony.\"[讽刺]\nQQ: 892768447\nEmail: 892768447@qq.com"
 __Copyright__ = "Copyright (c) 2018 Irony.\"[讽刺]"
 __Version__ = "Version 1.0"
 
-# 图标提供类
+# 图 图 图 提供 
 
 
 class FileIconProvider(QFileIconProvider):
@@ -36,10 +36,10 @@ class FileIconProvider(QFileIconProvider):
         :param fileInfo: 参考http://doc.qt.io/qt-5/qfileinfo.html
         '''
         if isinstance(type_info, QFileInfo):
-            # 如果type_info是QFileInfo类型则用getInfoIcon来返回图标
+            # type_info가 QFileInfo 유형 인 경우 GetInfoIcon을 사용하여 아이콘을 반환합니다. 
             return self.getInfoIcon(type_info)
-        # 如果type_info是QFileIconProvider自身的IconType枚举类型则执行下面的方法
-        # 这里只能自定义通用的几种类型，参考http://doc.qt.io/qt-5/qfileiconprovider.html#IconType-enum
+        # type_info가 QFileIconProvider의 자체 iContype 열거 형 유형의 유형이면 다음 메소드가 수행됩니다. 
+        # 이것은 단지 여러 유형의 범용, 참조 http : //doc.qt.io/qt-5/qfileiconprovider.html#icondype-enum 
         '''
         QFileIconProvider::Computer     0
         QFileIconProvider::Desktop      1
@@ -50,14 +50,14 @@ class FileIconProvider(QFileIconProvider):
         QFileIconProvider::File         6
         '''
         if type_info == QFileIconProvider.Folder:
-            # 如果是文件夹
+            # 폴더 인 경우 # 
             return self.DirIcon
         return super(FileIconProvider, self).icon(type_info)
 
     def getInfoIcon(self, type_info):
-        if type_info.isDir():  # 文件夹
+        if type_info.isDir():  # 폴더 
             return self.DirIcon
-        if type_info.isFile() and type_info.suffix() == "txt":  # 文件并且是txt
+        if type_info.isFile() and type_info.suffix() == "txt":  # 파일과 txt입니다 
             return self.TxtIcon
         return super(FileIconProvider, self).icon(type_info)
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     model = QFileSystemModel()
-    model.setIconProvider(FileIconProvider())  # 设置为自定义的图标提供类
+    model.setIconProvider(FileIconProvider())  # 클래스를 제공하는 사용자 정의 아이콘으로 설정합니다 
     model.setRootPath("")
     tree = QTreeView()
     tree.setModel(model)

@@ -30,10 +30,10 @@ class AnimationShadowEffect(QGraphicsDropShadowEffect):
         self._radius = 0
         self.animation = QPropertyAnimation(self)
         self.animation.setTargetObject(self)
-        self.animation.setDuration(2000)  # 一次循环时间
-        self.animation.setLoopCount(-1)  # 永久循环
+        self.animation.setDuration(2000)  # 一 次 次 循 
+        self.animation.setLoopCount(-1)  # 영구 순환 
         self.animation.setPropertyName(b'radius')
-        # 插入值
+        # 삽입 값 
         self.animation.setKeyValueAt(0, 1)
         self.animation.setKeyValueAt(0.5, 30)
         self.animation.setKeyValueAt(1, 1)
@@ -42,7 +42,7 @@ class AnimationShadowEffect(QGraphicsDropShadowEffect):
         self.animation.start()
 
     def stop(self, r=0):
-        # 停止动画并修改半径值
+        # 애니메이션을 중지하고 반 직경 값을 수정합니다. 
         self.animation.stop()
         self.radius = r
 

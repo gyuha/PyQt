@@ -14,9 +14,9 @@ __Author__ = "By: Irony.\"[讽刺]\nQQ: 892768447\nEmail: 892768447@qq.com"
 __Copyright__ = "Copyright (c) 2017 Irony.\"[讽刺]"
 __Version__ = "Version 1.0"
 
-# 这里把转换的xpm数组直接放到py文件中当做一个变量
+# 여기서 변환 된 XPM 배열을 PY 파일에 변수로 직접 놓습니다. 
 
-# 这里需要把xpm文件里的内容做下修改成python的list
+# 여기서 XPM 파일의 내용을 Python의 목록으로 수정해야합니다. 
 image_head = [
     "120 120 256 2",
     "8  c Black",

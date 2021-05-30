@@ -26,7 +26,7 @@ __Copyright__ = "Copyright (c) 2018 Irony"
 __Version__ = "Version 1.0"
 
 # engine = create_engine('mysql+mysqldb://root@localhost:3306/tourist?charset=utf8')
-engine = create_engine('sqlite:///Data/data.sqlite3', echo=True)  # echo 表示开启命令显示
+engine = create_engine('sqlite:///Data/data.sqlite3', echo=True)  # echo는 명령이 표시됩니다 
 Base = declarative_base()
 
 
@@ -51,9 +51,9 @@ class Window(QWidget, Ui_Form):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        # sql的拼接字段
+        # SQL SPLICING 필드 
         self.sql = {}
-        # 数据库连接
+        # 데이터베이스 연결 
         self.session = sessionmaker(bind=engine)()
 
     @pyqtSlot()
@@ -65,18 +65,18 @@ class Window(QWidget, Ui_Form):
         self.applyPort()
         if not self.sql:
             return QMessageBox.warning(self, '提示', '没有进行任何输入')
-        # 清空数据
+        # 清 数据 数据 
         self.tableWidget.clear()
-        # 重新设置表头
+        # 헤더를 재설정합니다 
         self.tableWidget.setHorizontalHeaderLabels(
             ['编号', '姓名', '证件号', '航班号', '航班日期', '座位号', '登机口', '序号', '出发地', '目的地'])
-        # 根据选择的字段进行并列查询
+        # 선택한 필드에 따라 # seearly 
         rets = self.session.query(Tourist).filter(
             and_(*(key == value for key, value in self.sql.items()))).all()
         if not rets:
             return QMessageBox.information(self, '提示', '未查询到结果')
         self.tableWidget.setRowCount(len(rets))
-        # 根据查询结果添加到表格中
+        # 쿼리 결과에 따라 테이블에 추가 
         for row, tourist in enumerate(rets):
             self.tableWidget.setItem(row, 0, QTableWidgetItem(str(tourist.id)))
             self.tableWidget.setItem(
@@ -101,9 +101,9 @@ class Window(QWidget, Ui_Form):
         """姓名"""
         if not self.checkBoxName.isChecked():
             if Tourist.name in self.sql:
-                # 移除
+                # 移 除 
                 self.sql.pop(Tourist.name)
-        # 更新或添加到字典里
+        # 업데이트 또는 사전에 추가하십시오 
         else:
             self.sql[Tourist.name] = self.lineEditName.text().strip()
 
@@ -111,9 +111,9 @@ class Window(QWidget, Ui_Form):
         """座位号"""
         if not self.checkBoxSeat.isChecked():
             if Tourist.seatnumber in self.sql:
-                # 移除
+                # 移 除 
                 self.sql.pop(Tourist.seatnumber)
-        # 更新或添加到字典里
+        # 업데이트 또는 사전에 추가하십시오 
         else:
             self.sql[Tourist.seatnumber] = self.lineEditSeat.text().strip()
 
@@ -121,9 +121,9 @@ class Window(QWidget, Ui_Form):
         """证件号"""
         if not self.checkBoxLicense.isChecked():
             if Tourist.license in self.sql:
-                # 移除
+                # 移 除 
                 self.sql.pop(Tourist.license)
-        # 更新或添加到字典里
+        # 업데이트 또는 사전에 추가하십시오 
         else:
             self.sql[Tourist.license] = self.lineEditLicense.text().strip()
 
@@ -131,9 +131,9 @@ class Window(QWidget, Ui_Form):
         """登机口"""
         if not self.checkBoxPort.isChecked():
             if Tourist.boardingport in self.sql:
-                # 移除
+                # 移 除 
                 self.sql.pop(Tourist.boardingport)
-        # 更新或添加到字典里
+        # 업데이트 또는 사전에 추가하십시오 
         else:
             self.sql[Tourist.boardingport] = self.lineEditPort.text().strip()
 

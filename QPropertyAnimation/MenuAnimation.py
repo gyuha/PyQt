@@ -42,11 +42,11 @@ class Window(QWidget):
         QApplication.instance().aboutQt()
 
     def initAnimation(self):
-        # 按钮动画
+        # 按 动 动画 
         self._animation = QPropertyAnimation(
             self._contextMenu, b'geometry', self,
             easingCurve=QEasingCurve.Linear, duration=300)
-        # easingCurve 修改该变量可以实现不同的效果
+        # EasingCurve 수정이 변수는 다른 효과를 얻을 수 있습니다 
 
     def initMenu(self):
         self._contextMenu = QMenu(self)

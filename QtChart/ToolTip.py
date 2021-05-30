@@ -125,7 +125,7 @@ class ChartView(QChartView):
     def __init__(self, *args, **kwargs):
         super(ChartView, self).__init__(*args, **kwargs)
         self.resize(800, 600)
-        self.setRenderHint(QPainter.Antialiasing)  # 抗锯齿
+        self.setRenderHint(QPainter.Antialiasing)  # 抗锯 齿齿 
         self.initChart()
 
         self.toolTipWidget = GraphicsProxyWidget(self._chart)
@@ -135,15 +135,15 @@ class ChartView(QChartView):
         self.lineItem.setZValue(998)
         self.lineItem.hide()
 
-        # 一些固定计算，减少mouseMoveEvent中的计算量
-        # 获取x和y轴的最小最大值
+        # 일부 고정 계산, mouseMoveEvent의 계산량을 줄입니다. 
+        # x 및 y 축의 최대 최대 값을 얻습니다. 
         axisX, axisY = self._chart.axisX(), self._chart.axisY()
         self.min_x, self.max_x = axisX.min(), axisX.max()
         self.min_y, self.max_y = axisY.min(), axisY.max()
-        # 坐标系中左上角顶点
+        # 上 上 上 上 上 上 上 
         self.point_top = self._chart.mapToPosition(
             QPointF(self.min_x, self.max_y))
-        # 坐标原点坐标
+        # 坐 原 原 点 
         self.point_bottom = self._chart.mapToPosition(
             QPointF(self.min_x, self.min_y))
         self.step_x = (self.max_x - self.min_x) / (axisX.tickCount() - 1)
@@ -152,18 +152,18 @@ class ChartView(QChartView):
 
     def mouseMoveEvent(self, event):
         super(ChartView, self).mouseMoveEvent(event)
-        # 把鼠标位置所在点转换为对应的xy值
+        # 마우스 위치를 해당 XY 값으로 변환하십시오. 
         x = self._chart.mapToValue(event.pos()).x()
         y = self._chart.mapToValue(event.pos()).y()
         index = round((x - self.min_x) / self.step_x)
         pos_x = self._chart.mapToPosition(
             QPointF(index * self.step_x + self.min_x, self.min_y))
         #         print(x, pos_x, index, index * self.step_x + self.min_x)
-        # 得到在坐标系中的所有series的类型和点
+        # 좌표계에서 모든 시리즈의 모든 유형과 포인트 가져 오기 
         points = [(serie, serie.at(index))
                   for serie in self._chart.series() if self.min_x <= x <= self.max_x and self.min_y <= y <= self.max_y]
         if points:
-            # 永远在轴上的黑线条
+            # 샤프트에 영원히 검은 선 
             self.lineItem.setLine(pos_x.x(), self.point_top.y(),
                                   pos_x.x(), self.point_bottom.y())
             self.lineItem.show()
@@ -196,13 +196,13 @@ class ChartView(QChartView):
             for j, v in enumerate(data_list):
                 series.append(j, v)
             series.setName("Series " + str(i))
-            series.setPointsVisible(True)  # 显示原点
+            series.setPointsVisible(True)  # 디스플레이 원본 
             series.hovered.connect(self.onSeriesHoverd)
             self._chart.addSeries(series)
-        self._chart.createDefaultAxes()  # 创建默认的轴
-        self._chart.axisX().setTickCount(7)  # x轴设置7个刻度
-        self._chart.axisY().setTickCount(7)  # y轴设置7个刻度
-        self._chart.axisY().setRange(0, 1500)  # 设置y轴范围
+        self._chart.createDefaultAxes()  # 기본 축을 만듭니다 
+        self._chart.axisX().setTickCount(7)  # x 축 설정 7 스케일 
+        self._chart.axisY().setTickCount(7)  # 샤프트 설정 7 스케일 
+        self._chart.axisY().setRange(0, 1500)  # y 축 범위를 설정합니다 
         self.setChart(self._chart)
 
 

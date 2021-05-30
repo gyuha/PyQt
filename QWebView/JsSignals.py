@@ -29,7 +29,7 @@ class WebView(QWebView):
     def __init__(self, *args, **kwargs):
         super(WebView, self).__init__(*args, **kwargs)
         self.initSettings()
-        # 暴露接口对象
+        # 노출 인터페이스 개체 
         self.page().mainFrame().javaScriptWindowObjectCleared.connect(self._exposeInterface)
 
     def _exposeInterface(self):
@@ -37,13 +37,13 @@ class WebView(QWebView):
         """
         self.page().mainFrame().addToJavaScriptWindowObject('Bridge', self)
 
-    # 注意pyqtSlot用于把该函数暴露给js可以调用
+    # note pyqtslot은 JS에 함수를 노출하는 데 사용됩니다. 
     @pyqtSlot(str)
     def callFromJs(self, text):
         QMessageBox.information(self, "提示", "来自js调用：{}".format(text))
 
     def sendCustomSignal(self):
-        # 发送自定义信号
+        # 사용자 정의 신호를 보냅니다 
         self.customSignal.emit('当前时间: ' + str(time()))
 
     @pyqtSlot(str)
@@ -59,11 +59,11 @@ class WebView(QWebView):
         '''
         eg: 初始化设置
         '''
-        # 获取浏览器默认设置
+        # 브라우저 기본 설정을 얻습니다 
         settings = self.settings()
-        # 开启开发人员工具
+        # 개발자 도구를 엽니 다 
         settings.setAttribute(QWebSettings.DeveloperExtrasEnabled, True)
-        # 设置默认编码
+        # 기본 코드를 설정하십시오 
         settings.setDefaultTextEncoding('UTF-8')
 
 

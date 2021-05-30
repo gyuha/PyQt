@@ -32,7 +32,7 @@ class ScrollArea(QScrollArea):
         self.setWidget(self.window)
 
         layout = QGridLayout(self.window)
-        fonts = list(FontAwesomes.alls().items())  # 786个 131*6
+        fonts = list(FontAwesomes.alls().items())  # 786 131 * 6. 
         print(fonts)
 
         for row in range(131):

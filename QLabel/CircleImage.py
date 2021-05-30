@@ -27,32 +27,32 @@ class Label(QLabel):
         self.setMinimumSize(200, 200)
         self.radius = 100
 
-        #####################核心实现#########################
-        self.target = QPixmap(self.size())  # 大小和控件一样
-        self.target.fill(Qt.transparent)  # 填充背景为透明
+        ############## ¶ ######################## ##################################################### ##################################################### ##################################################### ##################################################### ## 
+        self.target = QPixmap(self.size())  # 크기 및 제어 
+        self.target.fill(Qt.transparent)  # 背景 背景 为 
 
-        p = QPixmap("Data/Images/head.jpg").scaled(  # 加载图片并缩放和控件一样大
+        p = QPixmap("Data/Images/head.jpg").scaled(  # loading rouse and large로 확대됩니다 
             200, 200, Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
 
         painter = QPainter(self.target)
         if self.Antialiasing:
-            # 抗锯齿
+            # 抗锯 齿齿 
             painter.setRenderHint(QPainter.Antialiasing, True)
             painter.setRenderHint(QPainter.HighQualityAntialiasing, True)
             painter.setRenderHint(QPainter.SmoothPixmapTransform, True)
 
-        #         painter.setPen(# 测试圆圈
+        # painter.setpen (# 테스트 서클) 
         #             QPen(Qt.red, 5, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
         path = QPainterPath()
         path.addRoundedRect(
             0, 0, self.width(), self.height(), self.radius, self.radius)
-        # **** 切割为圆形 ****#
+        # **** 라운드로 잘라 **** # 
         painter.setClipPath(path)
-        #         painter.drawPath(path)  # 测试圆圈
+        # painter.DrawPath (경로) # 테스트 서클 
 
         painter.drawPixmap(0, 0, p)
         self.setPixmap(self.target)
-        #####################核心实现#########################
+        ############## ¶ ######################## ##################################################### ##################################################### ##################################################### ##################################################### ## 
 
 
 class Window(QWidget):

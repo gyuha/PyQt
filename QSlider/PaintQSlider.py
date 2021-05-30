@@ -29,7 +29,7 @@ class SliderStyle(QProxyStyle):
             control, option, subControl, widget)
         if subControl == QStyle.SC_SliderHandle:
             if option.orientation == Qt.Horizontal:
-                # 高度1/3
+                # 高度 1/3. 
                 radius = int(widget.height() / 3)
                 offset = int(radius / 3)
                 if option.state & QStyle.State_MouseOver:
@@ -41,7 +41,7 @@ class SliderStyle(QProxyStyle):
                 rect = QRect(x, int((rect.height() - radius) / 2),
                              radius, radius)
             else:
-                # 宽度1/3
+                # 너비 1/3. 
                 radius = int(widget.width() / 3)
                 offset = int(radius / 3)
                 if option.state & QStyle.State_MouseOver:
@@ -60,7 +60,7 @@ class PaintQSlider(QSlider):
 
     def __init__(self, *args, **kwargs):
         super(PaintQSlider, self).__init__(*args, **kwargs)
-        # 设置代理样式,主要用于计算和解决鼠标点击区域
+        # 프록시 스타일을 설정하십시오. 주로 마우스 클릭 영역을 계산하고 해결하는 데 사용됩니다. 
         self.setStyle(SliderStyle())
 
     def paintEvent(self, _):
@@ -70,11 +70,11 @@ class PaintQSlider(QSlider):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
 
-        # 中间圆圈的位置
+        # 中 の 위치 
         rect = self.style().subControlRect(
             QStyle.CC_Slider, option, QStyle.SC_SliderHandle, self)
 
-        # 画中间白色线条
+        # の 中 の の 线 
         painter.setPen(Qt.white)
         painter.setBrush(Qt.white)
         if self.orientation() == Qt.Horizontal:
@@ -83,29 +83,29 @@ class PaintQSlider(QSlider):
         else:
             x = self.width() / 2
             painter.drawLine(QPointF(x, 0), QPointF(x, self.height()))
-        # 画圆
+        # 画 圆 
         painter.setPen(Qt.NoPen)
-        if option.state & QStyle.State_MouseOver:  # 双重圆
-            # 半透明大圆
+        if option.state & QStyle.State_MouseOver:  # double circle. 
+            # 半 透 透 透 大. 
             r = rect.height() / 2
             painter.setBrush(QColor(255, 255, 255, 100))
             painter.drawRoundedRect(rect, r, r)
-            # 实心小圆(上下左右偏移4)
+            # 实心 센트 (위쪽 및 아래쪽 및 오른쪽 오프셋 4) 
             rect = rect.adjusted(4, 4, -4, -4)
             r = rect.height() / 2
             painter.setBrush(QColor(255, 255, 255, 255))
             painter.drawRoundedRect(rect, r, r)
-            # 绘制文字
+            # 文 
             painter.setPen(Qt.white)
-            if self.orientation() == Qt.Horizontal:  # 在上方绘制文字
+            if self.orientation() == Qt.Horizontal:  # 위의 텍스트를 그립니다 
                 x, y = rect.x(), rect.y() - rect.height() - 2
-            else:  # 在左侧绘制文字
+            else:  # 왼쪽에 텍스트를 그립니다 
                 x, y = rect.x() - rect.width() - 2, rect.y()
             painter.drawText(
                 x, y, rect.width(), rect.height(),
                 Qt.AlignCenter, str(self.value())
             )
-        else:  # 实心圆
+        else:  # 实心 圆 
             r = rect.height() / 2
             painter.setBrush(Qt.white)
             painter.drawRoundedRect(rect, r, r)

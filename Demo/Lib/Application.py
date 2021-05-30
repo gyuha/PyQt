@@ -26,12 +26,12 @@ class SharedApplication(QApplication):
         
         isAttached = self._memory.isAttached()
         print("isAttached", isAttached)
-        if isAttached:  # 如果进程附加在共享内存上
-            detach = self._memory.detach()  # 取消进程附加在共享内存上
+        if isAttached:  # 프로세스가 공유 메모리에 연결되어있는 경우 
+            detach = self._memory.detach()  # 取 进 공유 메모리에 연결된 프로세스가 있습니다 
             print("detach", detach)
         
         if self._memory.create(1) and self._memory.error() != QSharedMemory.AlreadyExists:
-            # 创建共享内存，如果创建失败，则说明已经创建，否则未创建
+            # 공유 ​​메모리를 만듭니다. 실패한 경우 설명이 만들어지지 않으면 생성되지 않았습니다. 
             print("create ok")
         else:
             print("create failed")
@@ -57,13 +57,13 @@ class QSingleApplication(QApplication):
         self._socketOut = None
         self._running = False
         
-        # 先尝试连接
+        # 먼저 연결 해보십시오 
         self._socketOut = QLocalSocket(self)
         self._socketOut.connectToServer(self._socketName)
         self._socketOut.error.connect(self.handleError)
         self._running = self._socketOut.waitForConnected()
         
-        if not self._running:  # 程序未运行
+        if not self._running:  # 程序 无 运 
             self._socketOut.close()
             del self._socketOut
             self._socketServer = QLocalServer(self)

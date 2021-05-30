@@ -23,8 +23,8 @@ __Version__ = "Version 1.0"
 
 class CircleProgressBar(QWidget):
 
-    Color = QColor(24, 189, 155)  # 圆圈颜色
-    Clockwise = True  # 顺时针还是逆时针
+    Color = QColor(24, 189, 155)  # 서클 색상 
+    Clockwise = True  # 顺 时 针 또는 반 시계 방향으로 
     Delta = 36
 
     def __init__(self, *args, color=None, clockwise=True, **kwargs):

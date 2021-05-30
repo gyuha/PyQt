@@ -24,23 +24,23 @@ __Version__ = "Version 1.0"
 class ClickJumpSlider(QSlider):
 
     def mousePressEvent(self, event):
-        # 获取上面的拉动块位置
+        # 获取 上 上 拉 块 위치 
         option = QStyleOptionSlider()
         self.initStyleOption(option)
         rect = self.style().subControlRect(
             QStyle.CC_Slider, option, QStyle.SC_SliderHandle, self)
         if rect.contains(event.pos()):
-            # 如果鼠标点击的位置在滑块上则交给Qt自行处理
+            # 슬라이더를 마우스 클릭하는 위치가있는 경우 QT 셀프 처리로 손을 긋습니다. 
             super(ClickJumpSlider, self).mousePressEvent(event)
             return
         if self.orientation() == Qt.Horizontal:
-            # 横向，要考虑invertedAppearance是否反向显示的问题
+            # 向, 인수 웨이브 칸아가 반전되었는지 여부를 고려해야합니까? 
             self.setValue(self.style().sliderValueFromPosition(
                 self.minimum(), self.maximum(),
                 event.x() if not self.invertedAppearance() else (self.width(
                 ) - event.x()), self.width()))
         else:
-            # 纵向
+            #ir. 
             self.setValue(self.style().sliderValueFromPosition(
                 self.minimum(), self.maximum(),
                 (self.height() - event.y()) if not self.invertedAppearance(
@@ -58,7 +58,7 @@ class DemoWindow(QWidget):
         layout.addRow(self.label1, ClickJumpSlider(
             Qt.Horizontal, valueChanged=lambda v: self.label1.setText(str(v))))
 
-        # 横向-反向显示
+        # 横 - 역전 
         self.label2 = QLabel('0', self)
         layout.addRow(self.label2, ClickJumpSlider(
             Qt.Horizontal, invertedAppearance=True,
@@ -68,7 +68,7 @@ class DemoWindow(QWidget):
         layout.addRow(self.label3, ClickJumpSlider(
             Qt.Vertical, minimumHeight=200, valueChanged=lambda v: self.label3.setText(str(v))))
 
-        # 纵向反向显示
+        #ir 종 방향 역전 
         self.label4 = QLabel('0', self)
         layout.addRow(self.label4, ClickJumpSlider(
             Qt.Vertical, invertedAppearance=True,

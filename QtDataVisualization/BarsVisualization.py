@@ -71,7 +71,7 @@ else:
 
 
 class GraphModifier(QObject):
-    # 奥卢 温度
+    # 卢 온도 
     tempOulu = (
         (-6.7, -11.7, -9.7, 3.3, 9.2, 14.0, 16.3, 17.8, 10.2, 2.1, -2.6, -0.3),
         (-6.8, -13.3, 0.2, 1.5, 7.9, 13.4, 16.1, 15.5, 8.2, 5.4, -2.6, -0.8),
@@ -83,7 +83,7 @@ class GraphModifier(QObject):
         (-7.9, -5.3, -9.1, 0.8, 11.6, 16.6, 15.9, 15.5, 11.2, 4.0, 0.1, -1.9)
     )
 
-    # 赫尔辛基 温度
+    # 尔辛基 温度 
     tempHelsinki = (
         (-3.7, -7.8, -5.4, 3.4, 10.7, 15.4, 18.6, 18.7, 14.3, 8.5, 2.9, 4.1),
         (-1.2, -7.5, 3.1, 5.5, 10.3, 15.9, 17.4, 17.9, 11.2, 7.3, 1.1, 0.5),
@@ -102,49 +102,49 @@ class GraphModifier(QObject):
 
     years = ("2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013")
 
-    shadowQualityChanged = pyqtSignal(int)  # 阴影质量改变信号
-    backgroundEnabledChanged = pyqtSignal(bool)  # 背景开启信号
-    gridEnabledChanged = pyqtSignal(bool)  # 网格开启信号
-    fontChanged = pyqtSignal(QFont)  # 字体改变信号
-    fontSizeChanged = pyqtSignal(int)  # 字体大小改变信号
+    shadowQualityChanged = pyqtSignal(int)  # 阴 음영 처리 된 품질 변경 신호 
+    backgroundEnabledChanged = pyqtSignal(bool)  # 배경 오픈 신호 
+    gridEnabledChanged = pyqtSignal(bool)  # 그리드 열린 신호 
+    fontChanged = pyqtSignal(QFont)  # 字 改 改 改 信号. 
+    fontSizeChanged = pyqtSignal(int)  # 글꼴 크기 변경 신호 
 
     def __init__(self, bargraph):
         super(GraphModifier, self).__init__()
 
-        self.m_graph = bargraph  # Q3DBars 实例
+        self.m_graph = bargraph  # Q3DBARS 인스턴스 
 
-        self.m_xRotation = 0.0  # 水平旋转角度
-        self.m_yRotation = 0.0  # 垂直旋转角度
+        self.m_xRotation = 0.0  # 가로 회전 각도 
+        self.m_yRotation = 0.0  # 수직 회전 각도 
         self.m_fontSize = 30
         self.m_segments = 4
         self.m_subSegments = 3
         self.m_minval = -20.0
         self.m_maxval = 20.0
-        self.m_temperatureAxis = QValue3DAxis()  # 温度轴
-        self.m_yearAxis = QCategory3DAxis()  # 年份轴
-        self.m_monthAxis = QCategory3DAxis()  # 月份轴
-        self.m_primarySeries = QBar3DSeries()  # 主序列
-        self.m_secondarySeries = QBar3DSeries()  # 次序列
-        self.m_barMesh = QAbstract3DSeries.MeshBevelBar  # 预定义的网格类型
-        self.m_smooth = False  # 是否平滑
+        self.m_temperatureAxis = QValue3DAxis()  # 온도 축 
+        self.m_yearAxis = QCategory3DAxis()  # 年 年 
+        self.m_monthAxis = QCategory3DAxis()  # 月 
+        self.m_primarySeries = QBar3DSeries()  # 主 序序 
+        self.m_secondarySeries = QBar3DSeries()  # 次序 序 
+        self.m_barMesh = QAbstract3DSeries.MeshBevelBar  # 미리 정의 된 그리드 유형 
+        self.m_smooth = False  # 是 是 
 
-        # 阴影以柔化的边缘高质量渲染
+        # 阴 그림자 부드러운 가장자리와 고품질 렌더링 
         self.m_graph.setShadowQuality(QAbstract3DGraph.ShadowQualitySoftMedium)
-        # 当前主题Q3DTheme设置背景是否可见
+        # 현재 주제 Q3DTheme 배경 설정이 표시됩니다 
         self.m_graph.activeTheme().setBackgroundEnabled(False)
-        # 当前主题Q3DTheme设置字体
+        # 현재 주제 Q3DTheme 세트 글꼴 설정 
         self.m_graph.activeTheme().setFont(
             QFont('Times New Roman', self.m_fontSize))
-        # 当前主题Q3DTheme设置标签是使用彩色背景还是使用完全透明的背景绘制
+        # 현재 주제 Q3DTheme 설정 태그 색상 배경을 사용하거나 완전히 투명한 배경을 사용하여 그린 태그 
         self.m_graph.activeTheme().setLabelBackgroundEnabled(True)
-        # 是否按比例将比例尺设置为单个系列比例尺来缩放比例
+        # 是否 按 按 例 将 比 比 比 比 比 比 比 比 
         self.m_graph.setMultiSeriesUniform(True)
 
         self.m_temperatureAxis.setTitle(Tr.get("Average temperature", "Average temperature"))
-        # 轴上的段数。这表明绘制了多少标签。要绘制的网格线的数量使用公式计算：segments * subsegments + 1。预设默认值为5。该值不能低于1
+        # 샤프트의 세그먼트 수. 이것은 많은 레이블이 얼마나 많은지를 나타냅니다. 그려지는 그리드 선의 수는 수식을 사용합니다. 세그먼트 * subsegments + 1. 기본값은 5입니다. 이 값은 1보다 작을 수 없습니다 
         self.m_temperatureAxis.setSegmentCount(self.m_segments)
-        # 轴上每个段内的子段数。
-        # 除每个线段外，还在每个子线段之间绘制网格线。预设默认值为1。该值不能低于1。
+        # 세그먼트 당 하위 섹션 수가 샤프트에 있습니다. 
+        # 각 라인 세그먼트 외에도 그리드 라인이 각각의 척추 세그먼트간에 그려져 있습니다. 기본값은 1입니다. 이 값은 1보다 작을 수 없습니다. 
         self.m_temperatureAxis.setSubSegmentCount(self.m_subSegments)
         self.m_temperatureAxis.setRange(self.m_minval, self.m_maxval)
         self.m_temperatureAxis.setLabelFormat(u"%.1f \N{degree sign}C")
@@ -153,14 +153,14 @@ class GraphModifier(QObject):
         self.m_monthAxis.setTitle("Month")
 
         self.m_graph.setValueAxis(self.m_temperatureAxis)
-        # 设置活动行的轴为年份
+        # Action Line의 축을 1 년으로 설정하십시오. 
         self.m_graph.setRowAxis(self.m_yearAxis)
-        # 设置活动列的轴为月份
+        # 이달로 활성 열 축을 설정하십시오. 
         self.m_graph.setColumnAxis(self.m_monthAxis)
 
         self.m_primarySeries.setItemLabelFormat(
             "Oulu - @colLabel @rowLabel: @valueLabel")
-        # 设置网格类型
+        # 그리드 유형을 설정하십시오 
         self.m_primarySeries.setMesh(QAbstract3DSeries.MeshBevelBar)
         self.m_primarySeries.setMeshSmooth(False)
 
@@ -179,7 +179,7 @@ class GraphModifier(QObject):
         self.resetTemperatureData()
 
     def resetTemperatureData(self):
-        # 重置温度数据
+        # 온도 데이터를 재설정하십시오 
         dataSet = []
         for row in self.tempOulu:
             dataSet.append([QBarDataItem(v) for v in row])
@@ -208,7 +208,7 @@ class GraphModifier(QObject):
             self.m_secondarySeries.setMesh(self.m_barMesh)
 
     def changePresetCamera(self):
-        # 修改摄像机的预定义位置
+        # 카메라의 미리 정의 된 위치를 수정하십시오 
         self.m_graph.scene().activeCamera().setCameraPreset(self.m_preset)
 
         preset = int(self.m_preset) + 1
@@ -218,7 +218,7 @@ class GraphModifier(QObject):
             self.m_preset = Q3DCamera.CameraPreset(preset)
 
     def changeTheme(self, theme):
-        # 切换主题
+        # 切 主 主 
         currentTheme = self.m_graph.activeTheme()
         currentTheme.setType(Q3DTheme.Theme(theme))
         self.backgroundEnabledChanged.emit(currentTheme.isBackgroundEnabled())

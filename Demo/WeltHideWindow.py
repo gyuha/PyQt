@@ -33,7 +33,7 @@ class WeltHideWindow(QWidget):
         super(WeltHideWindow, self).mousePressEvent(event)
         if event.button() == Qt.LeftButton:
             self._pos = event.globalPos() - self.pos()
-            # 当窗口最大化或者全屏时不可移动
+            # 창이 최대화되거나 전체 화면이 발생합니다 
             self._canMove = not self.isMaximized() or not self.isFullScreen()
 
     def mouseMoveEvent(self, event):
@@ -50,13 +50,13 @@ class WeltHideWindow(QWidget):
         x = pos.x()
         y = pos.y()
         if x < 0:
-            # 隐藏到左边
+            # 왼쪽 숨기기 
             return self.move(1 - self.width(), y)
         if y < 0:
-            # 隐藏到顶部
+            # 꼭대기에 숨겨진 것 
             return self.move(x, 1 - self.height())
-        if x > self._width - self.width() / 2:  # 窗口进入右边一半距离
-            # 隐藏到右边
+        if x > self._width - self.width() / 2:  # 口 进 进 一 
+            # 오른쪽에 숨어 있습니다 
             return self.move(self._width - 1, y)
 
     def enterEvent(self, event):

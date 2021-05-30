@@ -22,15 +22,15 @@ __Version__ = 1.0
 class QCursorGif:
 
     def initCursor(self, cursors, parent=None):
-        # 记录默认的光标
+        # 기본 커서를 녹화하십시오 
         self._oldCursor = Qt.ArrowCursor
         self.setOldCursor(parent)
-        # 加载光标图片
+        # 커서 사진로드 
         self._cursorImages = [
             QCursor(QPixmap(cursor)) for cursor in cursors]
         self._cursorIndex = 0
         self._cursorCount = len(self._cursorImages) - 1
-        # 创建刷新定时器
+        # 새로 고침 타이머를 만듭니다 
         self._cursorTimeout = 200
         self._cursorTimer = QTimer(parent)
         self._cursorTimer.timeout.connect(self._doBusy)

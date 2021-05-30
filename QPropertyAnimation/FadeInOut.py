@@ -4,7 +4,7 @@ from PyQt5.QtCore import QPropertyAnimation
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton
 
 
-# Created on 2018年6月14日
+# 2018 년 6 월 14 일에 작성되었습니다 
 # author: Irony
 # site: https://pyqt5.com , https://github.com/892768447
 # email: 892768447@qq.com
@@ -25,29 +25,29 @@ class Window(QWidget):
         layout = QVBoxLayout(self)
         layout.addWidget(QPushButton('退出', self, clicked=self.doClose))
 
-        # 窗口透明度动画类
+        # 透 透 动 动 动. 
         self.animation = QPropertyAnimation(self, b'windowOpacity')
-        self.animation.setDuration(1000)  # 持续时间1秒
+        self.animation.setDuration(1000)  # 持 时间 1. 
 
-        # 执行淡入
+        # 执行 入 
         self.doShow()
 
     def doShow(self):
         try:
-            # 尝试先取消动画完成后关闭窗口的信号
+            # 애니메이션이 완료된 후 # 창의 창을 닫으려고합니다. 
             self.animation.finished.disconnect(self.close)
         except:
             pass
         self.animation.stop()
-        # 透明度范围从0逐渐增加到1
+        # 透 透 范围 范围 0에서 점차적으로 1로 증가합니다. 
         self.animation.setStartValue(0)
         self.animation.setEndValue(1)
         self.animation.start()
 
     def doClose(self):
         self.animation.stop()
-        self.animation.finished.connect(self.close)  # 动画完成则关闭窗口
-        # 透明度范围从1逐渐减少到0
+        self.animation.finished.connect(self.close)  # 动 动 完成 完成 则. 
+        # 透 透 范围 范围 1에서 점차적으로 0으로 감소했습니다. 
         self.animation.setStartValue(1)
         self.animation.setEndValue(0)
         self.animation.start()

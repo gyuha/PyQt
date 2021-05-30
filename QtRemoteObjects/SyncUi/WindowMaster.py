@@ -22,23 +22,23 @@ __Version__ = 1.0
 
 class WindowMaster(QWidget):
 
-    # 输入框内容变化信号
+    # 상자 내용 변경 신호를 입력하십시오 
     editValueChanged = pyqtSignal(str)
-    # 勾选框变化信号
+    # 变化 信号 信号 
     checkToggled = pyqtSignal(bool)
-    # 进度条变化信号
+    # 成度 变 变 变 信号. 
     progressValueChanged = pyqtSignal(int)
 
     def __init__(self, *args, **kwargs):
         super(WindowMaster, self).__init__(*args, **kwargs)
         self.setupUi()
 
-        # 开启节点
+        # 开 节点 
         host = QRemoteObjectHost(QUrl('local:WindowMaster'), parent=self)
         host.enableRemoting(self, 'WindowMaster')
         print('开启节点完成')
 
-        # 定时器更新进度条
+        # 타이머 업데이트 진행률 표시 줄 
         self._value = 0
         self.utimer = QTimer(self, timeout=self.updateProgress)
         self.utimer.start(200)
@@ -47,13 +47,13 @@ class WindowMaster(QWidget):
         self.setWindowTitle('WindowMaster')
         self.resize(300, 400)
         layout = QVBoxLayout(self)
-        # 输入框(双向同步)
+        # 상자 (양방향 동기화) 
         self.lineEdit = QLineEdit(self)
         self.lineEdit.textChanged.connect(self.editValueChanged.emit)
-        # 勾选框(双向同步)
+        # (양방향 동기화) 
         self.checkBox = QCheckBox('来勾我啊', self)
         self.checkBox.toggled.connect(self.checkToggled.emit)
-        # 进度条(Master更新Slave)
+        # 成度 (마스터 업데이트 슬레이브) 
         self.progressBar = QProgressBar(self)
         self.progressBar.valueChanged.connect(self.progressValueChanged.emit)
         layout.addWidget(self.lineEdit)

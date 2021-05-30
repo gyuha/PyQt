@@ -36,17 +36,17 @@ class ImageView(QGraphicsView):
                             QPainter.SmoothPixmapTransform)
         self.setCacheMode(self.CacheBackground)
         self.setViewportUpdateMode(self.SmartViewportUpdate)
-        self._item = QGraphicsPixmapItem()  # 放置图像
+        self._item = QGraphicsPixmapItem()  # 이미지를 배치합니다 
         self._item.setFlags(QGraphicsPixmapItem.ItemIsFocusable |
                             QGraphicsPixmapItem.ItemIsMovable)
-        self._scene = QGraphicsScene(self)  # 场景
+        self._scene = QGraphicsScene(self)  # 장면 
         self.setScene(self._scene)
         self._scene.addItem(self._item)
         rect = QApplication.instance().desktop().availableGeometry(self)
         self.resize(int(rect.width() * 2 / 3), int(rect.height() * 2 / 3))
 
         self.pixmap = None
-        self._delta = 0.1  # 缩放
+        self._delta = 0.1  # 줌 
         self.setPixmap(image)
 
     def setBackground(self, color):
@@ -131,7 +131,7 @@ class ImageView(QGraphicsView):
         _factor = self.transform().scale(
             factor, factor).mapRect(QRectF(0, 0, 1, 1)).width()
         if _factor < 0.07 or _factor > 100:
-            # 防止过大过小
+            # 너무 많이 예방하십시오 
             return
         self.scale(factor, factor)
 

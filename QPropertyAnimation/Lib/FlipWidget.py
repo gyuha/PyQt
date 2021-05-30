@@ -21,21 +21,21 @@ __Copyright__ = 'Copyright (c) 2019'
 
 class FlipWidget(QWidget):
 
-    Left = 0                        # 从右往左
-    Right = 1                       # 从左往右
-    Scale = 3                       # 图片缩放比例
+    Left = 0                        # 오른쪽에서 
+    Right = 1                       # 왼쪽에서 오른쪽으로 
+    Scale = 3                       # 이미지 줌 비율 
     finished = pyqtSignal()
 
     def __init__(self, *args, **kwargs):
         super(FlipWidget, self).__init__(*args, **kwargs)
-        # 无边框无任务栏
+        # 无球 无 无 任 
         self.setWindowFlags(self.windowFlags() |
                             Qt.FramelessWindowHint | Qt.SubWindow)
-        # 背景透明
+        # 배경 투명 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        # 翻转角度
+        # 翻 翻 
         self._angle = 0
-        # 属性动画针对自定义属性`angle`
+        # Custom Attributes` Angle`의 속성 애니메이션 
         self._animation = QPropertyAnimation(self, b'angle', self)
         self._animation.setDuration(550)
         self._animation.setEasingCurve(QEasingCurve.OutInQuad)
@@ -60,7 +60,7 @@ class FlipWidget(QWidget):
         self.image2 = image2
         self.show()
         self._angle = 0
-        # 根据方向设置动画的初始和结束值
+        # 방향에 따라 애니메이션의 초기 및 최종 값 설정 
         if direction == self.Right:
             self._animation.setStartValue(1)
             self._animation.setEndValue(-180)
@@ -78,18 +78,18 @@ class FlipWidget(QWidget):
             painter.setRenderHint(QPainter.Antialiasing, True)
             painter.setRenderHint(QPainter.SmoothPixmapTransform, True)
 
-            # 变换
+            # # 变 
             transform = QTransform()
-            # 把圆心设置为矩形中心
+            # 센터를 사각형 센터로 설정하십시오 
             transform.translate(self.width() / 2, self.height() / 2)
 
             if self._angle >= -90 and self._angle <= 90:
-                # 当翻转角度在90范围内显示第一张图，且从大图缩放到小图的过程
+                # 플립 각도가 범위의 첫 번째 그림과 큰 이미지에서 작은 이미지로 프로세스를 표시 할 때 # 
                 painter.save()
-                # 设置翻转角度
+                # 플립 각을 설정하십시오 
                 transform.rotate(self._angle, Qt.YAxis)
                 painter.setTransform(transform)
-                # 缩放图片高度
+                # 줌 사진 높이 
                 width = self.image1.width() / 2
                 height = int(self.image1.height() *
                              (1 - abs(self._angle / self.Scale) / 100))
@@ -100,16 +100,16 @@ class FlipWidget(QWidget):
                     QPointF(-width, -height / 2), image)
                 painter.restore()
             else:
-                # 当翻转角度在90范围内显示第二张图，且从小图缩放到原图的过程
+                # 플립 각도가 90 범위의 두 번째 그림을 표시하고 작은 그림에서 원본 이미지로 확대되는 프로세스 
                 painter.save()
                 if self._angle > 0:
                     angle = 180 + self._angle
                 else:
                     angle = self._angle - 180
-                # 设置翻转角度， 注意这里角度有差异
+                # 플립 각을 설정 하고이 각도 차이에주의하십시오. 
                 transform.rotate(angle, Qt.YAxis)
                 painter.setTransform(transform)
-                # 缩放图片高度
+                # 줌 사진 높이 
                 width = self.image2.width() / 2
                 height = int(self.image2.height() *
                              (1 - ((360 - abs(angle)) / self.Scale / 100)))

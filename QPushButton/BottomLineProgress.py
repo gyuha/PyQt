@@ -33,11 +33,11 @@ PushButtonLine {
 
 class LoadingThread(QThread):
 
-    valueChanged = pyqtSignal(float)  # 当前值/最大值
+    valueChanged = pyqtSignal(float)  # 현재 값 / 최대 
 
     def __init__(self, *args, **kwargs):
         super(LoadingThread, self).__init__(*args, **kwargs)
-        self.totalValue = randint(100, 200)  # 模拟最大
+        self.totalValue = randint(100, 200)  # 模 模 
 
     def run(self):
         for i in range(self.totalValue + 1):
@@ -61,7 +61,7 @@ class PushButtonLine(QPushButton):
         super(PushButtonLine, self).paintEvent(event)
         if not self._timer.isActive():
             return
-        # 画进度
+        # 진행 상황을 그렸습니다 
         painter = QPainter(self)
         pen = QPen(self.lineColor)
         pen.setWidth(4)
@@ -82,7 +82,7 @@ class PushButtonLine(QPushButton):
         self.loadingThread.valueChanged.disconnect(self.setPercent)
         self.loadingThread.terminate()
         self.loadingThread.deleteLater()
-        QThread.msleep(100)  # 延迟等待deleteLater执行完毕
+        QThread.msleep(100)  # 迟 deleteLater 실행을 기다리고 있습니다 
         del self.loadingThread
         self._percent = 0
         self._timer.stop()

@@ -22,7 +22,7 @@ __version__ = "0.0.1"
 
 class WindowNotify(QWidget, Ui_NotifyForm):
 
-    SignalClosed = pyqtSignal()  # 弹窗关闭信号
+    SignalClosed = pyqtSignal()  # 弹窗 关 关 信号 
 
     def __init__(self, title="", content="", timeout=5000, *args, **kwargs):
         super(WindowNotify, self).__init__(*args, **kwargs)
@@ -60,73 +60,73 @@ class WindowNotify(QWidget, Ui_NotifyForm):
         webbrowser.open_new_tab("http://alyl.vip")
 
     def onClose(self):
-        #点击关闭按钮时
+        # 종료 버튼을 클릭하십시오 
         print("onClose")
         self.isShow = False
-        QTimer.singleShot(100, self.closeAnimation)#启动弹回动画
+        QTimer.singleShot(100, self.closeAnimation)# 启 弹 弹 回 
 
     def _init(self):
-        # 隐藏任务栏|去掉边框|顶层显示
+        # 隐 隐 任栏 | | 테두리 제거 | 탑 플래시 디스플레이 
         self.setWindowFlags(Qt.Tool | Qt.X11BypassWindowManagerHint |
                             Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-        # 关闭按钮事件
+        # 닫기 버튼 이벤트 
         self.buttonClose.clicked.connect(self.onClose)
-        # 点击查看按钮
+        #보기 버튼을 클릭하십시오 
         self.buttonView.clicked.connect(self.onView)
-        # 是否在显示标志
+        # 是 是 是 显示 
         self.isShow = True
-        # 超时
+        # 시간 초과 
         self._timeouted = False
-        # 桌面
+        # 데스크탑 
         self._desktop = QApplication.instance().desktop()
-        # 窗口初始开始位置
+        # 初 初 开始 开始 开始. 
         self._startPos = QPoint(
             self._desktop.screenGeometry().width() - self.width() - 5,
             self._desktop.screenGeometry().height()
         )
-        # 窗口弹出结束位置
+        # 弹 弹 结 结 结. 
         self._endPos = QPoint(
             self._desktop.screenGeometry().width() - self.width() - 5,
             self._desktop.availableGeometry().height() - self.height() - 5
         )
-        # 初始化位置到右下角
+        # 초기화 위치 하단의 오른쪽 구석 
         self.move(self._startPos)
 
-        # 动画
+        # 动画 
         self.animation = QPropertyAnimation(self, b"pos")
         self.animation.finished.connect(self.onAnimationEnd)
         self.animation.setDuration(1000)  # 1s
 
-        # 弹回定时器
+        # 弹 回 回 定 
         self._timer = QTimer(self, timeout=self.closeAnimation)
 
     def show(self, title="", content="", timeout=5000):
-        self._timer.stop()  # 停止定时器,防止第二个弹出窗弹出时之前的定时器出问题
-        self.hide()  # 先隐藏
-        self.move(self._startPos)  # 初始化位置到右下角
+        self._timer.stop()  # 停 时器, 두 번째 팝업 창 앞에 타이머를 방지하십시오. 
+        self.hide()  # 先 隐 隐 隐 
+        self.move(self._startPos)  # 초기화 위치 하단의 오른쪽 구석 
         super(WindowNotify, self).show()
         self.setTitle(title).setContent(content).setTimeout(timeout)
         return self
 
     def showAnimation(self):
         print("showAnimation isShow = True")
-        # 显示动画
+        # 애니메이션을 표시합니다 
         self.isShow = True
-        self.animation.stop()#先停止之前的动画,重新开始
+        self.animation.stop()# 먼저 이전 애니메이션을 중지하고 다시 시작하십시오 
         self.animation.setStartValue(self.pos())
         self.animation.setEndValue(self._endPos)
         self.animation.start()
-        # 弹出5秒后,如果没有焦点则弹回去
+        # 5 초 후, 초점이 없으면 재생됩니다. 
         self._timer.start(self._timeout)
 #         QTimer.singleShot(self._timeout, self.closeAnimation)
 
     def closeAnimation(self):
         print("closeAnimation hasFocus", self.hasFocus())
-        # 关闭动画
+        # 애니메이션을 닫습니다 
         if self.hasFocus():
-            # 如果弹出后倒计时5秒后还有焦点存在则失去焦点后需要主动触发关闭
+            # 팝업 카운트 다운 5 초 동안, 여전히 초점이 있으면 손실 될 때 활성 트리거가 있습니다. 
             self._timeouted = True
-            return  # 如果有焦点则不关闭
+            return  # 초점이 있으면 닫지 마십시오 
         self.isShow = False
         self.animation.stop()
         self.animation.setStartValue(self.pos())
@@ -134,7 +134,7 @@ class WindowNotify(QWidget, Ui_NotifyForm):
         self.animation.start()
 
     def onAnimationEnd(self):
-        # 动画结束
+        # 结 动 
         print("onAnimationEnd isShow", self.isShow)
         if not self.isShow:
             print("onAnimationEnd close()")
@@ -146,13 +146,13 @@ class WindowNotify(QWidget, Ui_NotifyForm):
 
     def enterEvent(self, event):
         super(WindowNotify, self).enterEvent(event)
-        # 设置焦点(好像没啥用,不过鼠标点击一下后,该方法就有用了)
+        # 포커스 설정 (사용되는 것처럼 보이지만 마우스 클릭,이 방법은 유용합니다) 
         print("enterEvent setFocus Qt.MouseFocusReason")
         self.setFocus(Qt.MouseFocusReason)
 
     def leaveEvent(self, event):
         super(WindowNotify, self).leaveEvent(event)
-        # 取消焦点
+        # 取 点 
         print("leaveEvent clearFocus")
         self.clearFocus()
         if self._timeouted:

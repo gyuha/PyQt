@@ -61,29 +61,29 @@ class NotificationItem(QWidget):
         self.callback = callback
         layout = QHBoxLayout(self, spacing=0)
         layout.setContentsMargins(0, 0, 0, 0)
-        self.bgWidget = QWidget(self)  # 背景控件, 用于支持动画效果
+        self.bgWidget = QWidget(self)  # 배경 제어, 애니메이션 효과를 지원하는 데 사용됩니다 
         layout.addWidget(self.bgWidget)
 
         layout = QGridLayout(self.bgWidget)
         layout.setHorizontalSpacing(15)
         layout.setVerticalSpacing(10)
 
-        # 标题左边图标
+        # 제목 왼쪽 아이콘 
         layout.addWidget(
             QLabel(self, pixmap=NotificationIcon.icon(ntype)), 0, 0)
 
-        # 标题
+        # 标题 
         self.labelTitle = QLabel(title, self)
         font = self.labelTitle.font()
         font.setBold(True)
         font.setPixelSize(22)
         self.labelTitle.setFont(font)
 
-        # 关闭按钮
+        # 关 闭 按 
         self.labelClose = QLabel(
             self, cursor=Qt.PointingHandCursor, pixmap=NotificationIcon.icon(NotificationIcon.Close))
 
-        # 消息内容
+        # 메시지 내용 
         self.labelMessage = QLabel(
             message, self, cursor=Qt.PointingHandCursor, wordWrap=True, alignment=Qt.AlignLeft | Qt.AlignTop)
         font = self.labelMessage.font()
@@ -91,14 +91,14 @@ class NotificationItem(QWidget):
         self.labelMessage.setFont(font)
         self.labelMessage.adjustSize()
 
-        # 添加到布局
+        # 레이아웃에 추가하십시오 
         layout.addWidget(self.labelTitle, 0, 1)
         layout.addItem(QSpacerItem(
             40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum), 0, 2)
         layout.addWidget(self.labelClose, 0, 3)
         layout.addWidget(self.labelMessage, 1, 1, 1, 2)
 
-        # 边框阴影
+        # 테두리 그림자 
         effect = QGraphicsDropShadowEffect(self)
         effect.setBlurRadius(12)
         effect.setColor(QColor(0, 0, 0, 25))
@@ -107,24 +107,24 @@ class NotificationItem(QWidget):
 
         self.adjustSize()
 
-        # 5秒自动关闭
+        # 5 초 자동 종료 
         self._timer = QTimer(self, timeout=self.doClose)
-        self._timer.setSingleShot(True)  # 只触发一次
+        self._timer.setSingleShot(True)  # 한 번만 트리거합니다 
         self._timer.start(5000)
 
     def doClose(self):
         try:
-            # 可能由于手动点击导致item已经被删除了
+            # 수동 클릭으로 인해 항목이 삭제 될 수 있습니다. 
             self.closed.emit(self.item)
         except:
             pass
 
     def showAnimation(self, width):
-        # 显示动画
+        # 애니메이션을 표시합니다 
         pass
 
     def closeAnimation(self):
-        # 关闭动画
+        # 애니메이션을 닫습니다 
         pass
 
     def mousePressEvent(self, event):
@@ -132,18 +132,18 @@ class NotificationItem(QWidget):
         w = self.childAt(event.pos())
         if not w:
             return
-        if w == self.labelClose:  # 点击关闭图标
-            # 先尝试停止计时器
+        if w == self.labelClose:  # 닫기 아이콘을 클릭하십시오 
+            # 첫 번째 타이머를 중지하십시오 
             self._timer.stop()
             self.closed.emit(self.item)
         elif w == self.labelMessage and self.callback and callable(self.callback):
-            # 点击消息内容
+            # 메시지 내용을 클릭하십시오 
             self._timer.stop()
             self.closed.emit(self.item)
-            self.callback()  # 回调
+            self.callback()  # 回调 
 
     def paintEvent(self, event):
-        # 圆角以及背景色
+        # 둥근 배경색과 배경색 
         super(NotificationItem, self).paintEvent(event)
         painter = QPainter(self)
         path = QPainterPath()
@@ -161,25 +161,25 @@ class NotificationWindow(QListWidget):
         self.setMinimumWidth(412)
         self.setMaximumWidth(412)
         QApplication.instance().setQuitOnLastWindowClosed(True)
-        # 隐藏任务栏,无边框,置顶等
+        # 藏 任 任 栏, 국경, 토핑 등 없음 
         self.setWindowFlags(self.windowFlags() | Qt.Tool |
                             Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-        # 去掉窗口边框
+        # 去 双 框 
         self.setFrameShape(self.NoFrame)
-        # 背景透明
+        # 배경 투명 
         self.viewport().setAutoFillBackground(False)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        # 不显示滚动条
+        # 스크롤 막대를 표시하지 마십시오 
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        # 获取屏幕高宽
+        # 获取 高 高宽 
         rect = QApplication.instance().desktop().availableGeometry(self)
         self.setMinimumHeight(rect.height())
         self.setMaximumHeight(rect.height())
         self.move(rect.width() - self.minimumWidth() - 18, 0)
 
     def removeItem(self, item):
-        # 删除item
+        # 삭제 항목 
         w = self.itemWidget(item)
         self.removeItemWidget(item)
         item = self.takeItem(self.indexFromItem(item).row())
@@ -189,7 +189,7 @@ class NotificationWindow(QListWidget):
 
     @classmethod
     def _createInstance(cls):
-        # 创建实例
+        # 인스턴스를 만듭니다 
         if not cls._instance:
             cls._instance = NotificationWindow()
             cls._instance.show()
@@ -269,7 +269,7 @@ if __name__ == '__main__':
     w.show()
 
 #     NotificationIcon.init()
-#     ww = NotificationItem('提示', '<html><head/><body><p><span style=" font-style:italic; color:teal;">这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案</span></p></body></html>', None,
+# ww = notificationItem ( 'tip', '<html> <head /> <body> <p> <span style = "글꼴 스타일 : 기울임 꼴; 색상 : 청록색;"> 이것은 프롬프트 복사본입니다. . 이것이 이것이 이것이 이것이 이것이 이것이 이것이 이것이 이것입니다. 이것은 유예 대소 문자입니다. 이것은 프롬프트 복사본입니다. 이것은 프롬프트 복사본입니다. 이것은 프롬프트 케이스 </ span> </ p> </ body> </ html> ' , 없음, 
 #                           ntype=NotificationIcon.Error)
 #     ww.bgWidget.setVisible(True)
 #     ww.show()

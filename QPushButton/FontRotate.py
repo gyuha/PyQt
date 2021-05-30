@@ -37,7 +37,7 @@ class PushButtonFont(QPushButton):
         self._rotateAnimation.setStartValue(1)
         self._rotateAnimation.setEndValue(12)
         self._rotateAnimation.setDuration(1000)
-        self._rotateAnimation.setLoopCount(-1)  # 无限循环
+        self._rotateAnimation.setLoopCount(-1)  # 무한 루프 
         self._rotateAnimation.valueChanged.connect(self.update)
         self.clicked.connect(self._onClick)
 
@@ -55,12 +55,12 @@ class PushButtonFont(QPushButton):
         font.setPointSize(self.fontSize)
         font.setFamily("FontAwesome")
         painter.setFont(font)
-        # 变换坐标为正中间
+        # 变 坐 为 为 中 の 
         painter.translate(self.rect().center())
-        # 旋转90度
+        # 90도 회전 
         painter.rotate(self._rotateAnimation.currentValue() * 30)
         fm = self.fontMetrics()
-        # 在变换坐标后的正中间画文字
+        # 正 画 文 文 좌표 후에 
         w = fm.width(self.LoadingText)
         h = fm.height()
         painter.drawText(
@@ -82,7 +82,7 @@ class PushButtonFont(QPushButton):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # 加载字体到字体库中
+    # 加 字 字 到 字 库 
     QFontDatabase.addApplicationFont(
         "Data/Fonts/FontAwesome/fontawesome-webfont.ttf")
     w = PushButtonFont("点击加载")

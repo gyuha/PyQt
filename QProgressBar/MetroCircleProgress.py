@@ -25,8 +25,8 @@ __Version__ = 1.0
 
 class CircleItem(QObject):
 
-    X = 0  # x坐标
-    Opacity = 1  # 透明度0~1
+    X = 0  # x coordinate. 
+    Opacity = 1  # 透 透 0 ~ 1. 
     valueChanged = pyqtSignal()
 
     @pyqtProperty(float)
@@ -53,9 +53,9 @@ def qBound(miv, cv, mxv):
 
 class MetroCircleProgress(QWidget):
 
-    Radius = 5  # 半径
-    Color = QColor(24, 189, 155)  # 圆圈颜色
-    BackgroundColor = QColor(Qt.transparent)  # 背景颜色
+    Radius = 5  # 등급 
+    Color = QColor(24, 189, 155)  # 서클 색상 
+    BackgroundColor = QColor(Qt.transparent)  # 배경색 
 
     def __init__(self, *args, radius=5, color=QColor(24, 189, 155),
                  backgroundColor=QColor(Qt.transparent), **kwargs):
@@ -121,44 +121,44 @@ class MetroCircleProgress(QWidget):
             painter.restore()
 
     def _initAnimations(self):
-        for index in range(5):  # 5个小圆
+        for index in range(5):  # 5 작은 라운드 
             item = CircleItem(self)
             item.valueChanged.connect(self.update)
-            # 串行动画组
+            # 行 动画 组 
             seqAnimation = QSequentialAnimationGroup(self)
             seqAnimation.setLoopCount(-1)
             self._items.append((item, seqAnimation))
 
-            # 暂停延迟动画
+            # 延 动动 
             seqAnimation.addAnimation(QPauseAnimation(150 * index, self))
 
-            # 加速,并行动画组1
+            # 가속화, 그림 그룹 1. 
             parAnimation1 = QParallelAnimationGroup(self)
-            # 透明度
+            # 透 透 
             parAnimation1.addAnimation(QPropertyAnimation(
                 item, b'opacity', self, duration=400, startValue=0, endValue=1.0))
-            # x坐标
+            # x coordinate. 
             parAnimation1.addAnimation(QPropertyAnimation(
                 item, b'x', self, duration=400, startValue=0, endValue=25.0))
             seqAnimation.addAnimation(parAnimation1)
             ##
 
-            # 匀速
+            # 速 
             seqAnimation.addAnimation(QPropertyAnimation(
                 item, b'x', self, duration=2000, startValue=25.0, endValue=75.0))
 
-            # 加速,并行动画组2
+            # 가속, 그림 그룹 2. 
             parAnimation2 = QParallelAnimationGroup(self)
-            # 透明度
+            # 透 透 
             parAnimation2.addAnimation(QPropertyAnimation(
                 item, b'opacity', self, duration=400, startValue=1.0, endValue=0))
-            # x坐标
+            # x coordinate. 
             parAnimation2.addAnimation(QPropertyAnimation(
                 item, b'x', self, duration=400, startValue=75.0, endValue=100.0))
             seqAnimation.addAnimation(parAnimation2)
             ##
 
-            # 暂停延迟动画
+            # 延 动动 
             seqAnimation.addAnimation(
                 QPauseAnimation((5 - index - 1) * 150, self))
 

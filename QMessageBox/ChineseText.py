@@ -80,11 +80,11 @@ QMessageBox QPushButton[text="Ignore"] {
 
 app = QApplication(sys.argv)
 
-# 通过QSS样式的方式设置按钮文字
+# QSS 스타일을 통해 버튼 텍스트를 설정하십시오 
 app.setStyleSheet(TextStyle)
 
-# 由于年代久远，Qt5的翻译功能没有更新，还是用的旧的结构导致无法翻译
-# 这里不使用（需要修改ts源码重新编译成qm）
+# 오랜 기록으로 인해 QT5의 번역 기능이 업데이트되지 않았거나 사용할 때 사용되는 이전 구조를 번역 할 수 없습니다. 
+# 这里 不 不 (QM에 다시 컴파일 할 TS 소스 코드를 수정해야합니다) 
 # translator = QTranslator()
 # print(translator.load(QLocale(), 'qt', '_', QLibraryInfo.location(
 #     QLibraryInfo.TranslationsPath)))

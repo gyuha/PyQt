@@ -469,7 +469,7 @@ class Ui_Setting(object):
         self.checkBox_23.setText(_translate("Setting", "启用一声问候消息"))
         self.checkBox_24.setText(_translate("Setting", "启用设备连接提醒"))
         self.right5.setText(_translate("Setting", "当插入安卓设备时，提示安装或者更新QQ手机版"))
-        self.label_3.setText(_translate("Setting", "<html><head/><body><p>您可以设置是否在屏幕右下角收到来自QQ空间的通知，<a href=\"#\"><span style=\" text-decoration: none; color:#00aaff;\">进入设置</span></a>。</p></body></html>"))
+        self.label_3.setText(_translate("Setting", "<html><head/><body><p>您可以设置是否在屏幕右下角收到来自QQ空间的通知，<a href=\"# \ "> <Span Style = \"텍스트 장식 : 없음; 색상 : # 00aaf; \ "> Enter 설정 </ span> </a> </ p> </ body> </ html>"))) 
         self.label_4.setText(_translate("Setting", "好友上线提醒"))
         self.radioButton.setText(_translate("Setting", "关闭好友上线提醒"))
         self.radioButton_2.setText(_translate("Setting", "全部好友上线提醒"))

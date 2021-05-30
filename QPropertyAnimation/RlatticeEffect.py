@@ -77,17 +77,17 @@ class Point(QObject):
         self._y = y
         self.__y = y
         self.originY = oy
-        # 5个闭合点
+        # 5 폐쇄점 
         self.closest = [0, 0, 0, 0, 0]
-        # 圆半径
+        # 둥근 반경 
         self.radius = 2 + random() * 2
-        # 连线颜色
+        # 连 线 색상 
         self.lineColor = QColor(156, 217, 249)
-        # 圆颜色
+        # 
         self.circleColor = QColor(156, 217, 249)
 
     def initAnimation(self):
-        # 属性动画
+        # 속성 애니메이션 
         if not hasattr(self, 'xanimation'):
             self.xanimation = QPropertyAnimation(
                 self, b'x', self, valueChanged=self.valueChanged.emit,
@@ -149,7 +149,7 @@ class Window(QWidget):
 
     def mouseMoveEvent(self, event):
         super(Window, self).mouseMoveEvent(event)
-        # 鼠标移动时更新xy坐标
+        # 마우스 이동시 XY 좌표를 업데이트하십시오 
         self.target.x = event.x()
         self.target.y = event.y()
         self.update()
@@ -157,7 +157,7 @@ class Window(QWidget):
     def initPoints(self):
         t = time()
         self.points.clear()
-        # 创建点
+        # 创 创 点. 
         stepX = self.width() / 20
         stepY = self.height() / 20
         for x in range(0, self.width(), int(stepX)):
@@ -170,16 +170,16 @@ class Window(QWidget):
         print(time() - t)
 
         t = time()
-        # 每个点寻找5个闭合点
+        # 点 点 5 闭 点. 
         findClose(self.points)
         print(time() - t)
 
     def animate(self, painter):
         for p in self.points:
-            # 检测点的范围
+            # # 点 的 
             value = abs(getDistance(self.target, p))
             if value < 4000:
-                # 其实就是修改颜色透明度
+                # 其 其 是 색상 투명성을 수정하십시오 
                 p.lineColor.setAlphaF(0.3)
                 p.circleColor.setAlphaF(0.6)
             elif value < 20000:
@@ -192,7 +192,7 @@ class Window(QWidget):
                 p.lineColor.setAlphaF(0)
                 p.circleColor.setAlphaF(0)
 
-            # 画线条
+            # 画 线 条 
             if p.lineColor.alpha():
                 for pc in p.closest:
                     if not pc:
@@ -205,7 +205,7 @@ class Window(QWidget):
                     painter.drawPath(path)
                     painter.restore()
 
-            # 画圆
+            # 画 圆 
             painter.save()
             painter.setPen(Qt.NoPen)
             painter.setBrush(p.circleColor)
@@ -213,7 +213,7 @@ class Window(QWidget):
                 p.x - p.radius, p.y - p.radius, 2 * p.radius, 2 * p.radius), p.radius, p.radius)
             painter.restore()
 
-            # 开启动画
+            # 开 动画 
             p.initAnimation()
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Created on 2018年4月1日
+# 2018 년 4 월 1 일에 작성되었습니다 
 # author: Irony
 # site: https://pyqt5.com , https://github.com/892768447
 # email: 892768447@qq.com
@@ -23,41 +23,41 @@ from PyQt5.QtWidgets import QProgressBar
 
 class WaterRippleProgressBar(QProgressBar):
 
-    # 浪高百分比
+    # 高 % 
     waterHeight = 1
-    # 密度
+    # 밀도 
     waterDensity = 1
-    # 样式1为矩形, 0为圆形
+    # 样 1은 직사각형, 0은 둥글다 
     styleType = 1
-    # 文字颜色
+    # 文 
     textColor = Qt.white
-    # 背景颜色
+    # 배경색 
     backgroundColor = Qt.gray
-    # 波浪颜色1
+    # 물결 모양의 색상 1. 
     waterColor1 = QColor(33, 178, 148)
-    # 波浪颜色2
+    # 물결 모양의 색깔 2. 
     waterColor2 = QColor(33, 178, 148, 100)
 
     def __init__(self, *args, **kwargs):
         super(WaterRippleProgressBar, self).__init__(*args, **kwargs)
         self._offset = 0
-        # 每隔100ms刷新波浪（模拟波浪动态）
+        # 100ms마다 파도를 새로 고침하십시오 (시뮬레이션 된 웨이브 역학) 
         self._updateTimer = QTimer(self, timeout=self.update)
         self._updateTimer.start(100)
 
     def setRange(self, minValue, maxValue):
         if minValue == maxValue == 0:
-            return  # 不允许设置busy状态
+            return  # 不 设置 b 状态. 
         super(WaterRippleProgressBar, self).setRange(minValue, maxValue)
 
     def setMinimum(self, value):
         if value == self.maximum() == 0:
-            return  # 不允许设置busy状态
+            return  # 不 设置 b 状态. 
         super(WaterRippleProgressBar, self).setMinimum(value)
 
     def setMaximum(self, value):
         if value == self.minimum() == 0:
-            return  # 不允许设置busy状态
+            return  # 不 设置 b 状态. 
         super(WaterRippleProgressBar, self).setMaximum(value)
 
     def setWaterHeight(self, height):
@@ -81,45 +81,45 @@ class WaterRippleProgressBar(QProgressBar):
     def paintEvent(self, event):
         if self.minimum() == self.maximum() == 0:
             return
-        # 正弦曲线公式 y = A * sin(ωx + φ) + k
-        # 当前值所占百分比
+        # 正弦 公 公 公 y = a * sin (ωx + φ) + k 
+        # 当前 值 值 所 
         percent = 1 - (self.value() - self.minimum()) / \
             (self.maximum() - self.minimum())
-        # w表示周期，6为人为定义
+        # W 표현주기, 6은 정의입니다. 
         w = 6 * self.waterDensity * math.pi / self.width()
-        # A振幅 高度百分比，1/26为人为定义
+        # 진폭 높이 백분율, 1/26은 정의입니다. 
         A = self.height() * self.waterHeight * 1 / 26
-        # k 高度百分比
+        # k 높이 백분율 
         k = self.height() * percent
 
-        # 波浪1
+        # wave 1 
         waterPath1 = QPainterPath()
-        waterPath1.moveTo(0, self.height())  # 起点在左下角
-        # 波浪2
+        waterPath1.moveTo(0, self.height())  # 시작점이 왼쪽 하단에 있습니다. 
+        # wave 2 
         waterPath2 = QPainterPath()
-        waterPath2.moveTo(0, self.height())  # 起点在左下角
+        waterPath2.moveTo(0, self.height())  # 시작점이 왼쪽 하단에 있습니다. 
 
-        # 偏移
+        # 오프셋 
         self._offset += 0.6
         if self._offset > self.width() / 2:
             self._offset = 0
 
         for i in range(self.width() + 1):
-            # 从x轴开始计算y轴点
+            # x 축에서 y 축 지점을 계산합니다. 
             y = A * math.sin(w * i + self._offset) + k
             waterPath1.lineTo(i, y)
 
-            # 相对第一条需要进行错位
+            # 相 第一 第一 第一 需要 错 错 
             y = A * math.sin(w * i + self._offset + self.width() / 2 * A) + k
             waterPath2.lineTo(i, y)
 
-        # 封闭两条波浪，形成一个 U形 上面加波浪的封闭区间
+        # 두 파도를 닫고 U 형으로 닫힌 간격을 형성합니다. 
         waterPath1.lineTo(self.width(), self.height())
         waterPath1.lineTo(0, self.height())
         waterPath2.lineTo(self.width(), self.height())
         waterPath2.lineTo(0, self.height())
 
-        # 整体形状（矩形或者圆形）
+        # 整体 모양 (직사각형 또는 원형) 
         bgPath = QPainterPath()
         if self.styleType:
             bgPath.addRect(QRectF(self.rect()))
@@ -127,35 +127,35 @@ class WaterRippleProgressBar(QProgressBar):
             radius = min(self.width(), self.height())
             bgPath.addRoundedRect(QRectF(self.rect()), radius, radius)
 
-        # 开始画路径
+        # 경로를 시작하십시오 
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing, True)
-        # 设置没有画笔
+        # 브러쉬 설정 설정 
         painter.setPen(Qt.NoPen)
 
         if not self.styleType:
-            # 圆形
+            # round. 
             painter.setClipPath(bgPath)
 
-        # 先整体绘制背景，然后再在背景上方绘制两条波浪
+        # 先 整 背景 背景 背景, 그런 다음 배경에 두 개의 파도를 그립니다. 
         painter.save()
         painter.setBrush(self.backgroundColor)
         painter.drawPath(bgPath)
         painter.restore()
 
-        # 波浪1
+        # wave 1 
         painter.save()
         painter.setBrush(self.waterColor1)
         painter.drawPath(waterPath1)
         painter.restore()
 
-        # 波浪2
+        # wave 2 
         painter.save()
         painter.setBrush(self.waterColor2)
         painter.drawPath(waterPath2)
         painter.restore()
 
-        # 绘制文字
+        # 文 
         if not self.isTextVisible():
             return
         painter.setPen(self.textColor)

@@ -22,7 +22,7 @@ __Version__ = "Version 1.0"
 class RestartWindow(QWidget):
 
     restarted = pyqtSignal(QWidget, str)
-    _Self = None  # 很重要,保留窗口引用
+    _Self = None  # 很 重要,, 保 引 引. 
 
     def __init__(self, path, *args, **kwargs):
         super(RestartWindow, self).__init__(*args, **kwargs)
@@ -39,7 +39,7 @@ class RestartWindow(QWidget):
     def onChangeDir(self):
         path = self.dirEdit.text().strip()
         if path and QMessageBox.question(self, "提示", "确认要切换到{0}目录吗?".format(path)) == QMessageBox.Yes:
-            self.hide()  # 先隐藏
+            self.hide()  # 先 隐 隐 隐 
             self.restarted.emit(self, path)
         else:
             self.dirEdit.setFocus()

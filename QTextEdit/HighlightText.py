@@ -29,7 +29,7 @@ class TextEdit(QMainWindow):
         self.textEdit.setPlainText(text)
 
     def highlight(self):
-        text = self.findText.text()  # 输入框中的文字
+        text = self.findText.text()  # 文 输入 中 中 
         if not text:
             return
 
@@ -37,23 +37,23 @@ class TextEdit(QMainWindow):
         if not col.isValid():
             return
 
-        # 恢复默认的颜色
+        # 기본 색상을 복원합니다 
         cursor = self.textEdit.textCursor()
         cursor.select(QTextCursor.Document)
         cursor.setCharFormat(QTextCharFormat())
         cursor.clearSelection()
         self.textEdit.setTextCursor(cursor)
 
-        # 文字颜色
+        # 文 
         fmt = QTextCharFormat()
         fmt.setForeground(col)
 
-        # 正则
+        # 正 则 
         expression = QRegExp(text)
         self.textEdit.moveCursor(QTextCursor.Start)
         cursor = self.textEdit.textCursor()
 
-        # 循环查找设置颜色
+        # 循 查 设置 设置 设置. 
         pos = 0
         index = expression.indexIn(self.textEdit.toPlainText(), pos)
         while index >= 0:

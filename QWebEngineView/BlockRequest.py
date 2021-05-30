@@ -24,7 +24,7 @@ class RequestInterceptor(QWebEngineUrlRequestInterceptor):
     def interceptRequest(self, info):
         url = info.requestUrl().toString()
         if url.find('pos.baidu.com') > -1 and url.find('ltu=') > -1:
-            # 拦截百度联盟的广告
+            # 가로 촬영 Baidu Alliance 광고 
             print('block:', url)
             info.block(True)
 

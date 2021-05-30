@@ -28,105 +28,105 @@ class Window(QWidget, Ui_FormSerialPort):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self._serial = QSerialPort(self)  # 用于连接串口的对象
-        self._serial.readyRead.connect(self.onReadyRead)  # 绑定数据读取信号
-        # 首先获取可用的串口列表
+        self._serial = QSerialPort(self)  # # 用 连接 连接 对 
+        self._serial.readyRead.connect(self.onReadyRead)  # 定 数据 数据 读 信号 信号 
+        # 먼저 사용 가능한 직렬 포트 목록을 가져옵니다 
         self.getAvailablePorts()
 
     @pyqtSlot()
     def on_buttonConnect_clicked(self):
-        # 打开或关闭串口按钮
+        # 직렬 버튼을 열거 나 닫습니다 
         if self._serial.isOpen():
-            # 如果串口是打开状态则关闭
+            # 직렬 포트가 열려 있으면 끄기 
             self._serial.close()
             self.textBrowser.append('串口已关闭')
             self.buttonConnect.setText('打开串口')
             self.labelStatus.setProperty('isOn', False)
-            self.labelStatus.style().polish(self.labelStatus)  # 刷新样式
+            self.labelStatus.style().polish(self.labelStatus)  # 새로 고침 스타일 
             return
 
-        # 根据配置连接串口
+        # 구성 연결 직렬 포트에 따라 다릅니다 
         name = self.comboBoxPort.currentText()
         if not name:
             QMessageBox.critical(self, '错误', '没有选择串口')
             return
         port = self._ports[name]
 #         self._serial.setPort(port)
-        # 根据名字设置串口（也可以用上面的函数）
+        # 이름에 따라 직렬 포트를 설정하십시오 (위 기능을 사용할 수도 있습니다) 
         self._serial.setPortName(port.systemLocation())
-        # 设置波特率
-        self._serial.setBaudRate(  # 动态获取,类似QSerialPort::Baud9600这样的吧
+        # 전송 속도를 설정합니다 
+        self._serial.setBaudRate(  #Traffled, QSerialPort :: Baud9600과 유사합니다 
             getattr(QSerialPort, 'Baud' + self.comboBoxBaud.currentText()))
-        # 设置校验位
+        # 확인 비트를 설정하십시오 
         self._serial.setParity(  # QSerialPort::NoParity
             getattr(QSerialPort, self.comboBoxParity.currentText() + 'Parity'))
-        # 设置数据位
+        # 데이터 비트를 설정하십시오 
         self._serial.setDataBits(  # QSerialPort::Data8
             getattr(QSerialPort, 'Data' + self.comboBoxData.currentText()))
-        # 设置停止位
+        # 정지 비트를 설정하십시오 
         self._serial.setStopBits(  # QSerialPort::Data8
             getattr(QSerialPort, self.comboBoxStop.currentText()))
 
-        # NoFlowControl          没有流程控制
-        # HardwareControl        硬件流程控制(RTS/CTS)
-        # SoftwareControl        软件流程控制(XON/XOFF)
-        # UnknownFlowControl     未知控制
+        # noflowcontrol 프로세스 제어가 없습니다 
+        # HardWareControl 하드웨어 흐름 제어 (RTS / CTS) 
+        # SoftwareControl 소프트웨어 흐름 제어 (XON / XOFF) 
+        # UnknownFlowControl 알 수없는 컨트롤 
         self._serial.setFlowControl(QSerialPort.NoFlowControl)
-        # 读写方式打开串口
+        # 读 写 写 方式 打开 口 
         ok = self._serial.open(QIODevice.ReadWrite)
         if ok:
             self.textBrowser.append('打开串口成功')
             self.buttonConnect.setText('关闭串口')
             self.labelStatus.setProperty('isOn', True)
-            self.labelStatus.style().polish(self.labelStatus)  # 刷新样式
+            self.labelStatus.style().polish(self.labelStatus)  # 새로 고침 스타일 
         else:
             self.textBrowser.append('打开串口失败')
             self.buttonConnect.setText('打开串口')
             self.labelStatus.setProperty('isOn', False)
-            self.labelStatus.style().polish(self.labelStatus)  # 刷新样式
+            self.labelStatus.style().polish(self.labelStatus)  # 새로 고침 스타일 
 
     @pyqtSlot()
     def on_buttonSend_clicked(self):
-        # 发送消息按钮
+        # 메시지를 보냅니다 
         if not self._serial.isOpen():
             print('串口未连接')
             return
         text = self.plainTextEdit.toPlainText()
         if not text:
             return
-        text = QByteArray(text.encode('gb2312'))  # emmm windows 测试的工具貌似是这个编码
+        text = QByteArray(text.encode('gb2312'))  # EMM Windows 테스트 도구이 코드처럼 보입니다 
         if self.checkBoxHexSend.isChecked():
-            # 如果勾选了hex发送
+            # 16 진수가 확인 된 경우 
             text = text.toHex()
-        # 发送数据
+        # 데이터 보내기 
         print('发送数据:', text)
         self._serial.write(text)
 
     def onReadyRead(self):
-        # 数据接收响应
+        # 데이터 수신 응답 
         if self._serial.bytesAvailable():
-            # 当数据可读取时
-            # 这里只是简答测试少量数据,如果数据量太多了此处readAll其实并没有读完
-            # 需要自行设置粘包协议
+            # 데이터가 읽을 수있는 경우 
+            # 이것은 소량의 데이터에 대한 짧은 대답입니다. 데이터의 양이 너무 많으면 ReadAll은 실제로 완료되지 않았습니다. 
+            # 자신의 본드 프로토콜을 설정해야합니다 
             data = self._serial.readAll()
             if self.checkBoxHexView.isChecked():
-                # 如果勾选了hex显示
+                # 16 진수가 확인 된 경우 
                 data = data.toHex()
             data = data.data()
-            # 解码显示（中文啥的）
+            # 디코딩 된 디스플레이 (啥 啥) 
             try:
                 self.textBrowser.append('我收到了: ' + data.decode('gb2312'))
             except:
-                # 解码失败
+                # 디코딩에 실패했습니다 
                 self.textBrowser.append('我收到了: ' + repr(data))
 
     def getAvailablePorts(self):
-        # 获取可用的串口
-        self._ports = {}  # 用于保存串口的信息
+        # 사용할 수있는 직렬 포트 가져 오기 
+        self._ports = {}  # 信息 保 保 保 信息. 
         infos = QSerialPortInfo.availablePorts()
-        infos.reverse()  # 逆序
+        infos.reverse()  # 逆 
         for info in infos:
-            # 通过串口名字-->关联串口变量
+            # 직렬 포트 이름 -> 연관된 직렬 포트 변수를 통해 
             self._ports[info.portName()] = info
             self.comboBoxPort.addItem(info.portName())
 

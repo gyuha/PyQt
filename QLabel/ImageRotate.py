@@ -43,37 +43,37 @@ class Window(QWidget):
         clayout.addItem(QSpacerItem(
             40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
 
-        # 原始图片
+        # 원본 그림 
         self.srcImage = QImage('Data/fg.png')
         self.imageLabel.setPixmap(QPixmap.fromImage(self.srcImage))
 
     def doHorFilp(self):
-        # 水平翻转
+        # 가로 플립 
         self.srcImage = self.srcImage.mirrored(True, False)
         self.imageLabel.setPixmap(QPixmap.fromImage(self.srcImage))
 
     def doVerFilp(self):
-        # 垂直翻转
+        # 수직 플립 
         self.srcImage = self.srcImage.mirrored(False, True)
         self.imageLabel.setPixmap(QPixmap.fromImage(self.srcImage))
 
     def doClockwise(self):
-        # 顺时针45度
+        # 시계 방향 45도 
         image = QImage(self.srcImage.size(),
                        QImage.Format_ARGB32_Premultiplied)
         painter = QPainter()
         painter.begin(image)
-        # 以图片中心为原点
+        # 原 以 
         hw = self.srcImage.width() / 2
         hh = self.srcImage.height() / 2
         painter.translate(hw, hh)
-        painter.rotate(45)  # 旋转45度
-        painter.drawImage(-hw, -hh, self.srcImage)  # 把图片绘制上去
+        painter.rotate(45)  # 4 45도 
+        painter.drawImage(-hw, -hh, self.srcImage)  # 사진을 그립니다 
         painter.end()
-        self.srcImage = image  # 替换
+        self.srcImage = image  # 
         self.imageLabel.setPixmap(QPixmap.fromImage(self.srcImage))
 
-#         # 下面这个旋转方法针对90度的倍数,否则图片会变大
+# #이 회전 방법 아래의 90 도의 여러도 아래로, 그렇지 않으면 그림이 더 크게 될 것입니다. 
 #         trans = QTransform()
 #         trans.rotate(90)
 #         self.srcImage = self.srcImage.transformed(
@@ -81,22 +81,22 @@ class Window(QWidget):
 #         self.imageLabel.setPixmap(QPixmap.fromImage(self.srcImage))
 
     def doAnticlockwise(self):
-        # 逆时针45度
+        # 시계 반대 방향 45도 
         image = QImage(self.srcImage.size(),
                        QImage.Format_ARGB32_Premultiplied)
         painter = QPainter()
         painter.begin(image)
-        # 以图片中心为原点
+        # 原 以 
         hw = self.srcImage.width() / 2
         hh = self.srcImage.height() / 2
         painter.translate(hw, hh)
-        painter.rotate(-45)  # 旋转-45度
-        painter.drawImage(-hw, -hh, self.srcImage)  # 把图片绘制上去
+        painter.rotate(-45)  # - 45도 
+        painter.drawImage(-hw, -hh, self.srcImage)  # 사진을 그립니다 
         painter.end()
-        self.srcImage = image  # 替换
+        self.srcImage = image  # 
         self.imageLabel.setPixmap(QPixmap.fromImage(self.srcImage))
 
-#         # 下面这个旋转方法针对90度的倍数,否则图片会变大
+# #이 회전 방법 아래의 90 도의 여러도 아래로, 그렇지 않으면 그림이 더 크게 될 것입니다. 
 #         trans = QTransform()
 #         trans.rotate(90)
 #         self.srcImage = self.srcImage.transformed(

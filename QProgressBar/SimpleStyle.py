@@ -41,7 +41,7 @@ StyleSheet = '''
 }
 
 #BlueProgressBar {
-    border: 2px solid #2196F3;/*边框以及边框颜色*/
+    border: 2px solid # 2196F3; / * 테두리 및 테두리 색상 * / 
     border-radius: 5px;
     background-color: #E0E0E0;
 }
@@ -79,7 +79,7 @@ class Window(QWidget):
         layout = QVBoxLayout(self)
         layout.addWidget(
             ProgressBar(self, minimum=0, maximum=100, objectName="RedProgressBar"))
-        layout.addWidget(  # 繁忙状态
+        layout.addWidget(  # 바쁜 
             ProgressBar(self, minimum=0, maximum=0, objectName="RedProgressBar"))
 
         layout.addWidget(

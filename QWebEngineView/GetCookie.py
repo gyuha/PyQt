@@ -23,8 +23,8 @@ __Version__ = "Version 1.0"
 
 class WebEngineView(QWebEngineView):
 
-    DomainCookies = {}  # 存放domain的key-value
-    PathCookies = {}  # 存放domain+path的key-value
+    DomainCookies = {}  # 存 d 的 的 的 乐乐 K K. 
+    PathCookies = {}  # 存 d d + 경로 키 - 값 
 
     def __init__(self, *args, **kwargs):
         super(WebEngineView, self).__init__(*args, **kwargs)
@@ -33,7 +33,7 @@ class WebEngineView(QWebEngineView):
         self.cookieView.move(400, 400)
         self.cookieView.setWindowTitle('Cookies')
         self.cookieView.show()
-        # 绑定cookie被添加的信号槽
+        # 定 定 c 被 加. 
         QWebEngineProfile.defaultProfile().cookieStore(
         ).cookieAdded.connect(self.onCookieAdd)
         self.loadFinished.connect(self.onLoadFinished)

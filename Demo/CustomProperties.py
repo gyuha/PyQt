@@ -34,7 +34,7 @@ class Window(QPushButton):
         print("textColor", self._textColor)
         self.setStyleSheet("qproperty-backgroundColor: %s;" % randint(1, 1000))
 
-    # 方式一、个人觉得比较简洁
+    # 方式 一, 개인은 더 간단합니다 
     @pyqtProperty(str, notify=bgChanged)
     def backgroundColor(self):
         return self._backgroundColor
@@ -44,7 +44,7 @@ class Window(QPushButton):
         self.bgChanged.emit(self._backgroundColor, color)
         self._backgroundColor = color
 
-    # 方式二
+    # 方式 2. 
     def getTextColor(self):
         return self._textColor
 

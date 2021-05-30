@@ -85,7 +85,7 @@ ApplicationWindow {
 
 class Window(QWidget):
 
-    # 定义一个时间信号
+    # 시간 신호를 정의하십시오 
     timerSignal = pyqtSignal(str)
 
     def __init__(self, *args, **kwargs):
@@ -99,21 +99,21 @@ class Window(QWidget):
         self._timer.start(2000)
 
     def onTimeout(self):
-        # 定时器发送信号通知qml
+        # 타이머 신호 알림 QML을 보냅니다 
         self.timerSignal.emit('定时器发来:' + str(time()))
 
     def callQmlFunc(self):
-        # 主动调用qml中的appendText函数
+        # qml에서 appendtext 함수를 적극적으로 호출합니다 
         engine.rootObjects()[0].appendText('我是被Python调用了')
 
     @pyqtSlot(int)
     def onValueChanged(self, value):
-        # qml中的自定义信号valueChanged所绑定的槽函数
+        # QML 사용자 정의 신호 ValueChanged 바인딩 슬롯 기능 
         self.resultView.append('拉动条值: %s' % value)
 
-    @pyqtSlot(str, result=str)  # 可以获取返回值
+    @pyqtSlot(str, result=str)  # 반환 값을 얻을 수 있습니다 
     def testSlot(self, name):
-        # 被qml调用的函数
+        # Q 调 Q 调 调 调 
         self.resultView.append('我被主动调用: %s' % name)
         return str(len(name))
 
@@ -126,14 +126,14 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
 
-    # 测试界面
+    # 테스트 인터페이스 
     w = Window()
     w.resize(400, 400)
     w.show()
     w.move(400, 400)
 
     engine = QQmlApplicationEngine()
-    # 提供一个沟通的对象_Window，必须是要继承QObject的类
+    # 통신 개체를 제공 _Window, Qobject를 상속하는 클래스가 있어야합니다. 
     engine.rootContext().setContextProperty('_Window', w)
 
     engine.objectCreated.connect(

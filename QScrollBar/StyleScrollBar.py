@@ -24,7 +24,7 @@ class Window(QTextEdit):
     def __init__(self, parent=None):
         super(Window, self).__init__(parent)
         self.resize(800, 600)
-        # 设置横向纵向滚动条总是显示
+        # 가로 세로 스크롤 막대를 항상 표시합니다 
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         with open("Data/ScrollBar.qss", "rb") as fp:
@@ -32,7 +32,7 @@ class Window(QTextEdit):
             encoding = chardet.detect(content) or {}
             content = content.decode(encoding.get("encoding") or "utf-8")
         self.setText(content)
-        # 设置样式
+        # 스타일을 설정하십시오 
         self.setStyleSheet(content)
 
 

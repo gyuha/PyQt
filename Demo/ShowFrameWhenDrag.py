@@ -59,22 +59,22 @@ class Window(QWidget):
         layout = QVBoxLayout(self)
         layout.addWidget(QLabel('拖动或者调整窗口试试看'))
 
-        # 重点替换窗口处理过程
+        # 키 교체 창 처리 
         self._newwndproc = WNDPROC(self._wndproc)
         self._oldwndproc = SetWindowLong(
             int(self.winId()), GWL_WNDPROC, self._newwndproc)
 
     def _wndproc(self, hwnd, msg, wparam, lparam):
         if msg == WM_NCLBUTTONDOWN:
-            # 获取系统本身是否已经开启
+            # 시스템 자체가 이미 열려 있는지 여부를 확인하십시오 
             isDragFullWindow = GetDragFullwindows()
             if isDragFullWindow != 0:
-                # 开启虚线框
+                # 가상 라인 상자를 엽니 다 
                 SetDragFullwindows(0)
-                # 系统本身处理
+                # 系统 本 处理 
                 ret = CallWindowProc(
                     self._oldwndproc, hwnd, msg, wparam, lparam)
-                # 关闭虚线框
+                # 关 虚 虚 虚 
                 SetDragFullwindows(1)
                 return ret
         return CallWindowProc(self._oldwndproc, hwnd, msg, wparam, lparam)

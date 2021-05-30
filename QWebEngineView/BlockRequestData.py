@@ -20,7 +20,7 @@ __Copyright__ = 'Copyright (c) 2019'
 __Version__ = 'Version 1.0'
 
 
-# 自定义url协议头
+# 사용자 정의 URL 프로토콜 헤더 
 class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
 
     def requestStarted(self, job):
@@ -30,16 +30,16 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
             file.open(QIODevice.ReadOnly)
             job.reply(b'image/png', file)
 
-# 请求拦截器
+# 가난자를 요청하십시오 
 
 
 class RequestInterceptor(QWebEngineUrlRequestInterceptor):
 
     def interceptRequest(self, info):
         url = info.requestUrl().toString()
-        # 这里演示只是拦截所有png图片，可自由发挥比如拦截js文件，修改后再返回
+        # 여기서 데모는 JS 파일을 가로 채는 것과 같이 자유롭게 재생할 수있는 모든 PNG 그림을 가로 챌 수 있습니다. 
         if url.endswith('.png'):
-            # 原理在于重定向到自己的url协议里
+            # Ration은 자체 URL 프로토콜로 리디렉션하는 것입니다. 
             info.redirect(QUrl('myurl://png'))
 
 
@@ -49,12 +49,12 @@ class Window(QWebEngineView):
         super(Window, self).__init__(*args, **kwargs)
         self.resize(800, 600)
 
-        # 首先获取默认的url协议
+        # 먼저 기본 URL 프로토콜을 가져옵니다 
         h1 = QWebEngineUrlScheme.schemeByName(b'http')
         h2 = QWebEngineUrlScheme.schemeByName(b'https')
 
-        # 这里需要修改增加本地文件和跨域支持
-        CorsEnabled = 0x80  # 5.14才增加
+        # 여기에서 로컬 파일과 도메인 간 지원을 수정해야합니다. 
+        CorsEnabled = 0x80  # 5.14 증가 
         h1.setFlags(h1.flags() |
                     QWebEngineUrlScheme.SecureScheme |
                     QWebEngineUrlScheme.LocalScheme |
@@ -66,7 +66,7 @@ class Window(QWebEngineView):
                     QWebEngineUrlScheme.LocalAccessAllowed |
                     CorsEnabled)
 
-        # 安装url拦截器和自定义url协议处理
+        # URL 인터셉터 및 사용자 정의 URL 프로토콜 처리 설치 
         de = QWebEngineProfile.defaultProfile()  # @UndefinedVariable
         de.setRequestInterceptor(RequestInterceptor(self))
         de.installUrlSchemeHandler(b'myurl', UrlSchemeHandler(self))

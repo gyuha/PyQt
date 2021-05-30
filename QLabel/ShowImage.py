@@ -31,33 +31,33 @@ class ImageView(QWidget):
         self.resize(800, 600)
         layout = QHBoxLayout(self)
 
-        # 从文件加载图片
+        # 파일에서 이미지로드 
         layout.addWidget(QLabel(self, pixmap=QPixmap("Data/head.jpg")))
 
-        # QResource 参考 http://doc.qt.io/qt-5/resources.html
+        # qResource 참조 http://doc.qt.io/qt-5/resources.html. 
 
-        # 从资源文件中加载1  from py file
-        # 转换命令pyrcc5 res.qrc -o res_rc.py
-        # 这种方式是从通过pyrcc5转换res.qrc为res_rc.py文件，可以直接import加载
-        # 此时可以通过路径:/images/head.jpg来访问
+        # load 1 자원 파일에서 py 파일에서 1 
+        # 转 p pyrcc5 res.qrc -o res_rc.py. 
+        #이 방법은 RES.QRC를 PROCC5에서 RES_RC.PY 파일로 전송하는 것입니다. 직접로드 할 수 있습니다. 
+        # 경로를 전달할 수 있습니다 : / images/head.jpg에 액세스 할 수 있습니다. 
         layout.addWidget(QLabel(self, pixmap=QPixmap(":/images/head.jpg")))
 
-        # 从二进制资源文件res.rcc中加载
-        # 转换命令tools/rcc.exe -binary res2.qrc -o res.rcc
-        # 这里把资源前缀修改下(/myfile),见res2.qrc文件
-        # 此时需要注册
+        # 바이너리 자원 파일 res에서 # RCC. 
+        # 转 ts o r 2. B. 
+        # 여기서 자원 접두사가 수정 (/ myfile), res2.qrc 파일을 참조하십시오. 
+        # 이번에는 등록해야합니다 
         QResource.registerResource("Data/res.rcc")
-        # 注意前缀
+        # 小 注意 前 
         layout.addWidget(
             QLabel(self, pixmap=QPixmap(":/myfile/images/head.jpg")))
 
-        # 从xpm数组中加载
-        # 通过工具tools/Image2XPM.exe来转换
-        # 这里把转换的xpm数组直接放到py文件中当做一个变量
-        # 见xpmres.py中的image_head
+        # XPM 배열에서로드합니다 
+        # 도구 도구 / image2xpm.exe로 변환하십시오 
+        # 여기서 변환 된 XPM 배열을 PY 파일에 변수로 직접 놓습니다. 
+        # xpmres.py에서 image_head를 참조하십시오 
         layout.addWidget(QLabel(self, pixmap=QPixmap(image_head)))
 
-        # 加载gif图片
+        # 加载 图片 
         movie = QMovie("Data/loading.gif")
         label = QLabel(self)
         label.setMovie(movie)

@@ -24,7 +24,7 @@ class DynamicSpline(QChart):
         self.m_step = 0
         self.m_x = 5
         self.m_y = 1
-        # 初始化图像
+        # 이미지를 초기화하십시오 
         self.series = QSplineSeries(self)
         green_pen = QPen(Qt.red)
         green_pen.setWidth(3)
@@ -51,7 +51,7 @@ class DynamicSpline(QChart):
         x = self.plotArea().width() / self.axisX.tickCount()
         y = (self.axisX.max() - self.axisX.min()) / self.axisX.tickCount()
         self.m_x += y
-        # 在PyQt5.11.3及以上版本中，QRandomGenerator.global()被重命名为global_()
+        # PYQT5.11.3 이상에서 QRandomGenerator.Global ()은 global_ ()로 변경됩니다. 
         self.m_y = QRandomGenerator.global_().bounded(5) - 2.5
         self.series.append(self.m_x, self.m_y)
         self.scroll(x, 0)
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     chart.setAnimationOptions(QChart.AllAnimations)
 
     view = QChartView(chart)
-    view.setRenderHint(QPainter.Antialiasing)  # 抗锯齿
+    view.setRenderHint(QPainter.Antialiasing)  # 抗锯 齿齿 
     view.resize(400, 300)
     view.show()
     sys.exit(app.exec_())

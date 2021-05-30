@@ -29,13 +29,13 @@ class Window(QWidget):
     def doShake(self):
         self.doShakeWindow(self)
 
-    # 下面这个方法可以做成这样的封装给任何控件
+    이 방법 아래의 # ¶이 방법은 모든 컨트롤을 제공 할 패키지를 만들 수 있습니다. 
     def doShakeWindow(self, target):
         """窗口抖动动画
         :param target:        目标控件
         """
         if hasattr(target, '_shake_animation'):
-            # 如果已经有该对象则跳过
+            # 객체가 이미있는 경우 건너 뜁니다 
             return
 
         animation = QPropertyAnimation(target, b'pos', target)

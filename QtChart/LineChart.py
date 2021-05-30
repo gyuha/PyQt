@@ -26,10 +26,10 @@ if __name__ == "__main__":
     series.append(0, 6)
     series.append(2, 4)
     chart.addSeries(series)
-    chart.createDefaultAxes()  # 创建默认轴
+    chart.createDefaultAxes()  # 기본 축을 만듭니다 
 
     view = QChartView(chart)
-    view.setRenderHint(QPainter.Antialiasing)  # 抗锯齿
+    view.setRenderHint(QPainter.Antialiasing)  # 抗锯 齿齿 
     view.resize(800, 600)
     view.show()
     sys.exit(app.exec_())

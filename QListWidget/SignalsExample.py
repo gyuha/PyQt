@@ -34,7 +34,7 @@ class Window(QWidget):
         self.listWidget.setAlternatingRowColors(True)
         self.listWidget.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.listWidget.setMovement(QListView.Free)
-        self.listWidget.setMouseTracking(True)  # 用于itemEntered信号
+        self.listWidget.setMouseTracking(True)  # itemNTERED 신호에 대한 # 
 
         self.resultView = QPlainTextEdit(self)
         self.resultView.setReadOnly(True)
@@ -46,14 +46,14 @@ class Window(QWidget):
         self.initSignals()
 
     def initData(self):
-        # 初始化模拟数据
+        # 아날로그 데이터를 초기화합니다 
         for i in range(100):
             item = QListWidgetItem('Item {0}'.format(i), self.listWidget)
             if i % 3 == 0:
                 item.setFlags(item.flags() | Qt.ItemIsEditable)
 
     def initSignals(self):
-        # 初始化信号
+        # 초기화 신호 
         self.listWidget.currentItemChanged.connect(self.onCurrentItemChanged)
         self.listWidget.currentRowChanged.connect(self.onCurrentRowChanged)
         self.listWidget.currentTextChanged.connect(self.onCurrentTextChanged)

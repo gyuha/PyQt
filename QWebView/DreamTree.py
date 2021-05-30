@@ -25,7 +25,7 @@ __Copyright__ = "Copyright (c) 2017 Irony.\"[讽刺]"
 __Version__ = "Version 1.0"
 
 
-# 要实现透明的webview,需要先用一个QWidget作为父控件
+# 투명한 WebView를 얻으려면 QWidget을 상위 제어로 사용해야합니다. 
 
 
 class Window(QWidget):
@@ -33,34 +33,34 @@ class Window(QWidget):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
 
-        self.setAttribute(Qt.WA_TranslucentBackground, True)  # 设置父控件Widget背景透明
-        self.setWindowFlags(Qt.FramelessWindowHint)  # 去掉边框
+        self.setAttribute(Qt.WA_TranslucentBackground, True)  # 부모 컨트롤 위젯 배경을 투명하게 설정합니다 
+        self.setWindowFlags(Qt.FramelessWindowHint)  # 去 掉 掉 边 
         palette = self.palette()
-        palette.setBrush(QPalette.Base, Qt.transparent)  # 父控件背景透明
+        palette.setBrush(QPalette.Base, Qt.transparent)  # 父 控 控 背景 透 透 
         self.setPalette(palette)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
 
         #         QWebSettings.globalSettings().setAttribute(
-        #             QWebSettings.DeveloperExtrasEnabled, True)# web开发者工具
+        # QWebSettings.DeveloperExtraSenabled, true) # 웹 개발자 도구 
 
-        self.webView = QWebView(self)  # 网页控件
+        self.webView = QWebView(self)  # 网 网 조절기 
         layout.addWidget(self.webView)
-        self.webView.setContextMenuPolicy(Qt.NoContextMenu)  # 去掉右键菜单
+        self.webView.setContextMenuPolicy(Qt.NoContextMenu)  # 去 键 键 菜 
         self.mainFrame = self.webView.page().mainFrame()
 
         self.mainFrame.setScrollBarPolicy(
-            Qt.Vertical, Qt.ScrollBarAlwaysOff)  # 去掉滑动条
+            Qt.Vertical, Qt.ScrollBarAlwaysOff)  # 去 滑条 
         self.mainFrame.setScrollBarPolicy(Qt.Horizontal, Qt.ScrollBarAlwaysOff)
 
-        # 最大化
+        # maximize. 
         rect = app.desktop().availableGeometry()
         self.resize(rect.size())
         self.webView.resize(rect.size())
 
     def load(self):
-        self.webView.load(QUrl('qrc:/tree.html'))  # 加载网页
+        self.webView.load(QUrl('qrc:/tree.html'))  # 加 网 
 
 
 if __name__ == '__main__':

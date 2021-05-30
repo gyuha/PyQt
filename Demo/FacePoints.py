@@ -60,7 +60,7 @@ class OpencvWidget(QLabel):
             self.outFile.remove()
         self._reply.deleteLater()
         del self._reply
-        # 下载完成解压文件并加载摄像头
+        # # 下载 압축 해제 된 파일을 완성하고 카메라를로드하십시오. 
         self.setText("正在解压数据。。。")
         try:
             bz = BZ2Decompressor()
@@ -83,7 +83,7 @@ class OpencvWidget(QLabel):
     def startCapture(self):
         self.setText("请稍候，正在初始化数据和摄像头。。。")
         try:
-            # 检测相关
+            # # 相关 相关 
             self.detector = dlib.get_frontal_face_detector()
             self.predictor = dlib.shape_predictor(
                 "Data/shape_predictor_68_face_landmarks.dat")
@@ -94,7 +94,7 @@ class OpencvWidget(QLabel):
             self.cap = cv2.VideoCapture(0)
             if not self.cap or not self.cap.isOpened():
                 return QMessageBox.critical(self, "错误", "打开摄像头失败")
-            # 开启定时器定时捕获
+            # 开 开 타이머 타이머 캡처 
             self.timer = QTimer(self, timeout=self.onCapture)
             self.timer.start(1000 / self.fps)
         except Exception as e:
@@ -126,35 +126,35 @@ class OpencvWidget(QLabel):
         minisize = (
             int(frame.shape[1] / DOWNSCALE), int(frame.shape[0] / DOWNSCALE))
         tmpframe = cv2.resize(frame, minisize)
-        tmpframe = cv2.cvtColor(tmpframe, cv2.COLOR_BGR2GRAY)  # 做灰度处理
+        tmpframe = cv2.cvtColor(tmpframe, cv2.COLOR_BGR2GRAY)  # 회색 치료를하십시오 
         tmpframe = cv2.equalizeHist(tmpframe)
 
-        # minNeighbors表示每一个目标至少要被检测到5次
+        # minneighbors 각 목표는 적어도 5 번이고 
         faces = self.cascade.detectMultiScale(tmpframe, minNeighbors=5)
         del tmpframe
-        if len(faces) < 1:  # 没有检测到脸
+        if len(faces) < 1:  # 아무 얼굴도 없어 
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             img = QImage(
                 frame.data, frame.shape[1], frame.shape[0], frame.shape[1] * 3, QImage.Format_RGB888)
             del frame
             return self.setPixmap(QPixmap.fromImage(img))
-        # 特征点检测描绘
+        # 特征点 검출 묘사 
         for x, y, w, h in faces:
             x, y, w, h = x * DOWNSCALE, y * DOWNSCALE, w * DOWNSCALE, h * DOWNSCALE
-            # 画脸矩形
+            # 画脸 
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0))
-            # 截取的人脸部分
+            # 人 
             tmpframe = frame[y:y + h, x:x + w]
-            # 进行特征点描绘
+            # 기능 포인트 묘사를 취하십시오 
             rects = self.detector(tmpframe, 1)
             if len(rects) > 0:
                 landmarks = numpy.matrix(
                     [[p.x, p.y] for p in self.predictor(tmpframe, rects[0]).parts()])
                 for _, point in enumerate(landmarks):
                     pos = (point[0, 0] + x, point[0, 1] + y)
-                    # 在原来画面上画点
+                    # 원래의 그림에 플리가 가리 킵니다 
                     cv2.circle(frame, pos, 3, color=(0, 255, 0))
-            # 转成Qt能显示的
+            # 转 q q 能 能. 
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             img = QImage(
                 frame.data, frame.shape[1], frame.shape[0], frame.shape[1] * 3, QImage.Format_RGB888)

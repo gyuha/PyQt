@@ -6,11 +6,11 @@ from PyQt5.QtWidgets import QListView, QWidget, QHBoxLayout, QLineEdit,\
     QPushButton
 
 
-# Created on 2018年8月4日
+# 2018 년 8 월 4 일에 만들어졌습니다 
 # author: Irony
 # site: https://pyqt5.com , https://github.com/892768447
 # email: 892768447@qq.com
-# file: QListView.显示自定义Widget
+# 파일 : QListView. 사용자 정의 위젯을 표시합니다 
 # description:
 __Author__ = """By: Irony
 QQ: 892768447
@@ -29,7 +29,7 @@ class CustomWidget(QWidget):
         layout.addWidget(QPushButton('x', self))
 
     def sizeHint(self):
-        # 决定item的高度
+        # 항목의 높이를 결정하십시오 
         return QSize(200, 40)
 
 
@@ -37,20 +37,20 @@ class ListView(QListView):
 
     def __init__(self, *args, **kwargs):
         super(ListView, self).__init__(*args, **kwargs)
-        # 模型
+        # 모델 
         self._model = QStandardItemModel(self)
         self.setModel(self._model)
 
-        # 循环生成10个自定义控件
+        # 循 生 生 10 10 自 控 
         for i in range(10):
             item = QStandardItem()
-            self._model.appendRow(item)  # 添加item
+            self._model.appendRow(item)  # 아이템 추가 
 
-            # 得到索引
+            # 색인을 얻으십시오 
             index = self._model.indexFromItem(item)
             widget = CustomWidget(str(i))
-            item.setSizeHint(widget.sizeHint())  # 主要是调整item的高度
-            # 设置自定义的widget
+            item.setSizeHint(widget.sizeHint())  # 주로 항목의 높이를 조정합니다 
+            # 사용자 정의 위젯을 설정합니다 
             self.setIndexWidget(index, widget)
 
 

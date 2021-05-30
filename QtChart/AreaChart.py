@@ -19,43 +19,43 @@ class Window(QChartView):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
         self.resize(400, 300)
-        # 抗锯齿
+        # 抗锯 齿齿 
         self.setRenderHint(QPainter.Antialiasing)
 
-        # 图表
+        # 图片 
         chart = QChart()
         self.setChart(chart)
-        # 设置标题
+        # 제목을 설정하십시오 
         chart.setTitle('Simple areachart example')
-        # 添加Series
+        # 加 ses. 
         chart.addSeries(self.getSeries())
-        # 创建默认轴线
+        # 기본 축을 만듭니다 
         chart.createDefaultAxes()
-        # 设置xy轴的范围
+        # xy 축의 범위를 설정하십시오 
         chart.axisX().setRange(0, 20)
         chart.axisY().setRange(0, 10)
 
     def getSeries(self):
-        # 创建Series
+        # 생성 시리즈 
         series0 = QLineSeries(self)
         series1 = QLineSeries(self)
 
-        # 添加数据
+        # 데이터 추가 
         series0 << QPointF(1, 5) << QPointF(3, 7) << QPointF(7, 6) << QPointF(9, 7) \
                 << QPointF(12, 6) << QPointF(16, 7) << QPointF(18, 5)
         series1 << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) \
                 << QPointF(12, 3) << QPointF(16, 4) << QPointF(18, 3)
 
-        # 创建区域图
+        # 지역 맵을 만드십시오 
         series = QAreaSeries(series0, series1)
         series.setName('Batman')
 
-        # 画笔
+        #부시 
         pen = QPen(0x059605)
         pen.setWidth(3)
         series.setPen(pen)
 
-        # 设置画刷
+        # 회화 브러시를 설정합니다 
         gradient = QLinearGradient(QPointF(0, 0), QPointF(0, 1))
         gradient.setColorAt(0.0, QColor(0x3cc63c))
         gradient.setColorAt(1.0, QColor(0x26f626))

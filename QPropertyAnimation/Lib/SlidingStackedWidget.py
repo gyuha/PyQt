@@ -28,21 +28,21 @@ class SlidingStackedWidget(QStackedWidget):
     def __init__(self, *args, **kwargs):
         super(SlidingStackedWidget, self).__init__(*args, **kwargs)
         self._pnow = QPoint(0, 0)
-        # 动画速度
+        # 动画 
         self._speed = 500
-        # 当前索引
+        # 현재 색인 
         self._now = 0
-        # 自动模式的当前索引
+        # 자동 모드 현재 색인 
         self._current = 0
-        # 下一个索引
+        # 다음 색인 
         self._next = 0
-        # 是否激活
+        # 지금 작동시켜 
         self._active = 0
-        # 动画方向(默认是横向)
+        # 动画 方 ((기본값은 수평으로) 
         self._orientation = Qt.Horizontal
-        # 动画曲线类型
+        # 动画 类 
         self._easing = QEasingCurve.Linear
-        # 初始化动画
+        # 초기화 애니메이션 
         self._initAnimation()
 
     def setSpeed(self, speed=500):
@@ -126,7 +126,7 @@ class SlidingStackedWidget(QStackedWidget):
         w_now = self.widget(_now)
         w_next = self.widget(_next)
 
-        # 自动判断方向
+        # 자동 판단 방향 
         if _now < _next:
             directionhint = self.TOP2BOTTOM if self._orientation == Qt.Vertical else self.RIGHT2LEFT
         else:
@@ -134,7 +134,7 @@ class SlidingStackedWidget(QStackedWidget):
         if direction == self.AUTOMATIC:
             direction = directionhint
 
-        # 计算偏移量
+        # 오프셋을 계산합니다 
         offsetX = self.frameRect().width()
         offsetY = self.frameRect().height()
         w_next.setGeometry(0, 0, offsetX, offsetY)
@@ -150,12 +150,12 @@ class SlidingStackedWidget(QStackedWidget):
         elif direction == self.LEFT2RIGHT:
             offsetY = 0
 
-        # 重新定位显示区域外部/旁边的下一个窗口小部件
+        # 디스플레이 영역의 바깥 쪽 / 쪽에서 다음 창 위젯 위치를 변경하십시오. 
         pnext = w_next.pos()
         pnow = w_now.pos()
         self._pnow = pnow
 
-        # 移动到指定位置并显示
+        # 지정된 위치로 이동하고 디스플레이합니다 
         w_next.move(pnext.x() - offsetX, pnext.y() - offsetY)
         w_next.show()
         w_next.raise_()
@@ -181,35 +181,35 @@ class SlidingStackedWidget(QStackedWidget):
 
     def _initAnimation(self):
         """初始化当前页和下一页的动画变量"""
-        # 当前页的动画
+        # 当前 动动 动动 
         self._animnow = QPropertyAnimation(
             self, propertyName=b'pos', duration=self._speed,
             easingCurve=self._easing)
-        # 下一页的动画
+        # 다음 페이지 애니메이션 
         self._animnext = QPropertyAnimation(
             self, propertyName=b'pos', duration=self._speed,
             easingCurve=self._easing)
-        # 并行动画组
+        # 并 行 行 动画 
         self._animgroup = QParallelAnimationGroup(
             self, finished=self.animationDoneSlot)
         self._animgroup.addAnimation(self._animnow)
         self._animgroup.addAnimation(self._animnext)
 
     def setCurrentIndex(self, index):
-        # 覆盖该方法实现的动画切换
+        # 盖 动画 动画 实 
         # super(SlidingStackedWidget, self).setCurrentIndex(index)
-        # 坚决不能调用上面的函数,否则动画失效
+        # 위의 기능을 단호하게 호출 할 수 없으며 그렇지 않으면 애니메이션이 유효하지 않습니다. 
         self.slideInIdx(index)
 
     def setCurrentWidget(self, widget):
-        # 覆盖该方法实现的动画切换
+        # 盖 动画 动画 实 
         super(SlidingStackedWidget, self).setCurrentWidget(widget)
-        # 坚决不能调用上面的函数,否则动画失效
+        # 위의 기능을 단호하게 호출 할 수 없으며 그렇지 않으면 애니메이션이 유효하지 않습니다. 
         self.setCurrentIndex(self.indexOf(widget))
 
     def animationDoneSlot(self):
         """动画结束处理函数"""
-        # 由于重写了setCurrentIndex方法所以这里要用父类本身的方法
+        # setCurrentIndex 메소드를 다시 작성하기 때문에 상위 클래스 자체의 메소드는 
 #         self.setCurrentIndex(self._next)
         QStackedWidget.setCurrentIndex(self, self._next)
         w = self.widget(self._now)

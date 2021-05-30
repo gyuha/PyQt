@@ -25,25 +25,25 @@ class WindowSlave(QWidget):
     def __init__(self, *args, **kwargs):
         super(WindowSlave, self).__init__(*args, **kwargs)
         self.setupUi()
-        # 加入Master节点
+        # 마스터 노드 가입 
         node = QRemoteObjectNode(parent=self)
         node.connectToNode(QUrl('local:WindowMaster'))
-        # 获取WindowMaster对象
+        # windowmaster object를 얻으십시오 
         self.windowMaster = node.acquireDynamic('WindowMaster')
-        # 初始化成功后才能去绑定信号等
+        # 초기화, 바인딩 신호 등으로 이동할 수 있습니다. 
         self.windowMaster.initialized.connect(self.onInitialized)
-        # 状态改变 https://doc.qt.io/qt-5/qremoteobjectreplica.html#State-enum
+        # 상태 변경 https://doc.qt.io/qt-5/qremoteobjectreplica.html#State-Enum. 
         self.windowMaster.stateChanged.connect(self.onStateChanged)
 
     def setupUi(self):
         self.setWindowTitle('WindowSlave')
         self.resize(300, 400)
         layout = QVBoxLayout(self)
-        # 输入框(双向同步)
+        # 상자 (양방향 동기화) 
         self.lineEdit = QLineEdit(self)
-        # 勾选框(双向同步)
+        # (양방향 동기화) 
         self.checkBox = QCheckBox('来勾我啊', self)
-        # 进度条(Master更新Slave)
+        # 成度 (마스터 업데이트 슬레이브) 
         self.progressBar = QProgressBar(self)
         layout.addWidget(self.lineEdit)
         layout.addWidget(self.checkBox)
@@ -54,15 +54,15 @@ class WindowSlave(QWidget):
             QMessageBox.critical(self, '错误', '连接丢失')
 
     def onInitialized(self):
-        # Master和Slave输入框绑定
+        # 마스터와 슬레이브 Enter 상자 바인드 
         self.windowMaster.editValueChanged.connect(self.lineEdit.setText)
         self.lineEdit.textChanged.connect(self.windowMaster.updateEdit)
 
-        # Master和Slave勾选框绑定
+        # 마스터 및 슬레이브 확인란 바인딩 
         self.windowMaster.checkToggled.connect(self.checkBox.setChecked)
         self.checkBox.toggled.connect(self.windowMaster.updateCheck)
 
-        # Master进度条同步到Slave
+        # 마스터 일정은 슬레이브에 동기화됩니다 
         self.windowMaster.progressValueChanged.connect(
             self.progressBar.setValue)
         

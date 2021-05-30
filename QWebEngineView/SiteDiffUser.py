@@ -25,12 +25,12 @@ class Window(QTabWidget):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
 
-        # 用户1
+        # 用户 用户 1. 
         self.webView1 = QWebEngineView(self)
         profile1 = QWebEngineProfile('storage1', self.webView1)
         profile1.setPersistentStoragePath('Tmp/Storage1')
         print(profile1.cookieStore())
-        # 如果要清除cookie
+        # 쿠키를 지우고 싶으면 
         # cookieStore = profile1.cookieStore()
         # cookieStore.deleteAllCookies()
         # cookieStore.deleteSessionCookies()
@@ -38,7 +38,7 @@ class Window(QTabWidget):
         self.webView1.setPage(page1)
         self.addTab(self.webView1, '用户1')
 
-        # 用户2
+        # 用户 用户 2. 
         self.webView2 = QWebEngineView(self)
         profile2 = QWebEngineProfile('storage2', self.webView2)
         profile2.setPersistentStoragePath('Tmp/Storage2')

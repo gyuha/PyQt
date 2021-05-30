@@ -24,34 +24,34 @@ class CpuLineChart(QChart):
     def __init__(self, *args, **kwargs):
         super(CpuLineChart, self).__init__(*args, **kwargs)
         self.m_count = 10
-        # 隐藏图例
+        # 隐 图 
         self.legend().hide()
         self.m_series = QSplineSeries(self)
-        # 设置画笔
+        # 설치 브러시 
         self.m_series.setPen(QPen(QColor('#3B8CFF'), 2, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
         self.addSeries(self.m_series)
-        # x轴
+        # x 축 
         self.m_axisX = QDateTimeAxis(self)
-        self.m_axisX.setTickCount(self.m_count + 1)  # 设置刻度数量
-        self.m_axisX.setFormat('hh:mm:ss')  # 设置时间显示格式
-        now = QDateTime.currentDateTime()  # 前10秒到现在
+        self.m_axisX.setTickCount(self.m_count + 1)  # 분 수를 설정합니다 
+        self.m_axisX.setFormat('hh:mm:ss')  # 시간 표시 형식을 설정하십시오 
+        now = QDateTime.currentDateTime()  # 前 10 초 
         self.m_axisX.setRange(now.addSecs(-self.m_count), now)
         self.addAxis(self.m_axisX, Qt.AlignBottom)
         self.m_series.attachAxis(self.m_axisX)
-        # y轴
+        # y. 
         self.m_axisY = QValueAxis(self)
-        self.m_axisY.setLabelFormat('%d')  # 设置文本格式
-        self.m_axisY.setMinorTickCount(4)  # 设置小刻度线的数目
+        self.m_axisY.setLabelFormat('%d')  # 텍스트 형식을 설정합니다 
+        self.m_axisY.setMinorTickCount(4)  # 작은 타이 선의 수를 설정하십시오 
         self.m_axisY.setTickCount(self.m_count + 1)
         self.m_axisY.setRange(0, 100)
         self.addAxis(self.m_axisY, Qt.AlignLeft)
         self.m_series.attachAxis(self.m_axisY)
 
-        # 填充11个初始点，注意x轴 需要转为秒的时间戳
+        # 11 초기 점을 채우고, X 축의 시간 소인에주의를 기울여 두 번째로 변환해야합니다. 
         self.m_series.append(
             [QPointF(now.addSecs(-i).toMSecsSinceEpoch(), 0) for i in range(self.m_count, -1, -1)])
 
-        # 定时器获取数据
+        # 타이머 데이터 가져 오기 
         self.m_timer = QTimer()
         self.m_timer.timeout.connect(self.update_data)
         self.m_timer.start(1000)
@@ -59,12 +59,12 @@ class CpuLineChart(QChart):
     def update_data(self):
         value = cpu_percent()
         now = QDateTime.currentDateTime()
-        self.m_axisX.setRange(now.addSecs(-self.m_count), now)  # 重新调整x轴的时间范围
-        # 获取原来的所有点,去掉第一个并追加新的一个
+        self.m_axisX.setRange(now.addSecs(-self.m_count), now)  # x 축의 시간 범위를 다시 조정합니다. 
+        # 모든 포인트 가져 오기, 먼저 제거하고 새 것을 추가하십시오. 
         points = self.m_series.pointsVector()
         points.pop(0)
         points.append(QPointF(now.toMSecsSinceEpoch(), value))
-        # 替换法速度更快
+        # 换 法 速 
         self.m_series.replace(points)
 
 
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     # chart.setAnimationOptions(QChart.SeriesAnimations)
 
     view = QChartView(chart)
-    view.setRenderHint(QPainter.Antialiasing)  # 抗锯齿
+    view.setRenderHint(QPainter.Antialiasing)  # 抗锯 齿齿 
     view.resize(800, 600)
     view.show()
     sys.exit(app.exec_())

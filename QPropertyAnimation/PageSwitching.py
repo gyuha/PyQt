@@ -30,14 +30,14 @@ class ImageSliderWidget(QWidget, Ui_Form):
     def __init__(self, *args, **kwargs):
         super(ImageSliderWidget, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        # 初始化动画曲线类型
+        # 애니메이션 곡선 유형을 초기화하십시오 
         curve_types = [(n, c) for n, c in QEasingCurve.__dict__.items()
                        if isinstance(c, QEasingCurve.Type)]
         curve_types.sort(key=lambda ct: ct[1])
         curve_types = [c[0] for c in curve_types]
         self.comboBoxEasing.addItems(curve_types)
 
-        # 绑定信号槽
+        # 定 信号 信号 
         self.spinBoxSpeed.valueChanged.connect(self.stackedWidget.setSpeed)
         self.comboBoxEasing.currentTextChanged.connect(self.setEasing)
         self.radioButtonHor.toggled.connect(self.setOrientation)
@@ -47,7 +47,7 @@ class ImageSliderWidget(QWidget, Ui_Form):
         self.pushButtonStart.clicked.connect(self.autoStart)
         self.pushButtonStop.clicked.connect(self.autoStop)
 
-        # 添加图片页面
+        # 사진을 추가하십시오 
         for name in os.listdir('Data/Images'):
             label = QLabel(self.stackedWidget)
             label.setScaledContents(True)

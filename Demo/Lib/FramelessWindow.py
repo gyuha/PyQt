@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel,\
     QSpacerItem, QSizePolicy, QPushButton
 
 
-# Created on 2018年4月30日
+# 2018 년 4 월 30 일에 만들어졌습니다 
 # author: Irony
 # site: https://pyqt5.com , https://github.com/892768447
 # email: 892768447@qq.com
@@ -21,66 +21,66 @@ __Version__ = 1.0
 
 class TitleBar(QWidget):
 
-    # 窗口最小化信号
+    신호 창 최소화 # 
     windowMinimumed = pyqtSignal()
-    # 窗口最大化信号
+    # 口 최대화 신호 
     windowMaximumed = pyqtSignal()
-    # 窗口还原信号
+    # 还 还原 信号 
     windowNormaled = pyqtSignal()
-    # 窗口关闭信号
+    # 关 闭 信号 
     windowClosed = pyqtSignal()
-    # 窗口移动
+    # 移动 移动 移动 
     windowMoved = pyqtSignal(QPoint)
 
     def __init__(self, *args, **kwargs):
         super(TitleBar, self).__init__(*args, **kwargs)
-        # 支持qss设置背景
+        # QSS 설정을 지원합니다 
         self.setAttribute(Qt.WA_StyledBackground, True)
         self.mPos = None
-        self.iconSize = 20  # 图标的默认大小
-        # 设置默认背景颜色,否则由于受到父窗口的影响导致透明
+        self.iconSize = 20  # 아이콘의 기본 크기 
+        # 기본 배경 색상을 설정합니다. 그렇지 않으면 상위 창의 영향으로 인해 투명도 
         self.setAutoFillBackground(True)
         palette = self.palette()
         palette.setColor(palette.Window, QColor(240, 240, 240))
         self.setPalette(palette)
-        # 布局
+        # 布局 
         layout = QHBoxLayout(self, spacing=0)
         layout.setContentsMargins(0, 0, 0, 0)
-        # 窗口图标
+        # 창 아이콘 
         self.iconLabel = QLabel(self)
 #         self.iconLabel.setScaledContents(True)
         layout.addWidget(self.iconLabel)
-        # 窗口标题
+        # 标 标题 
         self.titleLabel = QLabel(self)
         self.titleLabel.setMargin(2)
         layout.addWidget(self.titleLabel)
-        # 中间伸缩条
+        # 中 间 缩 
         layout.addSpacerItem(QSpacerItem(
             40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
-        # 利用Webdings字体来显示图标
+        # WebDings 글꼴을 사용하여 아이콘을 표시하십시오 
         font = self.font() or QFont()
         font.setFamily('Webdings')
-        # 最小化按钮
+        # 최소화 버튼 
         self.buttonMinimum = QPushButton(
             '0', self, clicked=self.windowMinimumed.emit, font=font, objectName='buttonMinimum')
         layout.addWidget(self.buttonMinimum)
-        # 最大化/还原按钮
+        # 최대화 / 복원 버튼 
         self.buttonMaximum = QPushButton(
             '1', self, clicked=self.showMaximized, font=font, objectName='buttonMaximum')
         layout.addWidget(self.buttonMaximum)
-        # 关闭按钮
+        # 关 闭 按 
         self.buttonClose = QPushButton(
             'r', self, clicked=self.windowClosed.emit, font=font, objectName='buttonClose')
         layout.addWidget(self.buttonClose)
-        # 初始高度
+        # 초기 높이 
         self.setHeight()
 
     def showMaximized(self):
         if self.buttonMaximum.text() == '1':
-            # 最大化
+            # maximize. 
             self.buttonMaximum.setText('2')
             self.windowMaximumed.emit()
-        else:  # 还原
+        else:  # 还原 
             self.buttonMaximum.setText('1')
             self.windowNormaled.emit()
 
@@ -88,7 +88,7 @@ class TitleBar(QWidget):
         """设置标题栏高度"""
         self.setMinimumHeight(height)
         self.setMaximumHeight(height)
-        # 设置右边按钮的大小
+        # 오른쪽 버튼의 크기를 설정하십시오 
         self.buttonMinimum.setMinimumSize(height, height)
         self.buttonMinimum.setMaximumSize(height, height)
         self.buttonMaximum.setMinimumSize(height, height)
@@ -133,34 +133,34 @@ class TitleBar(QWidget):
         event.accept()
 
 
-# 枚举左上右下以及四个定点
+# 举 上 上 上 上 上 
 Left, Top, Right, Bottom, LeftTop, RightTop, LeftBottom, RightBottom = range(8)
 
 
 class FramelessWindow(QWidget):
 
-    # 四周边距
+    # 四 四 边 
     Margins = 5
 
     def __init__(self, *args, **kwargs):
         super(FramelessWindow, self).__init__(*args, **kwargs)
         self._pressed = False
         self.Direction = None
-        # 背景透明
+        # 배경 투명 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        # 无边框
+        # 무시건 
         self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
-        # 鼠标跟踪
+        # 跟 跟 
         self.setMouseTracking(True)
-        # 布局
+        # 布局 
         layout = QVBoxLayout(self, spacing=0)
-        # 预留边界用于实现无边框窗口调整大小
+        # 경계선없는 창 조정 크기를 구현하기위한 예약 된 경계 
         layout.setContentsMargins(
             self.Margins, self.Margins, self.Margins, self.Margins)
-        # 标题栏
+        # 제목 
         self.titleBar = TitleBar(self)
         layout.addWidget(self.titleBar)
-        # 信号槽
+        # 신호 슬롯 
         self.titleBar.windowMinimumed.connect(self.showMinimized)
         self.titleBar.windowMaximumed.connect(self.showMaximized)
         self.titleBar.windowNormaled.connect(self.showNormal)
@@ -182,7 +182,7 @@ class FramelessWindow(QWidget):
         if hasattr(self, '_widget'):
             return
         self._widget = widget
-        # 设置默认背景颜色,否则由于受到父窗口的影响导致透明
+        # 기본 배경 색상을 설정합니다. 그렇지 않으면 상위 창의 영향으로 인해 투명도 
         self._widget.setAutoFillBackground(True)
         palette = self._widget.palette()
         palette.setColor(palette.Window, QColor(240, 240, 240))
@@ -192,7 +192,7 @@ class FramelessWindow(QWidget):
 
     def move(self, pos):
         if self.windowState() == Qt.WindowMaximized or self.windowState() == Qt.WindowFullScreen:
-            # 最大化或者全屏则不允许移动
+            # 최대화 또는 전체 화면 
             return
         super(FramelessWindow, self).move(pos)
 
@@ -247,35 +247,35 @@ class FramelessWindow(QWidget):
             self._resizeWidget(pos)
             return
         if xPos <= self.Margins and yPos <= self.Margins:
-            # 左上角
+            # 上 上 上 上 
             self.Direction = LeftTop
             self.setCursor(Qt.SizeFDiagCursor)
         elif wm <= xPos <= self.width() and hm <= yPos <= self.height():
-            # 右下角
+            # 一 右 下角 
             self.Direction = RightBottom
             self.setCursor(Qt.SizeFDiagCursor)
         elif wm <= xPos and yPos <= self.Margins:
-            # 右上角
+            오른쪽 상단 구석에 # 카운트 다운 
             self.Direction = RightTop
             self.setCursor(Qt.SizeBDiagCursor)
         elif xPos <= self.Margins and hm <= yPos:
-            # 左下角
+            # 下 下 
             self.Direction = LeftBottom
             self.setCursor(Qt.SizeBDiagCursor)
         elif 0 <= xPos <= self.Margins and self.Margins <= yPos <= hm:
-            # 左边
+            # 左 
             self.Direction = Left
             self.setCursor(Qt.SizeHorCursor)
         elif wm <= xPos <= self.width() and self.Margins <= yPos <= hm:
-            # 右边
+            # 
             self.Direction = Right
             self.setCursor(Qt.SizeHorCursor)
         elif self.Margins <= xPos <= wm and 0 <= yPos <= self.Margins:
-            # 上面
+            # 위 
             self.Direction = Top
             self.setCursor(Qt.SizeVerCursor)
         elif self.Margins <= xPos <= wm and hm <= yPos <= self.height():
-            # 下面
+            # 아래 # 
             self.Direction = Bottom
             self.setCursor(Qt.SizeVerCursor)
 
@@ -287,53 +287,53 @@ class FramelessWindow(QWidget):
         xPos, yPos = mpos.x(), mpos.y()
         geometry = self.geometry()
         x, y, w, h = geometry.x(), geometry.y(), geometry.width(), geometry.height()
-        if self.Direction == LeftTop:  # 左上角
+        if self.Direction == LeftTop:  # 上 上 上 上 
             if w - xPos > self.minimumWidth():
                 x += xPos
                 w -= xPos
             if h - yPos > self.minimumHeight():
                 y += yPos
                 h -= yPos
-        elif self.Direction == RightBottom:  # 右下角
+        elif self.Direction == RightBottom:  # 一 右 下角 
             if w + xPos > self.minimumWidth():
                 w += xPos
                 self._mpos = pos
             if h + yPos > self.minimumHeight():
                 h += yPos
                 self._mpos = pos
-        elif self.Direction == RightTop:  # 右上角
+        elif self.Direction == RightTop:  오른쪽 상단 구석에 # 카운트 다운 
             if h - yPos > self.minimumHeight():
                 y += yPos
                 h -= yPos
             if w + xPos > self.minimumWidth():
                 w += xPos
                 self._mpos.setX(pos.x())
-        elif self.Direction == LeftBottom:  # 左下角
+        elif self.Direction == LeftBottom:  # 下 下 
             if w - xPos > self.minimumWidth():
                 x += xPos
                 w -= xPos
             if h + yPos > self.minimumHeight():
                 h += yPos
                 self._mpos.setY(pos.y())
-        elif self.Direction == Left:  # 左边
+        elif self.Direction == Left:  # 左 
             if w - xPos > self.minimumWidth():
                 x += xPos
                 w -= xPos
             else:
                 return
-        elif self.Direction == Right:  # 右边
+        elif self.Direction == Right:  # 
             if w + xPos > self.minimumWidth():
                 w += xPos
                 self._mpos = pos
             else:
                 return
-        elif self.Direction == Top:  # 上面
+        elif self.Direction == Top:  # 위 
             if h - yPos > self.minimumHeight():
                 y += yPos
                 h -= yPos
             else:
                 return
-        elif self.Direction == Bottom:  # 下面
+        elif self.Direction == Bottom:  # 아래 # 
             if h + yPos > self.minimumHeight():
                 h += yPos
                 self._mpos = pos

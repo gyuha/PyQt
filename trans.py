@@ -39,6 +39,7 @@ def transRun(lines):
                 continue
             reText = translator.translate(match.group(), lang_tgt='ko')
             line = re.sub('#.*$', reText, line)
+            print("=>", line)
             newLines.append(line)
         else:
             newLines.append(line)
@@ -46,7 +47,7 @@ def transRun(lines):
 
 
 if __name__ == '__main__':
-    print(sys.argv[1])
+    print("###" + sys.argv[1] + "###")
     lines = loadFile(sys.argv[1])
     lines = transRun(lines)
     saveFile(sys.argv[1], lines)

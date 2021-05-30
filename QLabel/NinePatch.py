@@ -29,7 +29,7 @@ class Label(QWidget):
 
     def __init__(self, *args, **kwargs):
         super(Label, self).__init__(*args, **kwargs)
-        #.9 格式的图片
+        형식의 그림 # .9 형식 
         self.image = NinePatch('Data/skin_aio_friend_bubble_pressed.9.png')
 
     def paintEvent(self, event):

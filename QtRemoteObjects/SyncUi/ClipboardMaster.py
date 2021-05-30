@@ -31,16 +31,16 @@ class WindowMaster(QTextBrowser):
 
     def __init__(self, *args, **kwargs):
         super(WindowMaster, self).__init__(*args, **kwargs)
-        # 监听剪切板
+        # 监 板 
         clipboard = QApplication.clipboard()
         clipboard.dataChanged.connect(self.on_data_changed)
-        # 开启节点
+        # 开 节点 
         host = QRemoteObjectHost(QUrl('tcp://0.0.0.0:' + sys.argv[1]), parent=self)
         host.enableRemoting(self, 'WindowMaster')
         self.append('开启节点完成')
 
     def on_data_changed(self):
-        # 服务端剪贴板变化后发送到客户端
+        # 服务 服务 端 端 变 变 发化 发 到 
         clipboard = QApplication.clipboard()
         clipboard.blockSignals(True)
         mime_data = clipboard.mimeData()
@@ -69,7 +69,7 @@ class WindowMaster(QTextBrowser):
                        hasUrls, urls,
                        hasFiles, files,
                        ):
-        # 客户端剪切板同步到服务端
+        # 客户户 板 서버와 동기화하십시오 
         self.append('收到客户端发送的剪贴板')
         clipboard = QApplication.clipboard()
         clipboard.blockSignals(True)
